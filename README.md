@@ -56,9 +56,9 @@ Before running this project, make sure you have the following installed on your 
 
 Create a `.env` file in the backend directory of the project and add the following environment variables:
 
-PORT = ? (the port where the server will be listening)
-MONGO_URI= ?     (your MongoDB connection string)
-SECRET=?         (a secret key used by jsonwebtoken)
+- PORT = ? (the port where the server will be listening)
+- MONGO_URI= ?     (your MongoDB connection string)
+- SECRET=?         (a secret key used by jsonwebtoken)
 
 
 
