@@ -1,12 +1,12 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
-import User from "../models/user.model.js";
-// import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import ApiResponse from "../utils/ApiResponse.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
+
+import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 // @desc Register user
 // @route POST /api/v1/users/register
@@ -305,6 +305,15 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 });
 
 
+// @desc get all users
+// @route GET /api/v1/users
+// @access Private/Admin
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find().select("-password");
+  res.json(new ApiResponse(200, "Users fetched successfully", users));
+});
+
+
 
 
 
@@ -320,6 +329,7 @@ export {
   logoutUser,
   updateUserProfile,
   changeCurrentPassword,
-  getCurrentUser
+  getCurrentUser,
+  getAllUsers
  
 };

@@ -13,6 +13,7 @@ export const verifyUser = asyncHandler(async (req, res, next) => {
     }
 
     const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
+    console.log(decodedToken, "decodedToken")
 
     const user = await User.findById(decodedToken?._id).select("-password");
 
@@ -32,6 +33,8 @@ export const verifySeller = asyncHandler(async (req, res, next) => {
   try {
     const user = req.user;
 
+    console.log(user);
+
     if (user.userType !== "seller") {
       throw new ApiError(403, "Access denied");
     }
@@ -44,7 +47,13 @@ export const verifySeller = asyncHandler(async (req, res, next) => {
 
 export const verifyAdmin = asyncHandler(async (req, res, next) => {
   try {
+    //i dont have to check if the user is a seller or buyer 
+
+
+
     const user = req.user;
+    console.log(user);
+    console.log(user.userType);
 
     if (user.userType !== "admin") {
       throw new ApiError(403, "Access denied");
