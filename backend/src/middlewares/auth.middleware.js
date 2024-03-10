@@ -21,6 +21,8 @@ export const verifyUser = asyncHandler(async (req, res, next) => {
       throw new ApiError(404, "User not found");
     }
 
+    console.log(user, "user")
+
     req.user = user;
 
     next();

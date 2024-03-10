@@ -3,9 +3,9 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema({
-  fullName: { type: String, required: true, unique: true },
-  password: { type: String, required: true},
-  email: { type: String, required: true, unique: true },
+  fullName: { type: String, required: true, unique: true , trim : true},
+  password: { type: String, required: true,trim : true},
+  email: { type: String, required: true, unique: true , trim : true},
   location: { type: String },
   userType: {
     type: String,
@@ -63,6 +63,9 @@ userSchema.methods.generateResetToken=function(){
   this.resetTokenExpire=Date.now()+10*60*1000; //10 mins from now
   return resetToken;
 }
+
+
+userSchema.methods.compareTwoToken=(token) => jwt.verify(token, process.env.RESET_TOKEN_SECRET)
 
 
 //hash password before saving the user model into the database

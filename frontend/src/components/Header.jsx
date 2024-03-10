@@ -1,10 +1,36 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link ,useNavigate} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logout , reset} from "../store/auth/authSlice";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const dispatch = useDispatch();
+  const { user,message } = useSelector((state) => state.auth);
+  let navigate = useNavigate()
 
 
+
+  // when ever user login how to show the user profile picture means how to rerender header while login component change
+
+
+  useEffect(() => {
+
+
+  },[user])
+  
+
+  const logoutHandle = () => {
+    dispatch(logout());
+    toast.success("Logout Successfully!");
+    setSidebarOpen(false)
+    dispatch(reset());
+    navigate("/login");
+
+  }
 
 
 
@@ -19,30 +45,47 @@ const Header = () => {
         </Link>
       </div>
       <div className="flex items-center">
-      <Link to="/login" className="bg-blue-500 no-underline font-Roboto text-base   hover:bg-color-danger transition-all duration-150 text-white py-2 px-3 rounded-md text-md font-semibold">
-        Login
-      </Link>  
-
-      <div className="hidden">
-        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="user image" 
+        {
+          user ? (
+            <div>
+        <img src={user?.profilePicture} key={user.profilePicture} alt="user image" 
         className="w-10 h-10 rounded-full"
         onClick={() => setSidebarOpen(!sidebarOpen)}
          />
       </div>
+
+          ):(
+            <Link to="/login" className="bg-blue-500 no-underline font-Roboto text-base   hover:bg-color-danger transition-all duration-150 text-white py-2 px-3 rounded-md text-md font-semibold">
+            Sign In
+          </Link>  
+          )
+        }
+     
+
+      
       </div>
 
 
-      <div className={`${sidebarOpen ? 'block' : 'hidden'} rounded-sm  absolute right-12 top-16 mt-[4px] bg-body-bg   w-[200px]`}>
+      {
+        user && sidebarOpen ? (
+          <div className={`${sidebarOpen ? 'block' : 'hidden'} rounded-sm  absolute right-12 top-16 mt-[4px] bg-body-bg   w-[200px]`}>
         <nav className="pt-5">
           <Link to="/profile" className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light">Profile</Link>
-          <Link to="" className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light">Features</Link>
+          <Link to="" className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light">Manage Items</Link>
           <Link to="" className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light">Contact</Link>
-          <Link to="" className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light">Login</Link>
-          <Link to="/logout" className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light">Logout</Link>  
+        {
+            user && user.userType === "seller" ? (
+              <Link to="/upload-item" className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light">Upload items</Link>
+            ): null
+          }
+          <Link to="/change-password" className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light">Change Password</Link>  
+          <Link onClick={logoutHandle} className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light">Logout</Link>  
           
 
         </nav>
         </div>
+        ): null
+      }
     </div>
 
     );

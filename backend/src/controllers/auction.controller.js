@@ -37,26 +37,28 @@ const createAuction = asyncHandler(async (req, res) => {
     try {
         const { name, description, category, startTime, endTime, startingPrice, location } = req.body;
         const image = req.file?.path;
+
+
         
         // Check if fields are empty
         if (!name || !description || !category || !startTime || !endTime || !startingPrice || !location  || !image) {
-            throw new ApiError(400, "All fields are required");
+            return res.status(400).json(new ApiResponse(400, "All fields are required"));
         };  
         
         // Check if startTime is before endTime
         if (startTime >= endTime) {
-            throw new ApiError(400, "Start time must be before end time");
+            return res.status(400).json(new ApiResponse(400, "Start time must be before end time"));
         }
         
         // Check if startingPrice is a positive number
         if (startingPrice <= 0) {
-            throw new ApiError(400, "Starting price must be a positive number");
+            return res.status(400).json(new ApiResponse(400, "Starting price must be a positive number"));
         }
         
         const imgUrlCloudinary = await uploadOnCloudinary(image);
         
         if(!imgUrlCloudinary){
-            throw new ApiError(500, "Error uploading image");
+            return res.status(500).json(new ApiResponse(500, "Error uploading image"));
         }
 
         const auction = await Auction.create({
@@ -73,13 +75,13 @@ const createAuction = asyncHandler(async (req, res) => {
         });
 
         if(!auction){
-            throw new ApiError(500, "Error creating auction");
+            return res.status(500).json(new ApiResponse(500, "Error creating auction"));
         }
 
         return res.status(201).json(new ApiResponse(201, "Auction created successfully", auction));
     } catch (error) {
         // Handle the error
-        throw new ApiError(500, error?.message || "Internal server error");
+        return res.status(500).json(new ApiResponse(500, error?.message || "Internal server error"));
     }
 });
 
@@ -90,14 +92,17 @@ const createAuction = asyncHandler(async (req, res) => {
 
 const getAllAuctions = asyncHandler(async (req, res) => {
     try {
-        const auctions = await Auction.find().populate("category", "name").populate("seller", "fullName email phone location").populate("bids", "amount").populate("winner", "amount").populate("reviews", "comment rating").exec();
+        // const auctions = await Auction.find().populate("category", "name").populate("seller", "fullName email phone location").populate("bids", "amount").populate("winner", "amount").populate("reviews", "comment rating")
+
+        const auctions = await Auction.find()
+
         if (!auctions) {
-            throw new ApiError(404, "Auctions not found");
+            return res.status(404).json(new ApiResponse(404, "No auctions found"));
         }
         return res.json(new ApiResponse(200, "Auctions retrieved successfully", auctions));
     } catch (error) {
         // Handle the error
-        throw new ApiError(500, error?.message || "Internal server error");
+        return res.status(500).json(new ApiResponse(500, error?.message || "Internal server error"));
     }
 });
 

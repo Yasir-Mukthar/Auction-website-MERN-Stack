@@ -2,15 +2,23 @@
 import {BrowserRouter , Route, Routes} from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import Register from './pages/Register'
-import Login from './pages/Login'
+import Register from './pages/auth/Register'
+import Login from './pages/auth/Login'
 import Home from './pages/Home'
 import AboutUs from './pages/AboutUs'
 import ContactUs from './pages/ContactUs'
 import PrivacyPolicy from './pages/PrivacyPolicy'
+import { ToastContainer } from 'react-toastify';
+import ForgotPassword from './pages/auth/ForgotPassword'
+import ResetNewPassword from './pages/auth/ResetNewPassword'
+import ChangePassword from './pages/auth/ChangePassword'
+import UploadItem from './pages/UploadItem'
+import Dashboard from './pages/Dashboard'
+
 
 const App = () => {
   return (
+    <>
     <BrowserRouter>
     <Header />
       <Routes>
@@ -20,12 +28,20 @@ const App = () => {
         <Route path="/about-us" element={<AboutUs  />} />
         <Route path="/contact-us" element={<ContactUs  />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy  />} />
+        <Route path="/forgot-password" element={<ForgotPassword  />} />
+        <Route path="/reset-password/:id/:token" element={<ResetNewPassword  />} />
+        <Route path="/change-password" element={<ChangePassword />} />
+        <Route path="/upload-item" element={<UploadItem />} />
+        <Route path="/dashboard" element={<Dashboard />} />
 
 
       </Routes>
     
     <Footer />
     </BrowserRouter>
+    <ToastContainer />
+    </>
+
   )
 }
 

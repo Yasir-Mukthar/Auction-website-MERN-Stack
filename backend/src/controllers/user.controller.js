@@ -25,36 +25,37 @@ const registerUser = asyncHandler(async (req, res) => {
   const { fullName, email, password } = req.body;
 
   if (fullName == "") {
-    throw new ApiError(400, "Fullname is required");
+    return res.status(400).json(new ApiResponse(400, "Full name is required"));
   }
 
   if ([fullName, email, password].some((fields) => fields?.trim() === "")) {
-    throw new ApiError(400, "All fields are required");
+    return res
+      .status(400)
+      .json(new ApiResponse(400, "All fields are required"));
   }
   const existedUser = await User.findOne({
     $or: [{ fullName }, { email }],
   });
 
   if (existedUser) {
-    throw new ApiError(409, "User already exists");
+    return res.status(409).json(new ApiResponse(409, "User already exists"));
   }
 
-  const hashPassword = await bcrypt.hash(password, 10);
   const user = await User.create({
     fullName: fullName.toLowerCase(),
     email,
-    password: hashPassword,
+    password,
   });
 
   const createdUser = await User.findById(user._id).select("-password");
 
   if (!createdUser) {
-    throw new ApiError(500, "Error creating user");
+    return res.status(500).json(new ApiResponse(500, "Error creating user"));
   }
 
   return res
     .status(201)
-    .json(new ApiResponse(201, "User created successfully", createdUser));
+    .json(new ApiResponse(201, "User Registered successfully", createdUser));
 });
 
 // @desc Login user
@@ -71,16 +72,21 @@ const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   if (!password && !email) {
-    throw new ApiError(400, "email and password is required");
+    res
+      .status(400)
+      .json(new ApiResponse(400, "Email and password are required"));
+    return;
   }
 
   const user = await User.findOne({ email });
   if (!user) {
-    throw new ApiError(404, "User not found");
+    res.status(404).json(new ApiResponse(404, "User not found"));
+    return;
   }
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
-    throw new ApiError(401, "Invalid password");
+    res.status(401).json(new ApiResponse(401, "Invalid password"));
+    return;
   }
   const JwtToken = user.generateJwtToken();
 
@@ -113,11 +119,11 @@ const forgetPasswordSendEmail = asyncHandler(async (req, res) => {
   //return response
   const { email } = req.body;
   if (!email) {
-    throw new ApiError(400, "Email is required");
+    res.status(400).json(new ApiResponse(400, "Email is required"));
   }
   const user = await User.findOne({ email });
   if (!user) {
-    throw new ApiError(404, "User not found");
+    return res.status(404).json(new ApiResponse(404, "Enter correct mail."));
   }
   const resetToken = user.generateResetToken();
   await user.save({ validateBeforeSave: false });
@@ -147,17 +153,15 @@ const forgetPasswordSendEmail = asyncHandler(async (req, res) => {
       if (error) {
         console.log(error);
       } else {
-        res
-          .status(200)
-          .json(
-            new ApiResponse(200, "Reset token sent to your email", {
-              resetToken,
-            })
-          );
+        res.status(200).json(
+          new ApiResponse(200, "Reset token sent to your email", {
+            resetToken,
+          })
+        );
       }
     });
   } catch (err) {
-    throw new ApiError(500, "Error sending reset token to your email");
+    return res.status(500).json(new ApiResponse(500, "Error sending email"));
   }
 
   return res
@@ -178,26 +182,36 @@ const resetPassword = asyncHandler(async (req, res) => {
   const { id, token } = req.params;
   const { password } = req.body;
   if (!id || !token || !password) {
-    throw new ApiError(400, " password are required");
+    return res.status(400).json(new ApiResponse(400, "Invalid request"));
   }
   const user = await User.findById(id);
   if (!user) {
-    throw new ApiError(404, "User not found");
+    return res.status(404).json(new ApiResponse(404, "User not found"));
   }
-  console.log(user);
-  console.log(token, user.resetToken);
-  if (token !== user.resetToken) {
-    throw new ApiError(401, "Invalid reset token");
+  if (!user.resetToken) {
+    return res.status(400).json(new ApiResponse(400, "Invalid reset link"));
   }
-  const expireTime = user.resetTokenExpire;
-  if (expireTime < Date.now()) {
-    throw new ApiError(401, "Reset token expired");
+
+  if (user.resetToken !== token) {
+    return res.status(400).json(new ApiResponse(400, "Invalid reset link"));
   }
-  user.password = password;
-  user.resetToken = undefined;
-  user.resetTokenExpire = undefined;
-  await user.save();
-  res.status(200).json(new ApiResponse(200, "Password reset successfully"));
+  if (user.resetTokenExpire < Date.now()) {
+    return res.status(400).json(new ApiResponse(400, "Reset link expired"));
+  }
+
+  try {
+    user.password = password;
+    user.resetToken = undefined;
+    user.resetTokenExpire = undefined;
+    await user.save();
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "Password reset successfully"));
+  } catch (error) {
+    return res
+      .status(500)
+      .json(new ApiResponse(500, "Error resetting password"));
+  }
 });
 
 // @desc Logout user
@@ -208,7 +222,7 @@ const logoutUser = asyncHandler(async (req, res) => {
   //clear cookies
   //return response
   res.clearCookie("JwtToken");
-  res.json(new ApiResponse(200, "User logged out successfully"));
+  res.status(200).json(new ApiResponse(200, "User logged out successfully"));
 });
 
 // @desc update user profile
@@ -227,25 +241,23 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     const profilePath = req.file?.path;
     const userId = req.user?._id;
 
-
     const user = await User.findById(userId);
     if (!user) {
       throw new ApiError(404, "User not found");
     }
     const imgUrlCloudinary = await uploadOnCloudinary(profilePath);
     console.log(imgUrlCloudinary);
-    if(!imgUrlCloudinary.url){
-        return next(new ApiError(500, "Error uploading image"));
+    if (!imgUrlCloudinary.url) {
+      return next(new ApiError(500, "Error uploading image"));
     }
-
-
-
 
     user.fullName = fullName ? fullName : user.fullName;
     user.email = email ? email : user.email;
     user.location = location ? location : user.location;
     user.userType = userType ? userType : user.userType;
-    user.profilePicture = imgUrlCloudinary.url ? imgUrlCloudinary.url : user.profilePicture;
+    user.profilePicture = imgUrlCloudinary.url
+      ? imgUrlCloudinary.url
+      : user.profilePicture;
     user.phone = phone ? phone : user.phone;
     user.address = address ? address : user.address;
     user.city = city ? city : user.city;
@@ -255,71 +267,96 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     res.json(new ApiResponse(200, "User profile updated successfully", user));
   } catch (error) {
     console.error(error);
-    res.status(500).json(new ApiResponse(500, "Internal Server Error"));
+    res
+      .status(error.statusCode || 500)
+      .json(
+        new ApiResponse(
+          error.statusCode || 500,
+          error.message || "Internal Server Error"
+        )
+      );
   }
-
-   
-  
 });
-
 
 // @desc change current password
 // @route POST /api/v1/users/change-password
 // @access Private
 
 const changeCurrentPassword = asyncHandler(async (req, res) => {
-  //get user id from token
-  const userId = req.user._id;
-  //get old password and new password from frontend
-  const {oldPassword, newPassword} = req.body;
-  //validate old password and new password
-  if (!oldPassword || !newPassword) {
-    throw new ApiError(400, "Old password and new password are required");
+  try {
+    //get user id from token
+    const userId = req.user._id;
+    //get old password and new password from frontend
+    const { oldPassword, newPassword } = req.body;
+    console.log(oldPassword, newPassword, "old and new password")
+    //validate old password and new password
+    if (!oldPassword || !newPassword) {
+      return res.status(400).json(new ApiResponse(400, "All fields are required"));
+    }
+
+    //check if the old password is correct
+    const user = await User.findById(userId);
+
+    if (!user || !(await user.comparePassword(oldPassword))) {
+      return res.status(401).json(new ApiResponse(401, "Invalid old password"));
+    }
+
+    //if everything is ok then update the password
+    user.password = newPassword;
+    await user.save();
+
+    //return response
+    res.json(new ApiResponse(200, "Password changed successfully"));
+  } catch (error) {
+    res
+      .status(error.statusCode || 500)
+      .json(
+        new ApiResponse(
+          error.statusCode || 500,
+          error.message || "Internal Server Error"
+        )
+      );
   }
-  
-
-  //check if the old password is correct
-  const user= await User.findById(userId);
-
-  if (!user || !(await user.comparePassword(oldPassword))) {
-    throw new ApiError(401, "Invalid password");
-  }
-
-  //if everything is ok then update the password
-  user.password = newPassword;
-  await user.save();
-
-  //return response
-  res.json(new ApiResponse(200, "Password changed successfully"));
 });
-
-
 
 // @desc get current user
 // @route GET /api/v1/users/current-user
 // @access Private
 const getCurrentUser = asyncHandler(async (req, res) => {
-  return res
-    .status(200)
-    .json(200,  "current user fetched successfully", req.user);
+  try {
+    return res
+      .status(200)
+      .json(200, "current user fetched successfully", req.user);
+  } catch (error) {
+    res
+      .status(error.statusCode || 500)
+      .json(
+        new ApiResponse(
+          error.statusCode || 500,
+          error.message || "Internal Server Error"
+        )
+      );
+  }
 });
-
 
 // @desc get all users
 // @route GET /api/v1/users
 // @access Private/Admin
 const getAllUsers = asyncHandler(async (req, res) => {
-  const users = await User.find().select("-password");
-  res.json(new ApiResponse(200, "Users fetched successfully", users));
+  try {
+    const users = await User.find().select("-password");
+    res.json(new ApiResponse(200, "Users fetched successfully", users));
+  } catch (error) {
+    res
+      .status(error.statusCode || 500)
+      .json(
+        new ApiResponse(
+          error.statusCode || 500,
+          error.message || "Internal Server Error"
+        )
+      );
+  }
 });
-
-
-
-
-
-
-
-
 
 export {
   registerUser,
@@ -330,6 +367,5 @@ export {
   updateUserProfile,
   changeCurrentPassword,
   getCurrentUser,
-  getAllUsers
- 
+  getAllUsers,
 };
