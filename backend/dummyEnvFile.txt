@@ -1,0 +1,20 @@
+MONGODB_URI="add  your MongoDB URI"
+
+
+PORT=" port  number "
+
+# Setup node environment
+CORS_ORIGIN=" frontend  url or IP address from where you want to allow request"
+JWT_SECRET="    secret key for jwt token generation and verification"
+JWT_EXPIRES_IN="     time after which the JWT token will expire"
+RESET_TOKEN_SECRET="    "
+
+
+//this is for sending  email  using nodemailer
+USER_EMAIL=  "your gmail id"
+USER_PASSWORD=  "gmail password"
+
+
+CLOUDINARY_CLOUD_NAME=     "cloudinary cloud name"
+CLOUDINARY_API_KEY=         "cloudinary api key"
+CLOUDINARY_API_SECRET=        "cloudinary api secret"
