@@ -246,7 +246,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       throw new ApiError(404, "User not found");
     }
     const imgUrlCloudinary = await uploadOnCloudinary(profilePath);
-    console.log(imgUrlCloudinary);
+    //console.log(imgUrlCloudinary);
     if (!imgUrlCloudinary.url) {
       return next(new ApiError(500, "Error uploading image"));
     }
@@ -288,7 +288,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
     const userId = req.user._id;
     //get old password and new password from frontend
     const { oldPassword, newPassword } = req.body;
-    console.log(oldPassword, newPassword, "old and new password")
+   // console.log(oldPassword, newPassword, "old and new password")
     //validate old password and new password
     if (!oldPassword || !newPassword) {
       return res.status(400).json(new ApiResponse(400, "All fields are required"));

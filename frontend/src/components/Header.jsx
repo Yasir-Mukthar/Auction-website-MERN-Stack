@@ -68,7 +68,7 @@ const Header = () => {
 
       {
         user && sidebarOpen ? (
-          <div className={`${sidebarOpen ? 'block' : 'hidden'} rounded-sm  absolute right-12 top-16 mt-[4px] bg-body-bg   w-[200px]`}>
+          <div className={`${sidebarOpen ? 'block' : 'hidden'} rounded-sm  absolute right-12 top-16 mt-[4px] bg-body-bg z-50   w-[200px]`}>
         <nav className="pt-5">
           <Link to="/profile" className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light">Profile</Link>
           <Link to="" className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light">Manage Items</Link>

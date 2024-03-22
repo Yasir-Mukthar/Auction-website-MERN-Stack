@@ -11,9 +11,9 @@ const router = Router();
 // router.route("/register").post(registerUser);
 
 
+router.route("/").post( getAllAuctions);
 
 router.route("/").post(verifyUser,verifySeller,  upload.single("image"), createAuction);
-router.route("/").get( getAllAuctions);
 
 
 

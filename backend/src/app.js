@@ -20,6 +20,7 @@ app.use(cookieParser())
 import userRouter from "./routes/user.routes.js";
 import productCategoryRouter from "./routes/productCategory.routes.js";
 import auctionRouter from "./routes/auction.routes.js";
+import cityRouter from "./routes/city.routes.js";
 
 
 
@@ -28,6 +29,7 @@ import auctionRouter from "./routes/auction.routes.js";
 app.use("/api/v1/users",userRouter);
 app.use("/api/v1/product-categories",productCategoryRouter);
 app.use("/api/v1/auctions",auctionRouter);
+app.use("/api/v1/cities",cityRouter);
 
 
 

@@ -6,35 +6,63 @@ import { getAllAuctions } from "../store/auction/auctionSlice"
 import { toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import CountDownTimer from "../components/CountDownTimer"
+import SingleAuction from "../components/SingleAuction"
+import SearchLocationCategory from "../components/SearchLocationCategory"
+import { getAllCategories } from "../store/category/categorySlice"
+import { getAllCities } from "../store/city/cityService"
 
 
 const Dashboard = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const {auction, isLoading, isError, isSuccess, message} = useSelector(state => state.auction)
     const [auctionData , setAuctionData] = useState([])
 
-useEffect(() => {
+    const {auction, isLoading, isError, isSuccess, message} = useSelector(state => state.auction)
+   console.log(auctionData);
 
+useEffect(() => {
     dispatch(getAllAuctions())
-    if(isSuccess){
+}, [])
+
+useEffect(() => {
+    if (isSuccess) {
         setAuctionData(auction)
-        console.log(auctionData, "auction data")
-    }else if(isError){
+    } else if (isError) {
         toast.error(message)
     }
-
-    return () => {
-        dispatch(reset())
-    }
-},[auction ])
+}, [auction])
 
 
   
     
   return (
-    <div className="flex h-screen w-full  bg-[#061224] text-[#7386a8]">
-        <div>
+    <div className="flex flex-col min-h-screen w-full  bg-[#061224] text-[#7386a8]">
+        <div className="">
+            <SearchLocationCategory />
+        </div>
+
+        <div className="flex flex-wrap justify-center"> {
+           auctionData &&  auctionData.map((item, index) => (
+                <div
+                 key={index}
+                  className=" m-2 flex flex-wrap gap-1">
+                <SingleAuction
+                name={item.name}
+                startingPrice={item.startingPrice}
+                image={item.image}
+                endTime={item.endTime}
+                startTime={item.startTime}
+                id={item._id}
+                  />
+               
+               
+                </div>
+            ))
+
+        }            </div>
+
+        
+        {/* <div>
             <h1 className="text-2xl font-semibold text-white">Dashboard</h1>
             <div className="flex flex-wrap gap-4">
                 {auctionData.map((item, index) => (
@@ -50,7 +78,7 @@ useEffect(() => {
                     </div>
                 ))}
             </div>
-        </div>
+        </div> */}
       
     </div>
   );

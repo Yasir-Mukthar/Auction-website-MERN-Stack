@@ -1,23 +1,24 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch ,useSelector} from "react-redux";
 import { createAuction } from "../store/auction/auctionSlice.js";
+import { getAllCategories } from "../store/category/categorySlice.js";
+import { getAllCities } from "../store/city/citySlice.js";
 
 
+// const categories = [
+// //key value, name
+//     {_id: "65e89abf3c1083d3c16449f0", name: "Electronics", value: "electronics"}, 
+//     {_id:"65e89abf3c1083d3c16449f0",name: "Fashion", value: "fashion"},
+//     {_id: "65e89abf3c1083d3c16449f0", name: "Home & Living", value: "home-living"},
+// ];
 
-const categories = [
-//key value, name
-    {_id: "65e89abf3c1083d3c16449f0", name: "Electronics", value: "electronics"}, 
-    {_id:"65e89abf3c1083d3c16449f0",name: "Fashion", value: "fashion"},
-    {_id: "65e89abf3c1083d3c16449f0", name: "Home & Living", value: "home-living"},
-];
-
-const locationData= [
-    //key value ,name
-    {_id: "1", name: "Lahore", value: "lahore"},
-    {_id: "2", name: "Karachi", value: "karachi"},
-    {_id: "3", name: "Islamabad", value: "islamabad"},
-    {_id: "4", name: "Multan", value: "multan"},
-];
+// const locationData= [
+//     //key value ,name
+//     {_id: "1", name: "Lahore", value: "lahore"},
+//     {_id: "2", name: "Karachi", value: "karachi"},
+//     {_id: "3", name: "Islamabad", value: "islamabad"},
+//     {_id: "4", name: "Multan", value: "multan"},
+// ];
 
 
 const UploadItem = () => {
@@ -25,8 +26,17 @@ const UploadItem = () => {
   const [imgUrl, setImgUrl] = useState("");
   const imgRef = useRef(null);
   const {isLoading, isError, isSuccess, message} = useSelector(state => state.auction);
-  
+  const {categories} = useSelector(state => state.category);
+  const {cities} = useSelector(state => state.city);
 
+useEffect(()=>{
+    dispatch(getAllCategories())
+    dispatch(getAllCities())
+
+},[])
+
+  
+console.log("categoreik   ",categories)
 
   const [formData, setFormData] = useState({
     name: "",
@@ -136,7 +146,7 @@ const UploadItem = () => {
     value={formData.category} // Set the value attribute to formData.category
 >
     <option value="">Select Category</option>
-      {categories && categories.map((category) => (
+      {categories.data && categories.data.map((category) => (
         <option key={category._id} value={category._id}>{category.name}</option>
       ))}
     </select>
@@ -207,7 +217,7 @@ const UploadItem = () => {
                 value={formData.location}
               >
                 <option value="">Select Area</option>
-                {locationData && locationData.map((location) => (
+                {cities.data && cities.data.map((location) => (
                     <option key={location._id} value={location._id}>{location.name}</option>
                 ))}
               </select>
