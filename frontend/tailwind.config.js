@@ -2,16 +2,29 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    
     extend: {
       fontFamily: {
         Roboto: ["Roboto", "sans-serif"],
         Barlow: ["Barlow", "sans-serif"],
       },
-      screens:{
-        "vsm": "400px"
-      }
-,
+      screens: {
+        vsm: "400px",
+        // "2xl": { max: "1535px" },
+        // // => @media (max-width: 1535px) { ... }
+
+        // xl: { max: "1279px" },
+
+        // // => @media (max-width: 1279px) { ... }
+
+        // lg: { max: "1023px" },
+        // // => @media (max-width: 1023px) { ... }
+
+        // md: { max: "767px" },
+        // // => @media (max-width: 767px) { ... }
+
+        // sm: { max: "639px" },
+        // // => @media (max-width: 639px) { ... }
+      },
       colors: {
         "body-bg": "#061224",
         "body-text-color": "#7386a8",
@@ -34,6 +47,7 @@ export default {
         "border-white-color": "#ffffff14",
         "footer-bg": "#071B36",
         "footer-text-color": " #F5FAFF",
+        // "button-primary": "#00a3ff",
       },
     },
   },
