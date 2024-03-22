@@ -1,0 +1,15 @@
+MONGODB_URI=mongodb://booking:booking@ac-agjtuan-shard-00-00.znsrnb8.mongodb.net:27017,ac-agjtuan-shard-00-01.znsrnb8.mongodb.net:27017,ac-agjtuan-shard-00-02.znsrnb8.mongodb.net:27017/booking?replicaSet=atlas-k7whg1-shard-0&ssl=true&authSource=admin
+
+
+PORT=8000
+CORS_ORIGIN=http://localhost:5173
+JWT_SECRET=auctionwebsite@@@$$$&&&
+JWT_EXPIRES_IN=90d
+RESET_TOKEN_SECRET=resetpassword@@@$$$&&&
+
+
+
+
+CLOUDINARY_CLOUD_NAME=dnsxaor2k
+CLOUDINARY_API_KEY=917388212561489
+CLOUDINARY_API_SECRET=48aypZ_c1MN2NNHG_Py46TfwGyk
