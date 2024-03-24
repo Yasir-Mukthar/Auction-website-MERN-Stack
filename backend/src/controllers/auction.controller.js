@@ -4,6 +4,7 @@ import ApiResponse from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import Auction from "../models/auction.model.js";
 
+
 // name: { type: String, required: true },
 //   description: { type: String },
 //   category: { type: mongoose.Schema.Types.ObjectId, ref: "ProductCategory", required: true},
@@ -39,6 +40,12 @@ const createAuction = asyncHandler(async (req, res) => {
     } = req.body;
     const image = req.file?.path;
 
+    console.log(name, "name");
+    console.log(description, "description");
+    console.log(category, "category");
+    console.log(startTime, "startTime");
+    console.log(endTime, "endTime");
+    console.log(startingPrice, "startingPrice");
     // Check if fields are empty
     if (
       !name ||
@@ -143,4 +150,35 @@ const getAllAuctions = asyncHandler(async (req, res) => {
   }
 });
 
-export { createAuction, getAllAuctions };
+
+
+// @desc Get a single Auction by ID
+// @route GET /api/v1/auctions/:id
+// @access Public
+
+
+const getSingleAuctionById= asyncHandler(async (req, res) => {
+  try {
+console.log("single auction getting...");
+    // const auction = await Auction.findById(req.params.id).populate("category").populate("seller").populate("bids").populate("winner").populate("reviews");
+
+    //he is asking bids schema is not defined but i make a model for bid schema and also i make a model for review schema   
+     const auction = await Auction.findById(req.params.id).populate("category", "name").populate("seller", "fullName email phone profilePicture").populate("bids", "amount").populate("winner", "amount").populate("location", "name")
+
+    // const auction = await Auction.findById(req.params.id).populate("category", "name").populate("seller", "fullName email phone location").populate("bids", "amount").populate("winner", "amount").populate("reviews", "comment rating")
+
+    if (!auction) {
+      return res.status(404).json(new ApiResponse(404, "Auction not found"));
+    }
+
+    return res.json(new ApiResponse(200, "Auction retrieved successfully", auction));
+  } catch (error) {
+    // Handle the error
+    return res.status(500).json(new ApiResponse(500, error?.message || "Internal server error"));
+  }
+});
+
+export { 
+  createAuction, 
+  getAllAuctions,
+  getSingleAuctionById};

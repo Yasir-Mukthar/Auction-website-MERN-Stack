@@ -68,7 +68,7 @@ const SearchByFilter=() => {
         <select
           required
           id="category"
-          className="bg-[#061224] px-1 text-[#7386a8] w-full block sm:w-auto sm:inline  py-3  rounded-lg outline-none border-1"
+          className="bg-[#061224] px-1 text-[#7386a8] w-full block sm:w-auto sm:inline  py-3  rounded-lg outline-none border"
           onChange={(e) => setFilter({...filter, location: e.target.value}) }
         >
           <option value="">Select Location</option>
@@ -83,7 +83,7 @@ const SearchByFilter=() => {
         <select
           required
           id="category"
-          className="bg-[#061224] px-1 text-[#7386a8] w-full mt-2 sm:w-auto   sm:ml-4 block sm:inline   py-3  rounded-lg outline-none border-1"
+          className="bg-[#061224] px-1 text-[#7386a8] w-full mt-2 sm:w-auto   sm:ml-4 block sm:inline   py-3  rounded-lg outline-none border"
           onChange={(e)=> setFilter({...filter, category: e.target.value})}
         >
           <option value="">Select Category</option>

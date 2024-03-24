@@ -53,6 +53,7 @@ useEffect(() => {
                 endTime={item.endTime}
                 startTime={item.startTime}
                 id={item._id}
+                status={item.status}
                   />
                
                

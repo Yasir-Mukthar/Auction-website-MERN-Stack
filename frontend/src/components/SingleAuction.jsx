@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import CountDownTimer from "../components/CountDownTimer";
 
-const SingleAuction = ({ name, startingPrice, image, endTime, startTime }) => {
+const SingleAuction = ({ name, startingPrice, image, endTime, startTime , id ,status}) => {
   return (
     <div className=" bg-theme-bg rounded-lg flex flex-col p-3  text-white  ">
       <div className="w-80 h-80  rounded-md relative bg-white ">
@@ -11,7 +11,7 @@ const SingleAuction = ({ name, startingPrice, image, endTime, startTime }) => {
           alt="item image"
         />
         <div className="absolute bottom-3 right-3 border-[0.5px] border-color-primary border-solid rounded-full py-1 px-3 text-sm bg-gray-950 bg-opacity-[0.8] ">
-          <CountDownTimer startTime={startTime} endTime={endTime} />
+          <CountDownTimer startTime={startTime} endTime={endTime} status={status}/>
         </div>
       </div>
       <h3 className="my-3">{name}</h3>
@@ -33,7 +33,7 @@ const SingleAuction = ({ name, startingPrice, image, endTime, startTime }) => {
           <p className="mt-2">$ {startingPrice}</p>
         </div>
         <Link
-          to=""
+          to={`/single-auction-detail/${id}`}
           className=" bg-theme-color hover:bg-color-danger text-white text-sm font-bold  rounded-md my-auto px-3 py-2  text-center no-underline"
         >
           Place Bid

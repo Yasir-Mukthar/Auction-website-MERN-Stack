@@ -241,7 +241,7 @@ console.log("categoreik   ",categories)
 
           <button
             type="submit"
-            className="w-full py-3 my-5 rounded-lg outline-none "
+            className="w-full py-3 my-5 rounded-lg outline-none bg-theme-bg text-white"
           >
             Upload
           </button>
