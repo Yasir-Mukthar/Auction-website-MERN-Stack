@@ -15,6 +15,7 @@ import ChangePassword from './pages/auth/ChangePassword'
 import UploadItem from './pages/UploadItem'
 import Dashboard from './pages/Dashboard'
 import SingleAuctionDetail from './pages/SingleAuctionDetail'
+import UserProfile from './pages/UserProfile'
 
 
 const App = () => {
@@ -32,9 +33,11 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPassword  />} />
         <Route path="/reset-password/:id/:token" element={<ResetNewPassword  />} />
         <Route path="/change-password" element={<ChangePassword />} />
-        <Route path="/upload-item" element={<UploadItem />} />
+        <Route path="/create-auction" element={<UploadItem />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path='/single-auction-detail/:id' element={<SingleAuctionDetail />} />
+        <Route path="/user-profile/*" element={<UserProfile />} />        
+        <Route path='*' element={<h1>Not Found</h1>} />
 
 
       </Routes>
