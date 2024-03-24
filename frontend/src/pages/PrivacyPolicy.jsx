@@ -70,13 +70,13 @@ const PrivacyPolicy = () => {
                 <span className="font-semibold">
                   To provide and improve our services:
                 </span>{" "}
-                 We use your information to allow you to participate in
+                We use your information to allow you to participate in
                 auctions, process your transactions, send you auction
                 notifications, and provide customer support.
               </li>
               <li>
                 <span className="font-semibold">
-                  To personalize your experience: {" "}
+                  To personalize your experience:{" "}
                 </span>
                 We use your information to personalize your experience on our
                 website, such as by recommending auctions you might be
@@ -84,17 +84,17 @@ const PrivacyPolicy = () => {
               </li>
               <li>
                 <span className="font-semibold">
-                  To send you marketing communications:  {" "}
+                  To send you marketing communications:{" "}
                 </span>
-                We may use your contact information to send you marketing
+                We may use your contact information to send you marketing
                 communications, such as newsletters and promotional offers. You
                 can opt out of receiving these communications at any time.
               </li>
               <li>
                 <span className="font-semibold">
-                  To send you marketing communications:  {" "}
+                  To send you marketing communications:{" "}
                 </span>
-                We may use your contact information to send you marketing
+                We may use your contact information to send you marketing
                 communications, such as newsletters and promotional offers. You
                 can opt out of receiving these communications at any time.
               </li>
