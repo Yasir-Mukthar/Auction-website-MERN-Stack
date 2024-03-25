@@ -1,9 +1,114 @@
-import React from 'react'
-
+import React from "react";
+import { FaUserPlus } from "react-icons/fa6";
+import { FaRegEdit } from "react-icons/fa";
 const ProfileComponent = () => {
   return (
-    <div className='text-white bg-green-800 w-60'>profile page <br />Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt perspiciatis ea sint recusandae itaque officia totam asperiores commodi natus corporis ullam autem vitae praesentium voluptatem laudantium similique vel eligendi animi error repudiandae, quam eos tenetur quibusdam! Architecto expedita laborum dolorem quis quibusdam consequuntur suscipit cum alias repellendus! Minima odio itaque similique harum saepe, aut maxime culpa nam atque consequuntur nisi alias eligendi, sapiente quasi iusto vitae animi. Commodi expedita reprehenderit nulla aspernatur facilis deleniti possimus asperiores illo, inventore vitae perspiciatis aut fuga quo. Commodi exercitationem modi quia dolore officiis repellat quibusdam sit, repellendus corporis dignissimos sequi cum atque labore voluptate dolores. Numquam ipsam doloribus ea dolorem labore harum quisquam necessitatibus repudiandae ullam, reprehenderit tempore dicta qui sapiente, quod voluptatum nam molestiae molestias hic voluptate ducimus modi provident alias! Necessitatibus illo omnis est sint quaerat, quas consequuntur cum dolor? Ducimus accusanit.</div>
-  )
-}
+    <>
+      <div className="flex flex-col gap-4 w-full">
+        <div className="px-7 py-4 w-full bg-theme-bg text-white rounded-3xl">
+          <h2 className=" font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">
+            Profile Summary
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="flex items-center justify-between p-4 rounded-lg border border-border-info-color hover:border-theme-color transition-all">
+              <div>
+                <p className="text-theme-color font-bold text-lg">45.36k</p>
+                <p className="text-body-text-color">Followers</p>
+              </div>
+              <FaUserPlus size={25} />
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-lg border border-border-info-color hover:border-theme-color transition-all">
+              <div>
+                <p className="text-theme-color font-bold text-lg">15.36k</p>
+                <p className="text-body-text-color">Followed</p>
+              </div>
+              <FaUserPlus size={25} />
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-lg border border-border-info-color hover:border-theme-color transition-all">
+              <div>
+                <p className="text-theme-color font-bold text-lg">5.18k</p>
+                <p className="text-body-text-color">Liked</p>
+              </div>
+              <FaUserPlus size={25} />
+            </div>
+            <div className="flex items-center justify-between p-4 rounded-lg border border-border-info-color hover:border-theme-color transition-all">
+              <div>
+                <p className="text-theme-color font-bold text-lg">45.25 ETH</p>
+                <p className="text-body-text-color">Balance</p>
+              </div>
+              <FaUserPlus size={25} />
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-4 lg:flex-nowrap">
+          <div className="px-7 py-4 w-full bg-theme-bg text-white rounded-3xl">
+            <div className="font-bold flex justify-between items-center border-b border-border-info-color pb-3 mb-5 ">
+              <h2 className="text-xl ">Personal Info</h2>
+              <button className=" flex items-center gap-1 px-4 py-2 bg-theme-color rounded-xl">
+                <FaRegEdit size={16} /> <span>Edit</span>
+              </button>
+            </div>
+            <ul className="flex flex-col gap-2 font-medium text-body-text-color">
+              <li>
+                Name:{" "}
+                <span className="float-right font-normal">Alan Bratten</span>
+              </li>
+              <li>
+                Username:{" "}
+                <span className="float-right font-normal">@bratten65</span>
+              </li>
+              <li>
+                Email:{" "}
+                <span className="float-right font-normal">
+                  info@example.com
+                </span>
+              </li>
+              <li>
+                Phone:{" "}
+                <span className="float-right font-normal">
+                  +02 123 4567 789
+                </span>
+              </li>
+              <li>
+                Gender: <span className="float-right font-normal">Male</span>
+              </li>
+              <li>
+                Date of Birth:{" "}
+                <span className="float-right font-normal">25/10/1995</span>
+              </li>
+              <li>
+                Location:{" "}
+                <span className="float-right font-normal">New York, USA</span>
+              </li>
+              <li>
+                Join Date:{" "}
+                <span className="float-right font-normal">August 15, 2020</span>
+              </li>
+            </ul>
+          </div>
+          <div className="px-7 py-4 w-full bg-theme-bg text-white rounded-3xl">
+            <div className="font-bold flex justify-between items-center border-b border-border-info-color pb-3 mb-5 ">
+              <h2 className="text-xl ">Your Bio</h2>
+              <button className=" flex items-center gap-1 px-4 py-2 bg-theme-color rounded-xl">
+                <FaRegEdit size={16} /> <span>Edit</span>
+              </button>
+            </div>
+            <p className="text-body-text-color">
+              There are many variations of passages available but the majority
+              have suffered alteration in some form, by injected humour, or
+              randomised words which don't look even slightly believable.
+              Majority have suffered alteration in some form by injected humour
+              randomised words which even slightly believable are many
+              variations of passages of Lorem Ipsum available, but the majority
+              have suffered alteration in some form, by injected humour, or
+              randomised words are many variations of passages available but the
+              majority have suffered alteration words.
+            </p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
-export default ProfileComponent
+export default ProfileComponent;
