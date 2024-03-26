@@ -21,6 +21,7 @@ import userRouter from "./routes/user.routes.js";
 import productCategoryRouter from "./routes/productCategory.routes.js";
 import auctionRouter from "./routes/auction.routes.js";
 import cityRouter from "./routes/city.routes.js";
+import bidRouter from "./routes/bid.routes.js";
 
 
 
@@ -30,6 +31,7 @@ app.use("/api/v1/users",userRouter);
 app.use("/api/v1/product-categories",productCategoryRouter);
 app.use("/api/v1/auctions",auctionRouter);
 app.use("/api/v1/cities",cityRouter);
+app.use("/api/v1/bids",bidRouter);
 
 
 

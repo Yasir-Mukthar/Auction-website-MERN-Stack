@@ -13,3 +13,21 @@
 body{
     background-color: #061224;
 }
+.no-scrollbar::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .no-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px; /* Add this line */
+
+  }
+  
+  .no-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #0E294D;
+    border-radius: 5px; /* Add this line */
+  }
+  
+  .no-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #29B6F6;
+  }

@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import Auction from "../models/auction.model.js";
+import mongoose from "mongoose";
 
 
 // name: { type: String, required: true },
@@ -131,7 +132,7 @@ const getAllAuctions = asyncHandler(async (req, res) => {
     if (itemName) {
       filter.name = { $regex: itemName, $options: "i" };
     }
-
+console.log(filter,"filter ......");
     const auctions = await Auction.find(filter);
 
     // const auctions = await Auction.find()
@@ -163,9 +164,18 @@ console.log("single auction getting...");
     // const auction = await Auction.findById(req.params.id).populate("category").populate("seller").populate("bids").populate("winner").populate("reviews");
 
     //he is asking bids schema is not defined but i make a model for bid schema and also i make a model for review schema   
-     const auction = await Auction.findById(req.params.id).populate("category", "name").populate("seller", "fullName email phone profilePicture").populate("bids", "amount").populate("winner", "amount").populate("location", "name")
+     const auction = await Auction.findById(req.params.id).populate("category", "name").populate("location","name").populate("seller", "fullName email phone location profilePicture").populate("bids").populate("winner", "amount").populate("bids","bidder bidAmount bidTime").populate({
+      path: 'bids',
+      populate: {
+        path: 'bidder',
+        select: 'fullName email profilePicture'
+      }
+    })
 
-    // const auction = await Auction.findById(req.params.id).populate("category", "name").populate("seller", "fullName email phone location").populate("bids", "amount").populate("winner", "amount").populate("reviews", "comment rating")
+    //how to populate bidder in bids
+
+
+    // const auction = await Auction.findById(req.params.id).populate("category", "name").populate("seller", "fullName email phone location").populate("bids", "amount").populate("winner", "amount").populate("reviews", "comment rating") .populate("category", "name").populate("seller", "fullName email phone profilePicture").populate("bids").populate("bidder").populate("winner", "amount").populate("location", "name")
 
     if (!auction) {
       return res.status(404).json(new ApiResponse(404, "Auction not found"));
