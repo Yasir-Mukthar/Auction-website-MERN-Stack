@@ -47,13 +47,15 @@ useEffect(() => {
                  key={index}
                   className=" m-2 flex flex-wrap gap-1">
                 <SingleAuction
-                name={item.name}
-                startingPrice={item.startingPrice}
-                image={item.image}
-                endTime={item.endTime}
-                startTime={item.startTime}
-                id={item._id}
-                status={item.status}
+                name={item?.name}
+                startingPrice={item?.startingPrice}
+                image={item?.image}
+                endTime={item?.endTime}
+                startTime={item?.startTime}
+                id={item?._id}
+                status={item?.status}
+                sellerImage={item?.seller?.profilePicture}
+                sellerName={item?.seller?.fullName}
                   />
                
                

@@ -133,7 +133,7 @@ const getAllAuctions = asyncHandler(async (req, res) => {
       filter.name = { $regex: itemName, $options: "i" };
     }
 console.log(filter,"filter ......");
-    const auctions = await Auction.find(filter);
+    const auctions = await Auction.find(filter).populate("seller","fullName email phone location profilePicture")
 
     // const auctions = await Auction.find()
 

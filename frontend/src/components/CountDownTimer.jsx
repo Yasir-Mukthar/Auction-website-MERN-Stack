@@ -6,14 +6,19 @@ const CountDownTimer = (props) => {
   const startTime = new Date(props.startTime).getTime();
   const endTime = new Date(props.endTime).getTime();
 
+  const selectAuctionWinner = () => {
+    console.log("Auction Ended!");
+
+  }
+
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if (completed) {
       // Render a completed state
       return <span>Auction Ended!</span>;
     } else if (currentTime < startTime) {
       // Render a countdown to start time
-      return <span>Auction starts at 
-        {new Date(startTime).toLocaleString()}
+      return <span>Auction starts at  
+        {"" + new Date(startTime).toLocaleString()}
       </span>;
     } else {
       // Render a countdown to end time
@@ -27,7 +32,7 @@ const CountDownTimer = (props) => {
 
   return (
     <div>
-      <Countdown date={endTime} renderer={renderer} />
+      <Countdown date={endTime} renderer={renderer} onComplete={selectAuctionWinner} />
     </div>
   );
 };

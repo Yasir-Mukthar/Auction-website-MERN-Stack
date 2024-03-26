@@ -5,6 +5,12 @@ import { getSingleAuctionById } from "../store/auction/auctionSlice";
 import CountDownTimer from "../components/CountDownTimer";
 import BidCard from "../components/BidCard";
 import { placeABid } from "../store/bid/bidSlice";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
+
+
 
 
 const SingleAuctionDetail = () => {
@@ -33,23 +39,28 @@ const SingleAuctionDetail = () => {
     return null; // or handle the case when singleAuction is undefined
   }
 
-
-
-
-
-
   const placeBidHandle = (e) => {
     e.preventDefault();
+
     let bidData = {
       id: params.id,
       amount: newBidAmount,
+    };
+    if(newBidAmount <= singleAuction?.startingPrice){
+      toast.info('Bid amount should be greater than the currnt bid')
+      console.log(new Date().getTime() / 1000 + ' seconds');
+    }else if( singleAuction?.endTime < new Date().getTime() / 1000 ){
+      toast.info('Auction time is over')
+    }
+    else{
+      dispatch(placeABid(bidData));
+      setNewBidAmount("");
+      setActiveTab("bids");
     }
 
-console.log(newBidAmount, "newBidAmount");
-    dispatch(placeABid(bidData));
+    
   };
 
-  
   // Rest of your code
 
   return (
@@ -165,9 +176,13 @@ console.log(newBidAmount, "newBidAmount");
             {/* here i want to show users who bids and their amount and time of bid */}
 
             {/* map over bids array */}
-            {singleAuction?.bids?.length > 0 ? singleAuction?.bids?.map((bid) => (
-              <BidCard key={bid._id} bid={bid} />
-            )) :  <h1 className="text-white">No bids yet</h1>}
+            {singleAuction?.bids?.length > 0 ? (
+              singleAuction?.bids?.map((bid) => (
+                <BidCard key={bid._id} bid={bid} />
+              ))
+            ) : (
+              <h1 className="text-white">No bids yet</h1>
+            )}
           </div>
 
           {/* History */}
@@ -195,50 +210,7 @@ console.log(newBidAmount, "newBidAmount");
           {/* property */}
           {/* <span className="font-medium ">Property</span> */}
           {/* property wrap */}
-          {/* <div className="flex flex-wrap gap-2.5 pt-4">
-        <div className="flex flex-col py-1 px-4 rounded-2xl border border-border-info-color bg-theme-bg">
-          <span className="text-theme-color py-1">background</span>
-          <h6 className="font-medium">navy Blue</h6>
-          <p className="text-body-text-color normal-case">
-            5% have this trait
-          </p>
-        </div>
-        <div className="flex flex-col py-1 px-4 rounded-2xl border border-border-info-color bg-theme-bg">
-          <span className="text-theme-color py-1">mouth grade</span>
-          <h6 className="font-medium">Fresh</h6>
-          <p className="text-body-text-color normal-case">
-            3% have this trait
-          </p>
-        </div>
-        <div className="flex flex-col py-1 px-4 rounded-2xl border border-border-info-color bg-theme-bg">
-          <span className="text-theme-color py-1">head</span>
-          <h6 className="font-medium">Bowlcut</h6>
-          <p className="text-body-text-color normal-case">
-            8% have this trait
-          </p>
-        </div>
-        <div className="flex flex-col py-1 px-4 rounded-2xl border border-border-info-color bg-theme-bg">
-          <span className="text-theme-color py-1">body</span>
-          <h6 className="font-medium">red</h6>
-          <p className="text-body-text-color normal-case">
-            6% have this trait
-          </p>
-        </div>
-        <div className="flex flex-col py-1 px-4 rounded-2xl border border-border-info-color bg-theme-bg">
-          <span className="text-theme-color py-1">accessory</span>
-          <h6 className="font-medium">metal headband</h6>
-          <p className="text-body-text-color normal-case">
-            5% have this trait
-          </p>
-        </div>
-        <div className="flex flex-col py-1 px-4 rounded-2xl border border-border-info-color bg-theme-bg">
-          <span className="text-theme-color py-1">skin</span>
-          <h6 className="font-medium">dark brown</h6>
-          <p className="text-body-text-color normal-case">
-            9% have this trait
-          </p>
-        </div>
-      </div> */}
+         
         </div>
 
         {/* countdown timer */}
@@ -280,14 +252,17 @@ console.log(newBidAmount, "newBidAmount");
             />
             {logInUser ? (
               <button
-              type="submit"
-              disabled={
-                singleAuction?.seller?._id === logInUser?._id ? true : false
-              }
-                className={`bg-color-primary py-2 px-4 rounded-lg cursor-pointer text-white ${singleAuction?.seller?._id === logInUser?._id ? "bg-theme-bg2 text-body-text-color" 
-                : "bg-color-primary "} `}
+                type="submit"
+                disabled={
+                  singleAuction?.seller?._id === logInUser?._id ? true : false
+                }
+                className={`bg-color-primary py-2 px-4 rounded-lg cursor-pointer text-white ${
+                  singleAuction?.seller?._id === logInUser?._id
+                    ? "bg-theme-bg2 text-body-text-color"
+                    : "bg-color-primary "
+                } `}
               >
-                Place Bid 
+                Place Bid
               </button>
             ) : (
               <Link
