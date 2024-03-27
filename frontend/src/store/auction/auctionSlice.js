@@ -43,6 +43,18 @@ export const getSingleAuctionById = createAsyncThunk(
   }
 )
 
+export const updateAuctionStatus = createAsyncThunk(
+  'auction/updateAuctionStatus', async (payload, thunkAPI) => {
+    //directly chnage status
+    try {
+      return await auctionService.updateAuctionStatus(payload);
+    } catch (error) {
+      const message = (error.response && error.response.data.message) || error.message;
+      return thunkAPI.rejectWithValue({ message, isError: true });
+    }
+  }
+)
+
 const initialState = {
   auction: [
     
