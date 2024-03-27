@@ -85,7 +85,7 @@ const getAllProductCategories = async ( req, res) => {
         const productCategories = await ProductCategory.find();
         res.status(200).json(new ApiResponse(200, "Product categories retrieved successfully", productCategories));
     } catch (err) {
-        throw new ApiError(500, err?.message || "Internal server error");
+        return res.status(500).json(new ApiResponse(500, err?.message || "Internal server error"));
     }
 };
 

@@ -8,11 +8,6 @@ import { placeABid } from "../store/bid/bidSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
-
-
-
-
 const SingleAuctionDetail = () => {
   const [newBidAmount, setNewBidAmount] = useState("");
   const logInUser = JSON.parse(localStorage.getItem("user"));
@@ -21,6 +16,20 @@ const SingleAuctionDetail = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const { singleAuction, isLoading } = useSelector((state) => state.auction);
+  const [auctionStarted, setAuctionStarted] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const currentTime = new Date().getTime();
+      const auctionStartTime = new Date(singleAuction?.startTime).getTime();
+
+      if (currentTime >= auctionStartTime) {
+        setAuctionStarted(true);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [singleAuction?.startTime]);
 
   console.log(params.id);
   console.log(singleAuction);
@@ -46,19 +55,16 @@ const SingleAuctionDetail = () => {
       id: params.id,
       amount: newBidAmount,
     };
-    if(newBidAmount <= singleAuction?.startingPrice){
-      toast.info('Bid amount should be greater than the currnt bid')
-      console.log(new Date().getTime() / 1000 + ' seconds');
-    }else if( singleAuction?.endTime < new Date().getTime() / 1000 ){
-      toast.info('Auction time is over')
-    }
-    else{
+    if (newBidAmount <= singleAuction?.startingPrice) {
+      toast.info("Bid amount should be greater than the currnt bid");
+      console.log(new Date().getTime() / 1000 + " seconds");
+    } else if (singleAuction?.endTime < new Date().getTime() / 1000) {
+      toast.info("Auction time is over");
+    } else {
       dispatch(placeABid(bidData));
       setNewBidAmount("");
       setActiveTab("bids");
     }
-
-    
   };
 
   // Rest of your code
@@ -184,33 +190,12 @@ const SingleAuctionDetail = () => {
               <h1 className="text-white">No bids yet</h1>
             )}
           </div>
-
-          {/* History */}
-          {/* <div
-          id="history"
-          className={`pt-4 border-t border-border-info-color ${
-            activeTab === "history" ? "block" : "hidden"
-          }`}
-        ></div> */}
         </div>
-        {/* Owner*/}
-        {/* <div
-      id="author-item"
-      className="pt-4 border-t border-border-info-color text-heading-color"
-    >
-      <span className="font-medium capitalize ">Owner</span>
-      <div id="author-info" className="flex items-center gap-2 pt-2">
-        <img src={avatar3} alt="" className="w-[45px] rounded-full" />
-        <a href="#" className="font-medium">
-          @donel_tryon
-        </a>
-      </div>
-    </div> */}
+
         <div className="text-heading-color capitalize">
           {/* property */}
           {/* <span className="font-medium ">Property</span> */}
           {/* property wrap */}
-         
         </div>
 
         {/* countdown timer */}
@@ -254,10 +239,16 @@ const SingleAuctionDetail = () => {
               <button
                 type="submit"
                 disabled={
-                  singleAuction?.seller?._id === logInUser?._id ? true : false
+                  singleAuction?.seller?._id === logInUser?._id
+                    ? true
+                    : false || !auctionStarted
                 }
                 className={`bg-color-primary py-2 px-4 rounded-lg cursor-pointer text-white ${
                   singleAuction?.seller?._id === logInUser?._id
+                    ? "bg-theme-bg2 text-body-text-color"
+                    : "bg-color-primary "
+                } ${
+                  !auctionStarted
                     ? "bg-theme-bg2 text-body-text-color"
                     : "bg-color-primary "
                 } `}

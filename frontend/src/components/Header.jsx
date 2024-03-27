@@ -54,24 +54,60 @@ const Header = () => {
         )}
       </div>
 
-
-      {
-        user && sidebarOpen ? (
-          <div className={`${sidebarOpen ? 'block' : 'hidden'} rounded-sm  absolute right-12 top-16 mt-[4px] bg-body-bg z-50   w-[200px]`}>
-        <nav className="pt-5">
-          <Link to="/user-profile/profile" className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light">Profile</Link>
-          <Link to="" className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light">Manage Items</Link>
-          <Link to="" className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light">Contact</Link>
-        {
-            user && user.userType === "seller" ? (
-              <Link to="/create-auction" className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light">Upload items</Link>
-            ): null
-          }
-          <Link to="/change-password" className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light">Change Password</Link>  
-          <Link onClick={logoutHandle} className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light">Logout</Link>  
-          
-
-        </nav>
+      {user && sidebarOpen ? (
+        <div
+          className={`${
+            sidebarOpen ? "block" : "hidden"
+          } rounded-sm  absolute right-12 top-16 mt-[4px] bg-body-bg z-50   w-[200px]`}
+        >
+          <nav className="pt-5">
+            <Link
+              to="/user-profile/profile"
+              className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light"
+              onClick={() => setSidebarOpen(false)}
+            >
+              Profile
+            </Link>
+            <Link
+              to=""
+              className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light"
+              onClick={() => setSidebarOpen(false)}
+            >
+              Manage Items
+            </Link>
+            <Link
+              to=""
+              className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light"
+              onClick={() => setSidebarOpen(false)}
+            >
+              Contact
+            </Link>
+            {user && user.userType === "seller" ? (
+              <Link
+                to="/create-auction"
+                className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light"
+                onClick={() => setSidebarOpen(false)}
+              >
+                Upload items
+              </Link>
+            ) : null}
+            <Link
+              to="/change-password"
+              className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light"
+              onClick={() => setSidebarOpen(false)}
+            >
+              Change Password
+            </Link>
+            <Link
+              onClick={() => {
+                logoutHandle();
+                setSidebarOpen(false);
+              }}
+              className="block no-underline text-white font-Roboto text-lg py-2 px-4 hover:bg-theme-bg-light"
+            >
+              Logout
+            </Link>
+          </nav>
         </div>
       ) : null}
     </div>

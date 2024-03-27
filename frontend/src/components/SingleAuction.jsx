@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
 import CountDownTimer from "../components/CountDownTimer";
+import { useEffect, useState } from "react";
 
 const SingleAuction = ({ name, startingPrice, image, endTime, startTime , id ,status,sellerImage, sellerName}) => {
+  
+ 
+
+
+
   return (
     <div className=" bg-theme-bg rounded-lg flex flex-col p-3  text-white  ">
       <div className="w-80 h-80  rounded-md relative bg-white ">
