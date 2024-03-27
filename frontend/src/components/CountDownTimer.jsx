@@ -1,11 +1,14 @@
 
 import { useEffect, useState } from 'react';
 import Countdown from 'react-countdown';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateAuctionStatus } from "../store/auction/auctionSlice";
 
 const CountDownTimer = (props) => {
   const currentTime = new Date().getTime();
   const startTime = new Date(props.startTime).getTime();
   const endTime = new Date(props.endTime).getTime();
+  const dispatch = useDispatch();
 
   const [auctionStarted, setAuctionStarted] = useState(false);
 
@@ -28,8 +31,9 @@ const CountDownTimer = (props) => {
 
   }
 
-  const changeAuctionStatus = () => {
-    console.log("Auction Started!");
+  const handleChangeAuctionStatus = () => {
+    dispatch(updateAuctionStatus({ id: props?.id, status: "active" }));
+
   }
 
 
@@ -55,7 +59,7 @@ const CountDownTimer = (props) => {
 
   return (
     <div>
-      <Countdown date={endTime} renderer={renderer} onComplete={selectAuctionWinner} onStart={changeAuctionStatus} />
+      <Countdown date={endTime} renderer={renderer} onComplete={selectAuctionWinner} onStart={handleChangeAuctionStatus} />
     </div>
   );
 };

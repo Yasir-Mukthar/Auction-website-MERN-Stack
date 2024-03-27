@@ -16,12 +16,12 @@ const Footer = () => {
           </Link>
           <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-white list-none">
             <li>
-              <Link to="" className=" me-4 md:me-6 text-white no-underline hover:text-theme-color">
+              <Link to="/about-us" className=" me-4 md:me-6 text-white no-underline hover:text-theme-color">
                 About
               </Link>
             </li>
             <li>
-              <Link to="" className=" me-4 md:me-6 text-white no-underline  hover:text-theme-color">
+              <Link to="/privacy-policy" className=" me-4 md:me-6 text-white no-underline  hover:text-theme-color">
                 Privacy Policy
               </Link>
             </li>
@@ -31,7 +31,7 @@ const Footer = () => {
               </Link>
             </li>
             <li>
-              <Link to="" className=" text-white no-underline  hover:text-theme-color">
+              <Link to="/contact-us" className=" text-white no-underline  hover:text-theme-color">
                 Contact
               </Link>
             </li>

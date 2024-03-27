@@ -48,12 +48,31 @@ const getSingleAuctionById = async (id) => {
 };
 
 
+//update auction status
+
+const updateAuctionStatus = async (data) => {
+    try {
+        console.log('data updateAuctionStatus', data);
+        const response = await axios.post(`${API_URL}/auctions/${data.id}/status`, {status:data.status}, {withCredentials: true});
+        console.log('response updateAuctionStatus', response.data);
+        return response.data;
+
+    } catch (error) {
+        const message =
+            (error.response && error.response.data.message) || error.message;
+        console.error("Error with updateAuctionStatus", error);
+        return { message, isError: true };
+    }
+}
+
+
 
 
 const auctionService = {
  createAuction
     ,getAllAuctions
     ,getSingleAuctionById
+    ,updateAuctionStatus
 }
 
 export default auctionService;

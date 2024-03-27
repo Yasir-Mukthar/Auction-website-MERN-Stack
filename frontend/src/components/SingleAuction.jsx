@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import CountDownTimer from "../components/CountDownTimer";
 import { useEffect, useState } from "react";
 
+// eslint-disable-next-line react/prop-types
 const SingleAuction = ({ name, startingPrice, image, endTime, startTime , id ,status,sellerImage, sellerName}) => {
   
  
@@ -17,7 +18,7 @@ const SingleAuction = ({ name, startingPrice, image, endTime, startTime , id ,st
           alt="item image"
         />
         <div className="absolute bottom-3 right-3 border-[0.5px] border-color-primary border-solid rounded-full py-1 px-3 text-sm bg-gray-950 bg-opacity-[0.8] ">
-          <CountDownTimer startTime={startTime} endTime={endTime} status={status}/>
+          <CountDownTimer startTime={startTime} endTime={endTime} status={status} id={id}/>
         </div>
       </div>
       <h3 className="my-3">{name}</h3>
@@ -33,7 +34,22 @@ const SingleAuction = ({ name, startingPrice, image, endTime, startTime , id ,st
           <h3 className="text-sm">{sellerName}</h3>
         </div>
       </div>
-      <div className="flex justify-between item-center my-2">
+
+      
+      {/* show the winner of auction */}
+
+      {status === "over" ? <div className="flex justify-between item-center my-2">
+        <div className="flex flex-col ">
+          <p className="font-bold text-[12px]">Winner</p>
+          <p className="font-bold mt-2">John Doe</p>
+        </div>
+        <Link
+          to={`/single-auction-detail/${id}`}
+          className=" bg-theme-color hover:bg-color-danger text-white text-sm font-bold  rounded-md my-auto px-3 py-2  text-center no-underline" 
+        >
+          View Winner
+        </Link>
+      </div> : <div className="flex justify-between item-center my-2">
         <div className="flex flex-col ">
           <p className="text-[12px]">Current Bid</p>
           <p className="mt-2">$ {startingPrice}</p>
@@ -44,7 +60,9 @@ const SingleAuction = ({ name, startingPrice, image, endTime, startTime , id ,st
         >
           Place Bid
         </Link>
-      </div>
+      </div> }
+      
+
     </div>
   );
 };

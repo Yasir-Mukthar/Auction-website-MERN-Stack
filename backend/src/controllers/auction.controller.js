@@ -5,7 +5,6 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import Auction from "../models/auction.model.js";
 import mongoose from "mongoose";
 
-
 // name: { type: String, required: true },
 //   description: { type: String },
 //   category: { type: mongoose.Schema.Types.ObjectId, ref: "ProductCategory", required: true},
@@ -120,10 +119,7 @@ const createAuction = asyncHandler(async (req, res) => {
 
 const getAllAuctions = asyncHandler(async (req, res) => {
   try {
-    // const auctions = await Auction.find().populate("category", "name").populate("seller", "fullName email phone location").populate("bids", "amount").populate("winner", "amount").populate("reviews", "comment rating")
-
-    //if i have filters i can use the below code
-
+    
     const { location, category, itemName } = req.body;
     console.log(req.body, "req.body");
     let filter = {};
@@ -132,10 +128,11 @@ const getAllAuctions = asyncHandler(async (req, res) => {
     if (itemName) {
       filter.name = { $regex: itemName, $options: "i" };
     }
-console.log(filter,"filter ......");
-    const auctions = await Auction.find(filter).populate("seller","fullName email phone location profilePicture")
-
-    // const auctions = await Auction.find()
+    console.log(filter, "filter ......");
+    const auctions = await Auction.find(filter).populate(
+      "seller",
+      "fullName email phone location profilePicture"
+    );
 
     if (!auctions) {
       return res.status(404).json(new ApiResponse(404, "No auctions found"));
@@ -157,38 +154,61 @@ console.log(filter,"filter ......");
 // @route GET /api/v1/auctions/:id
 // @access Public
 
-
-const getSingleAuctionById= asyncHandler(async (req, res) => {
+const getSingleAuctionById = asyncHandler(async (req, res) => {
   try {
-console.log("single auction getting...");
-    // const auction = await Auction.findById(req.params.id).populate("category").populate("seller").populate("bids").populate("winner").populate("reviews");
+    console.log("single auction getting...");
 
-    //he is asking bids schema is not defined but i make a model for bid schema and also i make a model for review schema   
-     const auction = await Auction.findById(req.params.id).populate("category", "name").populate("location","name").populate("seller", "fullName email phone location profilePicture").populate("bids").populate("winner", "amount").populate("bids","bidder bidAmount bidTime").populate({
-      path: 'bids',
-      populate: {
-        path: 'bidder',
-        select: 'fullName email profilePicture'
-      }
-    })
-
-    //how to populate bidder in bids
-
-
-    // const auction = await Auction.findById(req.params.id).populate("category", "name").populate("seller", "fullName email phone location").populate("bids", "amount").populate("winner", "amount").populate("reviews", "comment rating") .populate("category", "name").populate("seller", "fullName email phone profilePicture").populate("bids").populate("bidder").populate("winner", "amount").populate("location", "name")
+    const auction = await Auction.findById(req.params.id)
+      .populate("category", "name")
+      .populate("location", "name")
+      .populate("seller", "fullName email phone location profilePicture")
+      .populate("bids")
+      .populate("winner", "amount")
+      .populate("bids", "bidder bidAmount bidTime")
+      .populate({
+        path: "bids",
+        populate: {
+          path: "bidder",
+          select: "fullName email profilePicture",
+        },
+      });
 
     if (!auction) {
       return res.status(404).json(new ApiResponse(404, "Auction not found"));
     }
 
-    return res.json(new ApiResponse(200, "Auction retrieved successfully", auction));
+    return res.json(
+      new ApiResponse(200, "Auction retrieved successfully", auction)
+    );
   } catch (error) {
     // Handle the error
-    return res.status(500).json(new ApiResponse(500, error?.message || "Internal server error"));
+    return res
+      .status(500)
+      .json(new ApiResponse(500, error?.message || "Internal server error"));
+  }
+});
+
+// @desc Update auction status
+// @route POST /api/v1/auctions/:id/status
+// @access public
+
+const updateAuctionStatus=asyncHandler(async(req,res)=>{
+  try {
+    const auction=await Auction.findById(req.params.id);
+    if(!auction){
+      return res.status(404).json(new ApiResponse(404,"Auction not found"));
+    }
+    auction.status=req.body.status;
+    await auction.save();
+    return res.json(new ApiResponse(200,"Auction status updated successfully",auction));
+  } catch (error) {
+    return res.status(500).json(new ApiResponse(500,error?.message||"Internal server error"));
   }
 });
 
 export { 
   createAuction, 
-  getAllAuctions,
-  getSingleAuctionById};
+  getAllAuctions, 
+  getSingleAuctionById,
+  updateAuctionStatus
+};
