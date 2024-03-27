@@ -1,41 +1,78 @@
-import {Link} from 'react-router-dom'
-
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <div className='w-[20%]'>
-        <div className="sidebar text-white bg-red-300">
-           
-            <ul className="list-unstyled components">
-            <li>
-                <Link to="/user-profile/profile">Profile</Link>
-            </li>
-            <li>
-                <Link to="/user-profile/manage-items">Manage Items</Link>
-            </li>
-            <li>
-                <Link to="/create-auction">Create Auction</Link>
-            </li>
-            <li>
-                <Link to="/user-profile/bids-items">Bids Items</Link>
-            </li>
-            <li>
-                <Link to="/user-profile/notifications">Notifications</Link>
-            </li>
-            <li>
-                <Link to="/user-profile/account-settings">Account Settings</Link>
-            </li>
-            <li>
-                <Link to="/user-profile/change-password">Change Password</Link>
-            </li>
-            <li>
-                <Link to="/user-profile/logout">Logout</Link>
-            </li>
-            </ul>
-        </div>
-    
+    <div className="w-full lg:w-[35%] min-w-[250px]">
+      <div className="text-white bg-theme-bg p-5 rounded-3xl">
+        <ul className="list-unstyled components flex flex-col gap-1 font-medium">
+          <li>
+            <Link
+              className="flex  py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500"
+              to="/user-profile/profile"
+            >
+              Profile
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="flex  py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500"
+              to="/user-profile/manage-items"
+            >
+              Manage Items
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="flex  py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500"
+              to="/create-auction"
+            >
+              Create Auction
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="flex  py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500"
+              to="/user-profile/bids-items"
+            >
+              Bids Items
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="flex  py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500"
+              to="/user-profile/notifications"
+            >
+              Notifications
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="flex  py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500"
+              to="/user-profile/account-settings"
+            >
+              Account Settings
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="flex  py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500"
+              to="/user-profile/change-password"
+            >
+              Change Password
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="flex py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500"
+              to="/user-profile/logout"
+            >
+              Logout
+            </Link>
+          </li>
+        </ul>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
