@@ -17,7 +17,7 @@ const {user,isLoading, isError, isSuccess, message} = useSelector(state => state
 useEffect(()=>{
  
   if(user) {
-    navigate("/");
+    navigate("/dashboard");
 
   }
   if(isError){
@@ -27,7 +27,7 @@ useEffect(()=>{
   if(isSuccess){
     toast.success(message);
     dispatch(reset());
-    navigate("/");
+    navigate("/dashboard");
   }
 
   return () => {

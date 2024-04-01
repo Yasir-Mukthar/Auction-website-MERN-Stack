@@ -19,6 +19,8 @@ const userSchema = new mongoose.Schema({
   phone: { type: String },
   address: { type: String },
   city: { type: String },
+  gender: { type: String },
+  description: { type: String },
 
   
   products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
@@ -29,6 +31,9 @@ const userSchema = new mongoose.Schema({
   notifications: [
     { type: mongoose.Schema.Types.ObjectId, ref: "Notification" },
   ],
+},{
+  timestamps:true
+
 });
 
 //compare password method

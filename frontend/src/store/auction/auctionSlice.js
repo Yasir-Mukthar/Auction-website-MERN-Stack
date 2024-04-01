@@ -55,6 +55,17 @@ export const updateAuctionStatus = createAsyncThunk(
   }
 )
 
+export const selectAuctionWinner = createAsyncThunk(
+  'auction/selectAuctionWinner', async (payload, thunkAPI) => {
+
+    try {
+      return await auctionService.selectAuctionWinner(payload);
+    } catch (error) {
+      const message = (error.response && error.response.data.message) || error.message;
+      return thunkAPI.rejectWithValue({ message, isError: true });
+    }
+  })
+
 const initialState = {
   auction: [
     
@@ -133,6 +144,43 @@ const auctionSlice = createSlice({
       state.isSuccess = false;
       state.message = action.payload.message;
     });
+    builder.addCase(updateAuctionStatus.pending, (state) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = "";
+    });
+    builder.addCase(updateAuctionStatus.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = true;
+      state.message = action.payload.message;
+    });
+    builder.addCase(updateAuctionStatus.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.isSuccess = false;
+      state.message = action.payload.message;
+    });
+    builder.addCase(selectAuctionWinner.pending, (state) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = "";
+    });
+    builder.addCase(selectAuctionWinner.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = true;
+      state.message = action.payload.message;
+    });
+    builder.addCase(selectAuctionWinner.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.isSuccess = false;
+      state.message = action.payload.message;
+    });
+    
   },
 });
 

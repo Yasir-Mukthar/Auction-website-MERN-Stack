@@ -132,7 +132,17 @@ const getAllAuctions = asyncHandler(async (req, res) => {
     const auctions = await Auction.find(filter).populate(
       "seller",
       "fullName email phone location profilePicture"
-    );
+    )
+    .populate({
+      path:"winner",
+      
+      populate:{
+        path:"bidder",
+        select:"fullName  profilePicture"
+      }
+
+    })
+
 
     if (!auctions) {
       return res.status(404).json(new ApiResponse(404, "No auctions found"));
@@ -171,7 +181,17 @@ const getSingleAuctionById = asyncHandler(async (req, res) => {
           path: "bidder",
           select: "fullName email profilePicture",
         },
-      });
+      })//populate the winner's information as well bidamount and time
+      
+      .populate({
+        path:"winner",
+        
+        populate:{
+          path:"bidder",
+          select:"fullName  profilePicture"
+        }
+
+      })
 
     if (!auction) {
       return res.status(404).json(new ApiResponse(404, "Auction not found"));
@@ -198,7 +218,17 @@ const updateAuctionStatus=asyncHandler(async(req,res)=>{
     if(!auction){
       return res.status(404).json(new ApiResponse(404,"Auction not found"));
     }
-    auction.status=req.body.status;
+    //check start and now time and update status
+    const now=new Date();
+    
+    if(now<auction.startTime){
+      auction.status="upcoming";
+    }else if(now>auction.startTime && now<auction.endTime){
+      auction.status="active";
+    }else{
+      auction.status="over";
+    }
+
     await auction.save();
     return res.json(new ApiResponse(200,"Auction status updated successfully",auction));
   } catch (error) {

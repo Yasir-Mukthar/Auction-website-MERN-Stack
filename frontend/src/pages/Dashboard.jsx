@@ -22,10 +22,12 @@ const Dashboard = () => {
 
 useEffect(() => {
     dispatch(getAllAuctions())
+    console.log("dispatched");
 }, [])
 
 useEffect(() => {
     if (isSuccess) {
+console.log("dkfkdjkkkkkkkkkkkkkkkkkk");
         setAuctionData(auction)
     } else if (isError) {
         toast.error(message)
@@ -56,6 +58,10 @@ useEffect(() => {
                 status={item?.status}
                 sellerImage={item?.seller?.profilePicture}
                 sellerName={item?.seller?.fullName}
+                winnerFullName={item?.winner?.bidder?.fullName}
+                winnerProfilePicture={item?.winner?.bidder?.profilePicture}
+                winnerBidAmount={item?.winner?.bidAmount}
+                winnerBidTime={item?.winner?.bidTime}
                   />
                
                

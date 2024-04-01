@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch ,useSelector} from "react-redux";
-import { createAuction } from "../store/auction/auctionSlice.js";
+import { createAuction ,reset} from "../store/auction/auctionSlice.js";
 import { getAllCategories } from "../store/category/categorySlice.js";
 import { getAllCities } from "../store/city/citySlice.js";
 import {useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getAllAuctions } from "../store/auction/auctionSlice"
+
 
 
 
@@ -13,7 +15,7 @@ const UploadItem = () => {
   const dispatch = useDispatch();
   const [imgUrl, setImgUrl] = useState("");
   const imgRef = useRef(null);
-  const {isLoading, isError, isSuccess, message} = useSelector(state => state.auction);
+  const {auction, isLoading, isError, isSuccess, message} = useSelector(state => state.auction);
   const {categories} = useSelector(state => state.category);
   const {cities} = useSelector(state => state.city);
   const navigate = useNavigate();
@@ -22,7 +24,7 @@ useEffect(()=>{
     dispatch(getAllCategories())
     dispatch(getAllCities())
 
-},[])
+},[dispatch])
 
   
 console.log("categoreik   ",categories)
@@ -62,7 +64,9 @@ console.log("categoreik   ",categories)
 
     dispatch(createAuction(data));
     toast.success("Auction created successfully");
-navigate("/dashboard")
+    dispatch(getAllAuctions())
+
+dispatch(reset())
 
     
   };

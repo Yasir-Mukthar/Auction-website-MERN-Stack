@@ -65,6 +65,22 @@ const updateAuctionStatus = async (data) => {
     }
 }
 
+const selectAuctionWinner = async (data) => {
+    try {
+        console.log('data selectAuctionWinner', data);
+        const response = await axios.get(`http://localhost:8000/api/v1/bids/${data.id}/winner`);
+        console.log('response selectAuctionWinner', response.data);
+        return response.data;
+
+    } catch (error) {
+        const message =
+            (error.response && error.response.data.message) || error.message;
+        console.error("Error with selectAuctionWinner", error);
+        return { message, isError: true };
+    }
+
+}
+    
 
 
 
@@ -73,6 +89,7 @@ const auctionService = {
     ,getAllAuctions
     ,getSingleAuctionById
     ,updateAuctionStatus
+    ,selectAuctionWinner
 }
 
 export default auctionService;
