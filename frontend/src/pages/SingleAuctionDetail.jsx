@@ -199,101 +199,104 @@ const SingleAuctionDetail = () => {
         </div>
 
         {/* countdown timer */}
-{
-  singleAuction?.status === "over" ? <></> : <div className="flex flex-col gap-4 pt-4 border-t border-border-info-color">
-  <div className="flex justify-between items-center">
-    <div className="flex flex-col gap-2">
-      <h3 className="text-heading-color font-medium">
-        {" "}
-        {singleAuction?.bids?.length > 0
-          ? "Current Bid"
-          : "Starting Price"}
-      </h3>
-      <p className="text-body-text-color">
-        ${singleAuction?.startingPrice}
-      </p>
-    </div>
-    <div className="flex flex-col gap-2">
-      <h3 className="text-heading-color font-medium">Time Left</h3>
-      <p className="text-body-text-color">
-        <CountDownTimer
-          startTime={singleAuction?.startTime}
-          endTime={singleAuction?.endTime}
-          id={singleAuction?._id}
-        />
-      </p>
-    </div>
-  </div>
-</div>
+        {singleAuction?.status === "over" ? (
+          <></>
+        ) : (
+          <div className="flex flex-col gap-4 pt-4 border-t border-border-info-color">
+            <div className="flex justify-between items-center">
+              <div className="flex flex-col gap-2">
+                <h3 className="text-heading-color font-medium">
+                  {" "}
+                  {singleAuction?.bids?.length > 0
+                    ? "Current Bid"
+                    : "Starting Price"}
+                </h3>
+                <p className="text-body-text-color">
+                  ${singleAuction?.startingPrice}
+                </p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h3 className="text-heading-color font-medium">Time Left</h3>
+                <p className="text-body-text-color">
+                  <CountDownTimer
+                    startTime={singleAuction?.startTime}
+                    endTime={singleAuction?.endTime}
+                    id={singleAuction?._id}
+                  />
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
-}
-        
         {/* // detail about current bid and timer  */}
         <div className=" flex flex-col gap-4 pt-4 border-t border-border-info-color ">
-         {singleAuction?.status === "over" ?  <div>
-            <h1 className="font-bold text-white">Winner</h1>
-            <div className="flex sm:gap-10 items-center border mt-2 justify-between md:w-[80%] py-1 px-2 md:px-5 border-theme-bg-light rounded-full">
-              <div className="flex gap-4 items-center text-white">
-                <img
-                  src={singleAuction?.seller?.profilePicture}
-                  alt="bidder profilePicture"
-                  className="w-10 h-10 rounded-full"
-                />
-                <div className="flex flex-col">
-                  <span className="font-semibold">Yair mukhtar</span>
-                  <span className="text-xs text-body-text-color">
-                    {new Date().toLocaleDateString()} {""}
-                    {new Date().toLocaleTimeString()}
-                  </span>
+          {singleAuction?.status === "over" ? (
+            <div>
+              <h1 className="font-bold text-white">Winner</h1>
+              <div className="flex sm:gap-10 items-center border mt-2 justify-between md:w-[80%] py-1 px-2 md:px-5 border-theme-bg-light rounded-full">
+                <div className="flex gap-4 items-center text-white">
+                  <img
+                    src={singleAuction?.winner?.bidder?.profilePicture}
+                    alt="bidder profilePicture"
+                    className="w-10 h-10 rounded-full"
+                  />
+                  <div className="flex flex-col">
+                    <span className="font-semibold">{singleAuction?.winner?.bidder?.fullName}</span>
+                    <span className="text-xs text-body-text-color">
+                      
+                      { new Date(singleAuction?.winner?.bidTime).toLocaleDateString()} {""}
+                      {`${new Date(singleAuction?.winner?.bidTime).toLocaleTimeString()}`} 
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div className="text-white">Bid Amount : $100</div>
-            </div>{" "}
-          </div>  :  <form
-            className="flex justify-between items-center"
-            onSubmit={placeBidHandle}
-          >
-            {/* input button for bid */}
-            <input
-              type="number"
-              className=" py-3 mt-2 px-2 outline-none border-none rounded-lg"
-              placeholder="Enter your bid"
-              value={newBidAmount}
-              onChange={(e) => setNewBidAmount(e.target.value)}
-              required
-            />
-            {logInUser ? (
-              <button
-                type="submit"
-                disabled={
-                  singleAuction?.seller?._id === logInUser?._id
-                    ? true
-                    : false || !auctionStarted
-                }
-                className={`bg-color-primary py-2 px-4 rounded-lg cursor-pointer text-white ${
-                  singleAuction?.seller?._id === logInUser?._id
-                    ? "bg-theme-bg2 text-body-text-color"
-                    : "bg-color-primary "
-                } ${
-                  !auctionStarted
-                    ? "bg-theme-bg2 text-body-text-color"
-                    : "bg-color-primary "
-                } `}
-              >
-                Place Bid
-              </button>
-            ) : (
-              <Link
-                to="/login"
-                className="bg-color-primary py-2 px-4 rounded-lg cursor-pointer text-white"
-              >
-                Place Bid
-              </Link>
-            )}
-          </form>
-          }
-
-           
+                <div className="text-white">Bid Amount : ${singleAuction?.winner?.bidAmount}</div>
+              </div>{" "}
+            </div>
+          ) : (
+            <form
+              className="flex justify-between items-center"
+              onSubmit={placeBidHandle}
+            >
+              {/* input button for bid */}
+              <input
+                type="number"
+                className=" py-3 mt-2 px-2 outline-none border-none rounded-lg"
+                placeholder="Enter your bid"
+                value={newBidAmount}
+                onChange={(e) => setNewBidAmount(e.target.value)}
+                required
+              />
+              {logInUser ? (
+                <button
+                  type="submit"
+                  disabled={
+                    singleAuction?.seller?._id === logInUser?._id
+                      ? true
+                      : false || !auctionStarted
+                  }
+                  className={`bg-color-primary py-2 px-4 rounded-lg cursor-pointer text-white ${
+                    singleAuction?.seller?._id === logInUser?._id
+                      ? "bg-theme-bg2 text-body-text-color"
+                      : "bg-color-primary "
+                  } ${
+                    !auctionStarted
+                      ? "bg-theme-bg2 text-body-text-color"
+                      : "bg-color-primary "
+                  } `}
+                >
+                  Place Bid
+                </button>
+              ) : (
+                <Link
+                  to="/login"
+                  className="bg-color-primary py-2 px-4 rounded-lg cursor-pointer text-white"
+                >
+                  Place Bid
+                </Link>
+              )}
+            </form>
+          )}
         </div>
       </div>
     </div>

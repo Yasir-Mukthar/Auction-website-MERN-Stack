@@ -80,9 +80,36 @@ export const changeCurrentPassword= createAsyncThunk('auth/changeCurrentPassword
 })
 
 
+export const getCurrentUser= createAsyncThunk('auth/getCurrentUser', async(_, thunkAPI) =>{
+    try {
+        return await authService.getCurrentUser();
+        
+    } catch (error) {
+        const message =(error.response && error.response.data.message) || error.message;
+        console.log(message, "error message")
+        
+        return thunkAPI.rejectWithValue({message,isError:true});
+    }
+    
+})
+
+export const updateProfile= createAsyncThunk('auth/updateProfile', async(payload, thunkAPI) =>{
+    try {
+        return await authService.updateProfile(payload);
+        
+    } catch (error) {
+        const message =(error.response && error.response.data.message) || error.message;
+        console.log(message, "error message")
+        
+        return thunkAPI.rejectWithValue({message,isError:true});
+    }
+    
+})
+
+
 
 const initialState={
-    user:user? user: null,
+    user:user ? user : null,
     isLoading:false,
     isError:false,
     isSuccess:false,
@@ -205,6 +232,40 @@ const authSlice = createSlice({
         state.isError=true;
         state.message=action.payload.message;
     })
+    .addCase(getCurrentUser.pending, (state)=>{
+        state.isLoading=true;
+        state.isError=false;
+        state.isSuccess=false;
+        state.message="";
+    })
+    .addCase(getCurrentUser.fulfilled, (state, action)=>{
+        state.isLoading=false;
+        state.isSuccess=true;
+        state.user=action.payload.data.user;
+    })
+    .addCase(getCurrentUser.rejected, (state, action)=>{
+        state.isLoading=false;
+        state.isError=true;
+        state.message=action.payload.message;
+    })
+    .addCase(updateProfile.pending, (state)=>{
+        state.isLoading=true;
+        state.isError=false;
+        state.isSuccess=false;
+        state.message="";
+    })
+    .addCase(updateProfile.fulfilled, (state, action)=>{
+        state.isLoading=false;
+        state.isSuccess=true;
+        state.message=action.payload.message;
+        state.user=action.payload.data.user;
+    })
+    .addCase(updateProfile.rejected, (state, action)=>{
+        state.isLoading=false;
+        state.isError=true;
+        state.message=action.payload.message;
+            });
+
 
 
     }

@@ -3,10 +3,10 @@ import CountDownTimer from "../components/CountDownTimer";
 import { useEffect, useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-const SingleAuction = ({ name, startingPrice, image, endTime, startTime , id ,status,sellerImage, sellerName}) => {
+const SingleAuction = ({ name, startingPrice, image, endTime, startTime , id ,status,sellerImage, sellerName , winnerFullName,winnerProfilePicture, winnerBidAmount, winnerBidTime}) => {
   
  
-
+  
 
 
   return (
@@ -41,7 +41,7 @@ const SingleAuction = ({ name, startingPrice, image, endTime, startTime , id ,st
       {status === "over" ? <div className="flex justify-between item-center my-2">
         <div className="flex flex-col ">
           <p className="font-bold text-[12px]">Winner</p>
-          <p className="font-bold mt-2">John Doe</p>
+          <p className="font-bold mt-2">{winnerFullName}</p>
         </div>
         <Link
           to={`/single-auction-detail/${id}`}

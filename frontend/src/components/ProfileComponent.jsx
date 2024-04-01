@@ -1,7 +1,32 @@
-import React from "react";
+import { useEffect } from "react";
 import { FaUserPlus } from "react-icons/fa6";
 import { FaRegEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUser } from "../store/auth/authSlice";
+
+
 const ProfileComponent = () => {
+
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
+
+  useEffect(()=>{
+    dispatch(getCurrentUser())
+console.log("useEffect........");
+  },[])
+
+  console.log(user, "user............");
+
+
+
+
+
+
+
+
+
   return (
     <>
       <div className="flex flex-col gap-4 w-full">
@@ -44,33 +69,33 @@ const ProfileComponent = () => {
           <div className="px-7 py-4 w-full bg-theme-bg text-white rounded-3xl">
             <div className="font-bold flex justify-between items-center border-b border-border-info-color pb-3 mb-5 ">
               <h2 className="text-xl ">Personal Info</h2>
-              <button className=" flex items-center gap-1 px-4 py-2 bg-theme-color rounded-xl">
+              <Link to="/user-profile/account-settings" className=" flex items-center gap-1 px-4 py-2 bg-theme-color rounded-xl">
                 <FaRegEdit size={16} /> <span>Edit</span>
-              </button>
+              </Link>
             </div>
             <ul className="flex flex-col gap-2 font-medium text-body-text-color">
               <li>
                 Name:{" "}
-                <span className="float-right font-normal">Alan Bratten</span>
+                <span className="float-right font-normal">{user?.fullName ? user?.fullName :  "-"}</span>
               </li>
-              <li>
+              {/* <li>
                 Username:{" "}
                 <span className="float-right font-normal">@bratten65</span>
-              </li>
+              </li> */}
               <li>
                 Email:{" "}
                 <span className="float-right font-normal">
-                  info@example.com
+                  {user?.email ? user.email : "-"}
                 </span>
               </li>
               <li>
                 Phone:{" "}
                 <span className="float-right font-normal">
-                  +02 123 4567 789
+                  {user?.phone ? user.phone : "-"}
                 </span>
               </li>
               <li>
-                Gender: <span className="float-right font-normal">Male</span>
+                Gender: <span className="float-right font-normal">{user?.gender ?  user.gender : "-"}</span>
               </li>
               <li>
                 Date of Birth:{" "}
@@ -78,7 +103,11 @@ const ProfileComponent = () => {
               </li>
               <li>
                 Location:{" "}
-                <span className="float-right font-normal">New York, USA</span>
+                <span className="float-right font-normal">{user?.location ?  user.location : "-"}</span>
+              </li>
+              <li>
+                User Type:{" "}
+                <span className="float-right font-normal">{user?.userType ?  user?.userType : "-"}</span>
               </li>
               <li>
                 Join Date:{" "}
@@ -89,20 +118,12 @@ const ProfileComponent = () => {
           <div className="px-7 py-4 w-full bg-theme-bg text-white rounded-3xl">
             <div className="font-bold flex justify-between items-center border-b border-border-info-color pb-3 mb-5 ">
               <h2 className="text-xl ">Your Bio</h2>
-              <button className=" flex items-center gap-1 px-4 py-2 bg-theme-color rounded-xl">
+              <Link to="/user-profile/account-settings" className=" flex items-center gap-1 px-4 py-2 bg-theme-color rounded-xl">
                 <FaRegEdit size={16} /> <span>Edit</span>
-              </button>
+              </Link>
             </div>
             <p className="text-body-text-color">
-              There are many variations of passages available but the majority
-              have suffered alteration in some form, by injected humour, or
-              randomised words which don't look even slightly believable.
-              Majority have suffered alteration in some form by injected humour
-              randomised words which even slightly believable are many
-              variations of passages of Lorem Ipsum available, but the majority
-              have suffered alteration in some form, by injected humour, or
-              randomised words are many variations of passages available but the
-              majority have suffered alteration words.
+      {user?.description ? user.description : "No bio available"}
             </p>
           </div>
         </div>

@@ -95,6 +95,7 @@ const loginUser = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
+    maxAge: 1 * 24 * 60 * 60 * 1000
   };
 
   return res
@@ -236,35 +237,42 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   //return respons
 
   try {
-    const { fullName, email, location, userType, phone, address, city } =
+    const { fullName, email, location, userType, phone, address, city ,gender, description} =
       req.body;
     const profilePath = req.file?.path;
     const userId = req.user?._id;
+    console.log(req.body, "req.body");
+    console.log(profilePath, "req.file")
 
     const user = await User.findById(userId);
     if (!user) {
       throw new ApiError(404, "User not found");
     }
-    const imgUrlCloudinary = await uploadOnCloudinary(profilePath);
+    if(profilePath){
+    var imgUrlCloudinary = await uploadOnCloudinary(profilePath);
     //console.log(imgUrlCloudinary);
-    if (!imgUrlCloudinary.url) {
-      return next(new ApiError(500, "Error uploading image"));
+    if (!imgUrlCloudinary?.url) {
+      return res.status(400).json(new ApiResponse(400, "Invalid image"));
     }
+  }
 
     user.fullName = fullName ? fullName : user.fullName;
     user.email = email ? email : user.email;
     user.location = location ? location : user.location;
     user.userType = userType ? userType : user.userType;
-    user.profilePicture = imgUrlCloudinary.url
+    user.profilePicture = imgUrlCloudinary?.url
       ? imgUrlCloudinary.url
-      : user.profilePicture;
+      : user.profilePicture || "https://res.cloudinary.com/dnsxaor2k/image/upload/v1709735601/vsauyvodor9ykjca5zvj.jpg";
     user.phone = phone ? phone : user.phone;
     user.address = address ? address : user.address;
     user.city = city ? city : user.city;
+    user.gender=  gender ? gender: user.gender ;
+    user.description= description? description: user.description;
+
 
     await user.save();
 
-    res.json(new ApiResponse(200, "User profile updated successfully", user));
+    res.json(new ApiResponse(200, "User profile updated successfully",{user:user}));
   } catch (error) {
     console.error(error);
     res
@@ -324,9 +332,9 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 // @access Private
 const getCurrentUser = asyncHandler(async (req, res) => {
   try {
-    return res
-      .status(200)
-      .json(200, "current user fetched successfully", req.user);
+    console.log("getting current user.....");
+    const user = await User.findById(req.user._id).select("-password");
+    return res.status(200).json(new ApiResponse(200, "User fetched", { user:user}));
   } catch (error) {
     res
       .status(error.statusCode || 500)

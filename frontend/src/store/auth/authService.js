@@ -60,14 +60,24 @@ const changeCurrentPassword = async (data) => {
 }
 
 // Get the logged in user data
-const getUserData = ()=>{
-    let token = localStorage.getItem('token');
-    if(!token) return null;
-    return axios.get(`${API_URL}/users/me`,{
-      headers:{
-          Authorization:`Bearer ${token}`
-      }
-    });
+
+const getCurrentUser = async () => {
+console.log('getCurrentUser');
+    const response = await axios.get(`${API_URL}/users/current-user`, { withCredentials:true });
+    console.log('response getCurrentUser', response.data)
+     if(response.data.data.user){
+        console.log('getCurrentUser........', response.data.data.user);
+         localStorage.setItem("user", JSON.stringify(response.data.data.user)); 
+     } 
+    return response.data;
+}
+
+const updateProfile = async (data) => {
+    console.log('data', data)
+    const response = await axios.put(`${API_URL}/users/update-user-profile`, data, { withCredentials:true });
+   
+    console.log('response updateProfile', response.data)
+    return response.data;
 }
 
 
@@ -83,6 +93,8 @@ const authService = {
     ,forgotPasswordSendMail
     ,resetNewPassword
     ,changeCurrentPassword
+    ,getCurrentUser
+    ,updateProfile
 }
 
 export default authService;
