@@ -15,6 +15,18 @@ export const placeABid=createAsyncThunk(
     }
 )
 
+export const getBidsAuctionsByUser = createAsyncThunk(
+    'bids/getBidsAuctionsByUser',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await bidService.getBidsAuctionsByUser();
+            return response && response.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+)
+
 
 
 
@@ -41,7 +53,44 @@ const bidSlice = createSlice({
 
 
     },
-    extraReducers:() =>{
+    extraReducers:(builder) =>{
+        builder.addCase(placeABid.pending,(state)=>{
+            state.isLoading=true;
+            state.isError=false;
+            state.isSuccess=false;
+            state.message="";
+        })
+        builder.addCase(placeABid.fulfilled,(state,action)=>{
+            state.isLoading=false;
+            state.isError=false;
+            state.isSuccess=true;
+            state.message=action.payload.message;
+        })
+        builder.addCase(placeABid.rejected,(state,action)=>{
+            state.isLoading=false;
+            state.isError=true;
+            state.isSuccess=false;
+            state.message=action.payload.message;
+        })
+        builder.addCase(getBidsAuctionsByUser.pending,(state)=>{
+            state.isLoading=true;
+            state.isError=false;
+            state.isSuccess=false;
+            state.message="";
+        })
+        builder.addCase(getBidsAuctionsByUser.fulfilled,(state,action)=>{
+            console.log("action.payload.data",action.payload);
+            state.isLoading=false;
+            state.isError=false;
+            state.isSuccess=true;
+            state.bids=action.payload;
+        })
+        builder.addCase(getBidsAuctionsByUser.rejected,(state,action)=>{
+            state.isLoading=false;
+            state.isError=true;
+            state.isSuccess=false;
+            state.message=action.payload.message;
+        })
        
         
         

@@ -15,6 +15,13 @@ export const placeABid=async(data)=>{
 };
 
 
+export const getBidsAuctionsByUser=async()=>{
+    const response = await axios.get(`${API_URL}/auctions/user-bids`, {withCredentials:true});
+     console.log("response bids auction...",response.data);
+    return response.data;
+};
+
+
 
 
 
@@ -22,7 +29,8 @@ export const placeABid=async(data)=>{
 
 
 const bidService= {
-    placeABid
+    placeABid,
+    getBidsAuctionsByUser
 }
 
 

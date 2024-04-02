@@ -4,6 +4,7 @@ import ApiResponse from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import Auction from "../models/auction.model.js";
 import mongoose from "mongoose";
+import Bid from "../models/bid.model.js";
 
 // name: { type: String, required: true },
 //   description: { type: String },
@@ -119,7 +120,6 @@ const createAuction = asyncHandler(async (req, res) => {
 
 const getAllAuctions = asyncHandler(async (req, res) => {
   try {
-    
     const { location, category, itemName } = req.body;
     console.log(req.body, "req.body");
     let filter = {};
@@ -129,20 +129,16 @@ const getAllAuctions = asyncHandler(async (req, res) => {
       filter.name = { $regex: itemName, $options: "i" };
     }
     console.log(filter, "filter ......");
-    const auctions = await Auction.find(filter).populate(
-      "seller",
-      "fullName email phone location profilePicture"
-    )
-    .populate({
-      path:"winner",
-      
-      populate:{
-        path:"bidder",
-        select:"fullName  profilePicture"
-      }
+    const auctions = await Auction.find(filter)
+      .populate("seller", "fullName email phone location profilePicture")
+      .populate({
+        path: "winner",
 
-    })
-
+        populate: {
+          path: "bidder",
+          select: "fullName  profilePicture",
+        },
+      });
 
     if (!auctions) {
       return res.status(404).json(new ApiResponse(404, "No auctions found"));
@@ -157,8 +153,6 @@ const getAllAuctions = asyncHandler(async (req, res) => {
       .json(new ApiResponse(500, error?.message || "Internal server error"));
   }
 });
-
-
 
 // @desc Get a single Auction by ID
 // @route GET /api/v1/auctions/:id
@@ -181,17 +175,16 @@ const getSingleAuctionById = asyncHandler(async (req, res) => {
           path: "bidder",
           select: "fullName email profilePicture",
         },
-      })//populate the winner's information as well bidamount and time
-      
-      .populate({
-        path:"winner",
-        
-        populate:{
-          path:"bidder",
-          select:"fullName  profilePicture"
-        }
+      }) //populate the winner's information as well bidamount and time
 
-      })
+      .populate({
+        path: "winner",
+
+        populate: {
+          path: "bidder",
+          select: "fullName  profilePicture",
+        },
+      });
 
     if (!auction) {
       return res.status(404).json(new ApiResponse(404, "Auction not found"));
@@ -212,33 +205,74 @@ const getSingleAuctionById = asyncHandler(async (req, res) => {
 // @route POST /api/v1/auctions/:id/status
 // @access public
 
-const updateAuctionStatus=asyncHandler(async(req,res)=>{
+const updateAuctionStatus = asyncHandler(async (req, res) => {
   try {
-    const auction=await Auction.findById(req.params.id);
-    if(!auction){
-      return res.status(404).json(new ApiResponse(404,"Auction not found"));
+    const auction = await Auction.findById(req.params.id);
+    if (!auction) {
+      return res.status(404).json(new ApiResponse(404, "Auction not found"));
     }
     //check start and now time and update status
-    const now=new Date();
-    
-    if(now<auction.startTime){
-      auction.status="upcoming";
-    }else if(now>auction.startTime && now<auction.endTime){
-      auction.status="active";
-    }else{
-      auction.status="over";
+    const now = new Date();
+
+    if (now < auction.startTime) {
+      auction.status = "upcoming";
+    } else if (now > auction.startTime && now < auction.endTime) {
+      auction.status = "active";
+    } else {
+      auction.status = "over";
     }
 
     await auction.save();
-    return res.json(new ApiResponse(200,"Auction status updated successfully",auction));
+    return res.json(
+      new ApiResponse(200, "Auction status updated successfully", auction)
+    );
   } catch (error) {
-    return res.status(500).json(new ApiResponse(500,error?.message||"Internal server error"));
+    return res
+      .status(500)
+      .json(new ApiResponse(500, error?.message || "Internal server error"));
   }
 });
 
-export { 
-  createAuction, 
-  getAllAuctions, 
+// @desc Get all auctions of a user on which he placed bids
+// @route GET /api/v1/auctions/user-bids
+// @access Private
+
+const getBidsAuctionsByUser = asyncHandler(async (req, res) => {
+  try {
+
+    const bids = await Bid.find({ bidder: req.user._id }).populate("auction")
+    // populate category in auction
+    .populate({
+      path: "auction",
+      populate: {
+        path: "category",
+        select: "name",
+      },
+    })
+    .sort({ createdAt: -1 });
+    // it is not showing in reverse order
+    
+
+    if (!bids) {
+      return res.status(404).json(new ApiResponse(404, "No bids found"));
+    }
+
+    
+
+    return res.json(
+      new ApiResponse(200, "bids retrieved successfully", bids)
+    );
+  } catch (error) {
+    return res
+      .status(500)
+      .json(new ApiResponse(500, error?.message || "Internal server error"));
+  }
+});
+
+export {
+  createAuction,
+  getAllAuctions,
   getSingleAuctionById,
-  updateAuctionStatus
+  updateAuctionStatus,
+  getBidsAuctionsByUser,
 };
