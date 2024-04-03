@@ -9,21 +9,6 @@ export default {
       },
       screens: {
         vsm: "400px",
-        // "2xl": { max: "1535px" },
-        // // => @media (max-width: 1535px) { ... }
-
-        // xl: { max: "1279px" },
-
-        // // => @media (max-width: 1279px) { ... }
-
-        // lg: { max: "1023px" },
-        // // => @media (max-width: 1023px) { ... }
-
-        // md: { max: "767px" },
-        // // => @media (max-width: 767px) { ... }
-
-        // sm: { max: "639px" },
-        // // => @media (max-width: 639px) { ... }
       },
       colors: {
         "body-bg": "#061224",
@@ -48,6 +33,9 @@ export default {
         "footer-bg": "#071B36",
         "footer-text-color": " #F5FAFF",
         // "button-primary": "#00a3ff",
+      },
+      backgroundImage: {
+        "hero-img": "url(./assets/bg.jpg)",
       },
     },
   },
