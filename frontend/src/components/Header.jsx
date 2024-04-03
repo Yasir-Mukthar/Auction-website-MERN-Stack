@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout, reset } from "../store/auth/authSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { IoIosNotificationsOutline } from "react-icons/io";
+
 
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -35,14 +37,18 @@ const Header = () => {
       </div>
       <div className="flex items-center">
         {user ? (
-          <div>
+          <div  className="flex justify-center items-center">
             <img
               src={user?.profilePicture}
               key={user.profilePicture}
               alt="user image"
-              className="w-10 h-10 rounded-full"
+              className="w-10 h-10 rounded-full order-2 cursor-pointer"
               onClick={() => setSidebarOpen(!sidebarOpen)}
             />
+<div className="mr-2 bg-theme-bg  rounded-full p-2">
+            <IoIosNotificationsOutline className="text-white text-xl cursor-pointer" />
+</div>
+
           </div>
         ) : (
           <Link

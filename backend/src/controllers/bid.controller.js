@@ -2,7 +2,10 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import Bid from "../models/bid.model.js";
 import Auction from "../models/auction.model.js";
-import User from "../models/user.model.js";
+
+
+
+
 
 // @desc Add bid on item
 // @route POST /api/v1/bids/:itemId
