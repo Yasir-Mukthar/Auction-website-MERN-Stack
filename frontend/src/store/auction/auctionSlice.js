@@ -66,11 +66,52 @@ export const selectAuctionWinner = createAsyncThunk(
     }
   })
 
-const initialState = {
-  auction: [
+
+export const getSellerAuction = createAsyncThunk(
+  'auction/getSellerAuction', async (_, thunkAPI) => {
+    try {
+      return await auctionService.getSellerAuction();
+      
+    } catch (error) {
+      const message = (error.response && error.response.data.message) || error.message;
+      return thunkAPI.rejectWithValue({ message, isError: true });
+      
+    }
+  }
+)
+
+export const deleteSingleAuctionById=createAsyncThunk(
+  'auction/deleteSingleAuctionById', async (id, thunkAPI) => {
+    try {
+      return await auctionService.deleteSingleAuctionById(id);
+    } catch (error) {
+      const message = (error.response && error.response.data.message) || error.message;
+      return thunkAPI.rejectWithValue({ message, isError: true });
+    }
+  }
+)
+
+
+export const updateSingleAuction=createAsyncThunk(
+  "auction/updateSingleAuaction", async (payload, thunkAPI) => {
     
-  ],
+  try {
+    return await auctionService.updateSingleAuction(payload);
+    
+  } catch (error) {
+    const message = (error.response && error.response.data.message) || error.message;
+    return thunkAPI.rejectWithValue({ message, isError: true });
+    
+  }
+})
+
+
+
+
+const initialState = {
+  auction: [],
   singleAuction : {},
+  sellerAuction:[],
   isLoading: false,
   isError: false,
   isSuccess: false,
@@ -180,6 +221,63 @@ const auctionSlice = createSlice({
       state.isSuccess = false;
       state.message = action.payload.message;
     });
+    builder.addCase(getSellerAuction.pending, (state) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = "";
+    });
+    builder.addCase(getSellerAuction.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = true;
+      state.message = action.payload.message;
+      state.sellerAuction = action.payload.data;
+    });
+    builder.addCase(getSellerAuction.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.isSuccess = false;
+      state.message = action.payload.message;
+    });
+    builder.addCase(deleteSingleAuctionById.pending, (state) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = "";
+    });
+    builder.addCase(deleteSingleAuctionById.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = true;
+      state.message = action.payload.message;
+    });
+    builder.addCase(deleteSingleAuctionById.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.isSuccess = false;
+      state.message = action.payload.message;
+    });
+    builder.addCase(updateSingleAuction.pending, (state) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = "";
+    });
+    builder.addCase(updateSingleAuction.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = true;
+      state.message = action.payload.message;
+    });
+    builder.addCase(updateSingleAuction.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.isSuccess = false;
+      state.message = action.payload.message;
+    });
+
+
     
   },
 });
