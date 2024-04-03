@@ -4,7 +4,7 @@ const PrivacyPolicy = () => {
   return (
     <>
       <div className="text-white ">
-        <div className="flex items-center justify-center flex-col h-[280px] bg-gradient-to-b from-theme-color to-theme-bg2">
+        <div className="flex items-center justify-center flex-col h-[280px] bg-hero-img bg-cover">
           <h1 className="text-center font-bold text-3xl">Privacy Policy</h1>
           <div className="flex gap-2 font-medium pt-2">
             <Link
@@ -14,7 +14,7 @@ const PrivacyPolicy = () => {
               Home
             </Link>
             <span>/</span>
-            <p>Privacy Policy</p>
+            <span className="text-theme-color">Privacy Policy</span>
           </div>
         </div>
         <div className="px-4 py-20 flex flex-col m-auto gap-10 max-w-[1300px]">

@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import ChangePassword from "./auth/ChangePassword";
 import ProfileComponent from "../components/ProfileComponent";
@@ -12,7 +12,20 @@ import AccountSetting from "../components/AccountSetting";
 const UserProfile = () => {
   return (
     <div className="">
-      <div className="flex gap-4 p-5 flex-wrap lg:flex-nowrap ">
+      <div className="text-white flex items-center justify-center flex-col h-[280px] bg-hero-img bg-cover">
+        <h1 className="text-center font-bold text-3xl">Profile</h1>
+        <div className="flex gap-2 font-medium pt-2">
+          <Link
+            to="/"
+            className=" no-underline hover:text-theme-color transition-all"
+          >
+            Home
+          </Link>
+          <span>/</span>
+          <span className="text-theme-color">Profile</span>
+        </div>
+      </div>
+      <div className="flex gap-4 px-5 py-10 flex-wrap lg:flex-nowrap ">
         <Sidebar />
         <Routes>
           <Route path="/profile" element={<ProfileComponent />} />

@@ -26,7 +26,7 @@ const Header = () => {
   };
 
   return (
-    <div className="flex justify-between items-center px-5 sm:px-14 bg-body-bg py-4  border-b-theme-bg">
+    <div className="flex justify-between items-center px-5 sm:px-14 bg-body-bg py-4 border-b border-border-info-color">
       <div className="flex items-center px-1 vsm:px-8 ">
         <Link to="/dashboard" className=" no-underline">
           <h1 className="text-3xl font-bold text-white font-Roboto">
@@ -35,7 +35,7 @@ const Header = () => {
           </h1>
         </Link>
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center cursor-pointer">
         {user ? (
           <div  className="flex justify-center items-center">
             <img
