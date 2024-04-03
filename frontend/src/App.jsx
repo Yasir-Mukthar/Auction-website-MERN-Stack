@@ -16,6 +16,7 @@ import UploadItem from './pages/UploadItem'
 import Dashboard from './pages/Dashboard'
 import SingleAuctionDetail from './pages/SingleAuctionDetail'
 import UserProfile from './pages/UserProfile'
+import EditAuction from './pages/EditAuction'
 
 
 const App = () => {
@@ -36,7 +37,9 @@ const App = () => {
         <Route path="/create-auction" element={<UploadItem />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path='/single-auction-detail/:id' element={<SingleAuctionDetail />} />
-        <Route path="/user-profile/*" element={<UserProfile />} />        
+        <Route path="/user-profile/*" element={<UserProfile />} /> 
+        <Route path='/edit-auction/:id' element={<EditAuction />} />
+
         <Route path='*' element={<h1>Not Found</h1>} />
 
 

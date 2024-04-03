@@ -7,6 +7,8 @@ import BidsItem from "../components/BidsItem";
 import Notifications from "../components/Notifications";
 import AccountSetting from "../components/AccountSetting";
 
+
+
 const UserProfile = () => {
   return (
     <div className="">
@@ -33,6 +35,7 @@ const UserProfile = () => {
           <Route path="/account-settings" element={<AccountSetting />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/logout" element={<ChangePassword />} />
+
         </Routes>
       </div>
     </div>

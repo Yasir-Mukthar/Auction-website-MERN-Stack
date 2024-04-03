@@ -10,7 +10,7 @@ export const verifyUser = asyncHandler(async (req, res, next) => {
     const token = req.cookies?.JwtToken ||  req.headers.authorization?.split(" ")[1];
 
     if (!token) {
-      throw new ApiError(401, "Unauthorized request");
+      return res.status(401).json(new ApiResponse(401, "Unauthorized request"));
     }
 
     const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
@@ -19,7 +19,7 @@ export const verifyUser = asyncHandler(async (req, res, next) => {
     const user = await User.findById(decodedToken?._id).select("-password");
 
     if (!user) {
-      throw new ApiError(404, "User not found");
+      return res.status(401).json(new ApiResponse(401, "Unauthorized request"));
     }
 
     //console.log(user, "user")
@@ -28,23 +28,23 @@ export const verifyUser = asyncHandler(async (req, res, next) => {
 
     next();
   } catch (error) {
-    throw new ApiError(401, error?.message || "Unauthorized request");
+    return res.status(401).json(new ApiResponse(401, error?.message || "Unauthorized request"));
   }
 });
 
 export const verifySeller = asyncHandler(async (req, res, next) => {
   try {
     const user = req.user;
-
+console.log(user, "user seller");
    // console.log(user);
 
     if (user.userType !== "seller") {
-      throw new ApiError(403, "Access denied");
+     return res.status(403).json(new ApiResponse(403, "Access denied"));
     }
 
     next();
   } catch (error) {
-    throw new ApiError(401, error?.message || "Unauthorized request");
+    return res.status(401).json(new ApiResponse(401, error?.message || "Unauthorized request"));
   }
 });
 
