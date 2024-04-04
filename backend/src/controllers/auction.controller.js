@@ -3,7 +3,6 @@ import { ApiError } from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import Auction from "../models/auction.model.js";
-import mongoose from "mongoose";
 import Bid from "../models/bid.model.js";
 
 // name: { type: String, required: true },
