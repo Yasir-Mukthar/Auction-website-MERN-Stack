@@ -27,7 +27,7 @@ export default {
         "color-danger": "#FF7782",
         "color-warning": "#FFBB55",
         "color-secondary": "#E9ECEF",
-
+        hover: "#FF7782",
         "border-info-color": "#757f9540",
         "border-white-color": "#ffffff14",
         "footer-bg": "#071B36",

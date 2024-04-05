@@ -1,12 +1,20 @@
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Footer = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
-    <footer className=" bg-theme-bg shadow   w-full">
+    <footer className=" bg-theme-bg shadow w-full">
       <div className="lg:w-[80%] mx-auto p-4 md:py-8">
         <div className="sm:flex items-center justify-between">
           <Link
-            to="/"
+            to="/dashboard"
             className="flex items-center mb-4 sm:mb-0 space-x-3 no-underline"
           >
             <h1 className="text-3xl font-bold text-white font-Roboto">
@@ -26,7 +34,7 @@ const Footer = () => {
             <li>
               <Link
                 to="/privacy-policy"
-                className=" me-4 md:me-6 text-white no-underline  hover:text-theme-color"
+                className=" me-4 md:me-6 text-white no-underline hover:text-theme-color"
               >
                 Privacy Policy
               </Link>
@@ -34,7 +42,7 @@ const Footer = () => {
             <li>
               <Link
                 to=""
-                className=" me-4 md:me-6 text-white no-underline  hover:text-theme-color"
+                className=" me-4 md:me-6 text-white no-underline hover:text-theme-color"
               >
                 Licensing
               </Link>
@@ -42,14 +50,14 @@ const Footer = () => {
             <li>
               <Link
                 to="/contact-us"
-                className=" text-white no-underline  hover:text-theme-color"
+                className=" text-white no-underline hover:text-theme-color"
               >
                 Contact
               </Link>
             </li>
           </ul>
         </div>
-        <hr className="my-6 border-gray-200 sm:mx-auto lg:my-8" />
+        <hr className="my-6 border-border-info-color sm:mx-auto lg:my-8" />
         <div className=" font-Roboto flex justify-center text-white items-center text-sm sm:text-center">
           © {new Date().getFullYear()}
           <Link to="/" className=" ml-1 no-underline">
