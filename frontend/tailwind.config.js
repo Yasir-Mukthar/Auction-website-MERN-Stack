@@ -39,5 +39,11 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addVariant }) {
+      addVariant("inputs", "& input");
+      addVariant("select", "& select");
+      addVariant("child-hover", "& > *:hover");
+    },
+  ],
 };

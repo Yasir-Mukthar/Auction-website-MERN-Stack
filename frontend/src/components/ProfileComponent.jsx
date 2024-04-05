@@ -21,7 +21,7 @@ const ProfileComponent = () => {
   return (
     <>
       <div className="flex flex-col gap-4 w-full">
-        <div className="px-7 py-4 w-full bg-theme-bg text-white rounded-3xl">
+        <div className="px-7 py-4 w-full bg-theme-bg text-white rounded-2xl">
           <h2 className=" font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">
             Profile Summary
           </h2>
@@ -58,7 +58,7 @@ const ProfileComponent = () => {
           </div>
         </div>
         <div className="flex flex-wrap gap-4 lg:flex-nowrap">
-          <div className="px-7 py-4 w-full bg-theme-bg text-white rounded-3xl">
+          <div className="px-7 py-4 w-full bg-theme-bg text-white rounded-2xl">
             <div className="font-bold flex justify-between items-center border-b border-border-info-color pb-3 mb-5 ">
               <h2 className="text-xl ">Personal Info</h2>
               <Link
@@ -119,7 +119,7 @@ const ProfileComponent = () => {
               </li>
             </ul>
           </div>
-          <div className="px-7 py-4 w-full bg-theme-bg text-white rounded-3xl">
+          <div className="px-7 py-4 w-full bg-theme-bg text-white rounded-2xl">
             <div className="font-bold flex justify-between items-center border-b border-border-info-color pb-3 mb-5 ">
               <h2 className="text-xl ">Your Bio</h2>
               <Link

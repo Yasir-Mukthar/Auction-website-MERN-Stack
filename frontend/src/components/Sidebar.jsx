@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Sidebar = () => {
   return (
     <div className="w-full lg:w-[35%] min-w-[250px]">
-      <div className="text-white bg-theme-bg p-5 rounded-3xl">
+      <div className="text-white bg-theme-bg p-5 rounded-2xl">
         <ul className="list-unstyled components flex flex-col gap-1 font-medium">
           <li>
             <Link

@@ -55,7 +55,7 @@ const AccountSetting = () => {
   };
 
   return (
-    <div className=" px-7 py-4 w-full bg-theme-bg text-body-text-color rounded-3xl">
+    <div className=" px-7 py-4 w-full bg-theme-bg text-body-text-color rounded-2xl">
       <h2 className=" text-white font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">
         Account Settings
       </h2>
@@ -68,7 +68,7 @@ const AccountSetting = () => {
           className="w-full md:w-[200px] mb-4 rounded-lg border-2 object-contain cursor-pointer"
         />
         {/* INPUTS*/}
-        <div className="flex flex-col gap-4 [&_input]:outline-none [&_input]:px-3 [&_input]:py-4 [&_input]:rounded-xl [&_input]:bg-theme-bg2 [&_input[type=submit]]:bg-theme-color">
+        <div className="flex flex-col gap-4 inputs:outline-none inputs:px-3 inputs:py-4 inputs:rounded-xl inputs:bg-theme-bg2 [&_input[type=submit]]:bg-theme-color inputs:border inputs:border-border-info-color focus:inputs:border-theme-color select:border select:border-border-info-color  [&_*]:transition-all ">
           <input
             type="file"
             className="hidden"
@@ -96,9 +96,9 @@ const AccountSetting = () => {
                 setFormData({ ...formData, email: e.target.value })
               }
             />{" "}
-            {/* {select fielsd} */}
+            {/* {select field} */}
             <select
-              className="outline-none bg-theme-bg2 rounded-xl px-3 py-4 cursor-pointer"
+              className="outline-none bg-theme-bg2 rounded-xl px-3 py-4 cursor-pointer focus:border-theme-color"
               value={formData.gender}
               name="gender"
               onChange={(e) =>
@@ -139,7 +139,7 @@ const AccountSetting = () => {
             }
           />
           <select
-            className="outline-none bg-theme-bg2 rounded-xl px-3 py-4 cursor-pointer"
+            className="outline-none bg-theme-bg2 rounded-xl px-3 py-4 cursor-pointer focus:border-theme-color"
             value={formData.userType}
             name="userType"
             onChange={(e) =>
@@ -150,7 +150,7 @@ const AccountSetting = () => {
             <option value="seller">Seller</option>
           </select>
           <textarea
-            className="outline-none bg-theme-bg2 rounded-xl px-3 py-4"
+            className="outline-none bg-theme-bg2 rounded-xl px-3 py-4 border border-border-info-color focus:border-theme-color"
             cols="30"
             rows="10"
             placeholder="Description"
