@@ -40,7 +40,7 @@ console.log("notification dispatch............");
 
   return (
     <div className="flex justify-between items-center px-5 sm:px-14 bg-body-bg py-4 border-b border-border-info-color">
-      <div className="flex items-center px-1 vsm:px-8 ">
+      <div className="flex items-center px-1">
         <Link to="/dashboard" className=" no-underline">
           <h1 className="text-3xl font-bold text-white font-Roboto">
             <span className="uppercase text-theme-color">A</span>uction
