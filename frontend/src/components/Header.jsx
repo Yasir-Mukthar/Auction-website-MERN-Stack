@@ -4,18 +4,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout, reset } from "../store/auth/authSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useLocation } from "react-router-dom";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import { getNotificationForUser } from "../store/notification/notificationSlice";
 
 
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const dispatch = useDispatch();
   const { user, message } = useSelector((state) => state.auth);
+  const {notifications } = useSelector(state=>state.notification);
   let navigate = useNavigate();
+  let location = useLocation()
+
+  console.log(notifications,"notifications............ header......");
+  //i want a length of isRead ===false
+   const unReadNotifications = notifications.filter((notification) => notification.isRead === false);
 
   // when ever user login how to show the user profile picture means how to rerender header while login component change
+  
 
   useEffect(() => {}, [user]);
+  useEffect(()=>{
+dispatch(getNotificationForUser());
+console.log("notification dispatch............");
+  },[location])
 
   const logoutHandle = () => {
     dispatch(logout());
@@ -45,9 +58,11 @@ const Header = () => {
               className="w-10 h-10 rounded-full order-2 cursor-pointer"
               onClick={() => setSidebarOpen(!sidebarOpen)}
             />
-<div className="mr-2 bg-theme-bg  rounded-full p-2">
-            <IoIosNotificationsOutline className="text-white text-xl cursor-pointer" />
-</div>
+<Link to="/user-profile/notifications" className="mr-2 bg-theme-bg  rounded-full p-2 relative" >
+  <span className="absolute right-0 top-0 w-[18px] h-[18px] flex items-center justify-center bg-theme-color rounded-full  text-white text-xs font-bold">{unReadNotifications.length}</span>
+            <IoIosNotificationsOutline className="text-white text-xl cursor-pointer " />
+             
+</Link>
 
           </div>
         ) : (
