@@ -1,15 +1,16 @@
 import { Router } from "express";
 import { verifyAdmin, verifyUser,verifySeller } from "../middlewares/auth.middleware.js";
-// import { addBidOnItem,getWinnerOfAuction, getBidsByUser } from "../controllers/bid.controller.js";
+import { sendNotification, getUserNotifications, markNotificationAsRead } from "../controllers/notification.controller.js";
 
 
 
 const router = Router();
 
-// router.route("/register").post(registerUser);
-// router.route("/:id/winner").get( getWinnerOfAuction);
-// router.route("/get-all-bids-items").get(verifyUser, getBidsByUser);
-// router.route("/:id").post(verifyUser, addBidOnItem );
+
+
+router.route("/mark-as-read/:id").put(verifyUser, markNotificationAsRead);
+router.route("/get-notifications").get(verifyUser, getUserNotifications);
+router.route("/send-notification").post(verifyUser, sendNotification);
 
 
 

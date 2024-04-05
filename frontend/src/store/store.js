@@ -5,6 +5,7 @@ import auctionReducer from './auction/auctionSlice';
 import categoryReducer from './category/categorySlice';
 import cityReducer from './city/citySlice';
 import bidReducer from './bid/bidSlice';
+import notificationReducer from './notification/notificationSlice';
 
 export const store= configureStore({
     reducer: {
@@ -14,6 +15,7 @@ export const store= configureStore({
         category: categoryReducer,
         city: cityReducer,
         bid: bidReducer,
+        notification: notificationReducer,
 
         
     }
