@@ -118,8 +118,28 @@ const markNotificationAsRead = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "Notification marked as read"));
 });
 
+
+// @desc mark all notification as read
+// @route PUT /api/v1/notifications/mark-all-as-read
+// @access Private
+
+const markAllNotificationsAsRead = asyncHandler(async (req, res) => {
+  await Notification.updateMany(
+    { user: req?.user?._id },
+    { $set: { isRead: true } }
+  );
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "All notifications marked as read"));
+});
+
+
+
+
 export { 
   sendNotification,
   getUserNotifications,
-  markNotificationAsRead 
+  markNotificationAsRead,
+  markAllNotificationsAsRead,
 };

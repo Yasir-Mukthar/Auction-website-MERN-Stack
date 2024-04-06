@@ -27,6 +27,31 @@ export const markNotificationAsRead= createAsyncThunk("notification/markNotifica
     }
 })
 
+export const sendNewBidNotification= createAsyncThunk("notification/sendNewBidNotification",async(data,thunkAPI)=>{
+    try {
+        return await notificationService.sendNewBidNotification(data);
+        
+    } catch (error) {
+        const message =(error.response && error.response.data.message) || error.message;
+        
+        return thunkAPI.rejectWithValue({message,isError:true});
+        
+    }
+})
+
+
+export const markAllNotificationsAsRead = createAsyncThunk("notification/markAllNotificationsAsRead",async(_,thunkAPI)=>{
+    try {
+        return await notificationService.markAllNotificationsAsRead();
+        
+    } catch (error) {
+        const message =(error.response && error.response.data.message) || error.message;
+        
+        return thunkAPI.rejectWithValue({message,isError:true});
+        
+    }
+})
+
 
 const initialState={
     notifications:[],
@@ -85,6 +110,42 @@ const notificationSlice = createSlice({
             state.message=action.payload.message;
         })
         .addCase(markNotificationAsRead.rejected,(state,action)=>{
+            state.isLoading=false;
+            state.isError=true;
+            state.isSuccess=false;
+            state.message=action.payload.message;
+        })
+        .addCase(sendNewBidNotification.pending,(state)=>{
+            state.isLoading=true;
+            state.isError=false;
+            state.isSuccess=false;
+            state.message="";
+        })
+        .addCase(sendNewBidNotification.fulfilled,(state,action)=>{
+            state.isLoading=false;
+            state.isSuccess=true;
+            state.isError=false;
+            state.message=action.payload.message;
+        })
+        .addCase(sendNewBidNotification.rejected,(state,action)=>{
+            state.isLoading=false;
+            state.isError=true;
+            state.isSuccess=false;
+            state.message=action.payload.message;
+        })
+        .addCase(markAllNotificationsAsRead.pending,(state)=>{
+            state.isLoading=true;
+            state.isError=false;
+            state.isSuccess=false;
+            state.message="";
+        })
+        .addCase(markAllNotificationsAsRead.fulfilled,(state,action)=>{
+            state.isLoading=false;
+            state.isSuccess=true;
+            state.isError=false;
+            state.message=action.payload.message;
+        })
+        .addCase(markAllNotificationsAsRead.rejected,(state,action)=>{
             state.isLoading=false;
             state.isError=true;
             state.isSuccess=false;

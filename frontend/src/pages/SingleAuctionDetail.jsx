@@ -7,8 +7,12 @@ import BidCard from "../components/BidCard";
 import { placeABid } from "../store/bid/bidSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { sendNewBidNotification } from "../store/notification/notificationSlice";
+
+
 
 const SingleAuctionDetail = () => {
+
   const [newBidAmount, setNewBidAmount] = useState("");
   const logInUser = JSON.parse(localStorage.getItem("user"));
   console.log(logInUser, "logInUser");
@@ -62,8 +66,10 @@ const SingleAuctionDetail = () => {
       toast.info("Auction time is over");
     } else {
       dispatch(placeABid(bidData));
+      dispatch(sendNewBidNotification({ auctionId: params.id , type: "BID_PLACED", newBidAmount: newBidAmount}))
       setNewBidAmount("");
       setActiveTab("bids");
+      
     }
   };
 

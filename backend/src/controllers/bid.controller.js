@@ -115,7 +115,10 @@ const getBidsByUser = asyncHandler(async (req, res) => {
     const bids = await Bid.find({ bidder: req.user._id }).populate(
       "auction",
       "title description startingPrice"
-    );
+    )
+    .sort({ createdAt: -1 })
+
+
     console.log(bids, "bids....");
     if (!bids) {
       return res.status(404).json(new ApiResponse(404, "No bids found"));
