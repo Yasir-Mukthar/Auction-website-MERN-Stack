@@ -26,6 +26,27 @@ export const markNotificationAsRead= async (id) => {
    
 
 
+  export  const sendNewBidNotification= async (data) => {
+    console.log(data, " data from sendNewBidNotification");
+    const response = await axios.post(`${API_URL}/notifications/send-notification`, data, {
+        withCredentials: true,
+        
+    });
+    console.log(response.data, " response from sendNewBidNotification");
+    return response.data;
+  };
+
+
+
+  export const markAllNotificationsAsRead= async () => {
+    const response = await axios.put(`${API_URL}/notifications/mark-all-as-read`, {}, {
+        withCredentials: true,
+        
+    });
+    console.log(response.data, " response from markAllNotificationsAsRead");
+    return response.data;
+  };
+
 
 
 
@@ -35,7 +56,9 @@ export const markNotificationAsRead= async (id) => {
 
 const notificationService= {
     getNotificationForUser,
-    markNotificationAsRead
+    markNotificationAsRead,
+    sendNewBidNotification,
+    markAllNotificationsAsRead,
 }
 
 
