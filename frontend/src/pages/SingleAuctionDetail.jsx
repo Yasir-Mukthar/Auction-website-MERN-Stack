@@ -9,10 +9,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { sendNewBidNotification } from "../store/notification/notificationSlice";
 
-
-
 const SingleAuctionDetail = () => {
-
   const [newBidAmount, setNewBidAmount] = useState("");
   const logInUser = JSON.parse(localStorage.getItem("user"));
   console.log(logInUser, "logInUser");
@@ -45,7 +42,7 @@ const SingleAuctionDetail = () => {
   }, []);
 
   if (isLoading) {
-    return <h1 className="text-white">Loading...</h1>;
+    return <h1 className="text-center mt-10 text-lg text-white">Loading...</h1>;
   }
 
   if (!singleAuction) {
@@ -66,10 +63,15 @@ const SingleAuctionDetail = () => {
       toast.info("Auction time is over");
     } else {
       dispatch(placeABid(bidData));
-      dispatch(sendNewBidNotification({ auctionId: params.id , type: "BID_PLACED", newBidAmount: newBidAmount}))
+      dispatch(
+        sendNewBidNotification({
+          auctionId: params.id,
+          type: "BID_PLACED",
+          newBidAmount: newBidAmount,
+        })
+      );
       setNewBidAmount("");
       setActiveTab("bids");
-      
     }
   };
 
@@ -77,15 +79,15 @@ const SingleAuctionDetail = () => {
 
   return (
     <div
-      className=" place-content-between p-10 flex pt-40 items-start gap-7 flex-wrap lg:flex-nowrap"
+      className="flex place-content-between  py-10 px-5 lg:py-20  lg:px-10  items-start gap-7 flex-wrap md:flex-nowrap"
       id="item01"
     >
       <img
-        className=" object-fill   lg:min-w-[35%] h-[600px] lg:h-[600px]   rounded-xl min-w-48 max-w-3xl "
+        className=" rounded-xl lg:min-w-48 w-full lg:w-[80%]  "
         src={singleAuction?.image}
         alt="product image"
       />
-      <div className="lg:min-w-[50%] lg:w-1/2 flex gap-4 flex-col ">
+      <div className="w-full flex gap-4 flex-col ">
         <div>
           <h2 className="text-3xl font-extrabold text-white">
             {singleAuction?.name}
@@ -248,26 +250,34 @@ const SingleAuctionDetail = () => {
                     className="w-10 h-10 rounded-full"
                   />
                   <div className="flex flex-col">
-                    <span className="font-semibold">{singleAuction?.winner?.bidder?.fullName}</span>
+                    <span className="font-semibold">
+                      {singleAuction?.winner?.bidder?.fullName}
+                    </span>
                     <span className="text-xs text-body-text-color">
-                      
-                      { new Date(singleAuction?.winner?.bidTime).toLocaleDateString()} {""}
-                      {`${new Date(singleAuction?.winner?.bidTime).toLocaleTimeString()}`} 
+                      {new Date(
+                        singleAuction?.winner?.bidTime
+                      ).toLocaleDateString()}{" "}
+                      {""}
+                      {`${new Date(
+                        singleAuction?.winner?.bidTime
+                      ).toLocaleTimeString()}`}
                     </span>
                   </div>
                 </div>
-                <div className="text-white">Bid Amount : ${singleAuction?.winner?.bidAmount}</div>
+                <div className="text-white">
+                  Bid Amount : ${singleAuction?.winner?.bidAmount}
+                </div>
               </div>{" "}
             </div>
           ) : (
             <form
-              className="flex justify-between items-center"
+              className="flex justify-between flex-wrap gap-4 items-center"
               onSubmit={placeBidHandle}
             >
               {/* input button for bid */}
               <input
                 type="number"
-                className=" py-3 mt-2 px-2 outline-none border-none rounded-lg"
+                className="outline-none text-slate-300 px-3 py-4 rounded-xl bg-theme-bg2 border border-border-info-color focus:border-theme-color transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 placeholder="Enter your bid"
                 value={newBidAmount}
                 onChange={(e) => setNewBidAmount(e.target.value)}
@@ -281,13 +291,13 @@ const SingleAuctionDetail = () => {
                       ? true
                       : false || !auctionStarted
                   }
-                  className={`bg-color-primary py-2 px-4 rounded-lg cursor-pointer text-white ${
+                  className={`bg-color-primary py-2 px-4 rounded-lg  text-white ${
                     singleAuction?.seller?._id === logInUser?._id
-                      ? "bg-theme-bg2 text-body-text-color"
-                      : "bg-color-primary "
+                      ? "bg-theme-bg2 text-body-text-color cursor-not-allowed border border-border-info-color hover:border-color-danger"
+                      : "bg-color-primary border cursor-pointer border-border-info-color hover:bg-color-danger"
                   } ${
                     !auctionStarted
-                      ? "bg-theme-bg2 text-body-text-color"
+                      ? "bg-theme-bg2 text-body-text-color "
                       : "bg-color-primary "
                   } `}
                 >

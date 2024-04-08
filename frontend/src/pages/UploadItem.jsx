@@ -114,6 +114,7 @@ const UploadItem = () => {
             <input
               required
               id="product_name"
+              placeholder="e.g (Modern Abstract Painting)"
               type="text"
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
@@ -125,7 +126,7 @@ const UploadItem = () => {
           <div className="grid">
             <label htmlFor="category">Category</label>
             <select
-              className="outline-none bg-theme-bg rounded-xl px-3 py-4 cursor-pointer focus:border-theme-color"
+              className="outline-none h-[50px] bg-theme-bg rounded-xl px-3 py-4 cursor-pointer focus:border-theme-color"
               required
               id="category"
               onChange={(e) =>
@@ -183,10 +184,10 @@ const UploadItem = () => {
                 value={formData.startingPrice}
               />
             </div>
-            <div className="grid">
+            <div className="grid ">
               <label htmlFor="category">Area</label>
               <select
-                className="outline-none bg-theme-bg rounded-xl px-3 py-4 cursor-pointer focus:border-theme-color"
+                className="outline-none h-[50px] bg-theme-bg cursor-pointer focus:border-theme-color"
                 required
                 id="category"
                 onChange={(e) =>
@@ -207,6 +208,7 @@ const UploadItem = () => {
           <div className="grid">
             <label htmlFor="description">Description</label>
             <textarea
+              placeholder="Describe your product, art, etc."
               required
               id="description"
               rows="7"

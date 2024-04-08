@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <div className="w-full lg:w-[35%] min-w-[250px]">
+    <div className="w-full lg:w-[25%] min-w-[250px] lg:max-w-[350px] ">
       <div className="text-white bg-theme-bg p-5 rounded-2xl">
-        <ul className="list-unstyled components flex flex-col gap-1 font-medium">
+        <ul className="flex flex-col gap-1 font-medium">
           <li>
             <Link
-              className="flex  py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500"
+              className="flex  py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500 "
               to="/user-profile/profile"
             >
               Profile

@@ -1,52 +1,80 @@
-import {useDispatch, useSelector} from 'react-redux'
-import {useEffect} from 'react'
-import { getBidsAuctionsByUser } from '../store/bid/bidSlice'
-import { Link } from 'react-router-dom'
-
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getBidsAuctionsByUser } from "../store/bid/bidSlice";
+import { Link } from "react-router-dom";
+import { FaEye } from "react-icons/fa";
 const BidsItem = () => {
-
-  const dispatch = useDispatch()
-  const {bids} = useSelector(state => state.bid)
-console.log(bids, "bids....");
+  const dispatch = useDispatch();
+  const { bids } = useSelector((state) => state.bid);
+  console.log(bids, "bids....");
   useEffect(() => {
-    dispatch(getBidsAuctionsByUser())
+    dispatch(getBidsAuctionsByUser());
     console.log("use effecty bids....", bids);
-  }, [])
-
-
-
+  }, []);
 
   return (
-    <div className='bg-green-800 text-white'>
-      <span className='px-2'>img</span>
-      <span className='px-2'>name</span>
-      <span className='px-2'>category</span>
-      <span className='px-2'>status</span>
-      <span className='px-2'>currentPrice</span>
-      <span className='px-2'>your bid</span>
-
-      <span className='px-2'>view</span>
-      {
-        bids?.map(bid => (
-          <div key={bid?._id} className='flex justify-between items-center p-4 border-b border-green-600'>
-            <img src={bid?.auction?.image} alt="auction image" className='w-[50px] h-[50px] rounded-full' />
-            <h1 className='px-2'>{bid?.auction?.name}</h1>
-            <h2 className='px-2'>{bid?.auction?.category?.name}</h2>
-            <h2 className='px-2'>{bid?.auction?.status}</h2>
-            <h2 className='px-2'>{bid?.auction?.startingPrice}</h2>
-            <h2 className='px-2'>{bid?.bidAmount}</h2>
-
-            <Link to={`/single-auction-detail/${bid?.auction?._id}`}>view</Link>
-
-
-          </div>
-        ))
-      }
-
+    <div className="overflow-auto px-7 py-4 w-full bg-theme-bg text-white rounded-2xl ">
+      <h2 className="  text-white font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">
+        Bids Items
+      </h2>
+      <div className="overflow-auto px-4 bg-theme-bg2 rounded-2xl  max-h-[750px] border border-border-info-color  ">
+        <table className="text-left whitespace-nowrap w-full border-separate border-spacing-x-0 border-spacing-y-4 ">
+          <thead className="table-header-group">
+            <tr className="capitalize table-row bg-theme-color [&_th]:table-cell [&_th]:pl-5 [&_th]:pr-3 [&_th]:py-3">
+              <th className=" rounded-l-lg ">Product</th>
+              <th>Catagory</th>
+              <th>Status</th>
+              <th>Bid</th>
+              <th>Your Bid</th>
+              <th className=" rounded-r-lg">Action</th>
+            </tr>
+          </thead>
+          <tbody className="table-row-group">
+            {bids?.map((bid) => (
+              <tr
+                className="table-row bg-theme-bg [&_td]:table-cell [&_td]:pl-5 [&_td]:pr-3 [&_td]:py-3"
+                key={bid?._id}
+              >
+                <td className="rounded-l-lg">
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={bid?.auction?.image}
+                      alt="auction image"
+                      className="w-[50px] h-[50px] rounded-full"
+                    />
+                    <span className="pr-10">{bid?.auction?.name}</span>
+                  </div>
+                </td>
+                <td>
+                  <span>{bid?.auction?.category?.name}</span>
+                </td>
+                <td className="capitalize">
+                  <span className="px-3 py-1 rounded-full text-sm border bg-theme-bg2 border-border-info-color">
+                    {bid?.auction?.status}
+                  </span>
+                </td>
+                <td>
+                  <span>{bid?.auction?.startingPrice}</span>
+                </td>
+                <td>
+                  <span>{bid?.bidAmount}</span>
+                </td>
+                <td className="capitalize rounded-r-lg flex justify-center items-center">
+                  <Link
+                    className="text-theme-color hover:text-white hover:bg-theme-color rounded-lg border-2 border-theme-color p-2  transition-all"
+                    to={`/single-auction-detail/${bid?.auction?._id}`}
+                  >
+                    <FaEye size={24} className="inline mt-[-2px]" />
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {/* Card */}
     </div>
-  )
-}
+  );
+};
 
-export default BidsItem
+export default BidsItem;

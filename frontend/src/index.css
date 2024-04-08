@@ -1,33 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-*{
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: "border-box";
+* {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: "border-box";
 }
-body{
-    background-color: #061224;
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  background-color: #061224;
+  margin-bottom: 200px;
 }
 .no-scrollbar::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  .no-scrollbar::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 5px; /* Add this line */
+  width: 10px;
+}
 
-  }
-  
-  .no-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #0E294D;
-    border-radius: 5px; /* Add this line */
-  }
-  
-  .no-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #29B6F6;
-  }
+.no-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px; /* Add this line */
+}
+
+.no-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #0e294d;
+  border-radius: 5px; /* Add this line */
+}
+
+.no-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #29b6f6;
+}
