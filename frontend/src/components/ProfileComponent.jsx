@@ -63,7 +63,7 @@ const ProfileComponent = () => {
               <h2 className="text-xl ">Personal Info</h2>
               <Link
                 to="/user-profile/account-settings"
-                className=" flex items-center gap-1 px-4 py-2 bg-theme-color rounded-xl"
+                className=" flex items-center gap-1 px-4 py-2 bg-theme-color hover:bg-color-danger rounded-xl"
               >
                 <FaRegEdit size={16} /> <span>Edit</span>
               </Link>
@@ -124,7 +124,7 @@ const ProfileComponent = () => {
               <h2 className="text-xl ">Your Bio</h2>
               <Link
                 to="/user-profile/account-settings"
-                className=" flex items-center gap-1 px-4 py-2 bg-theme-color rounded-xl"
+                className=" flex items-center gap-1 px-4 py-2 bg-theme-color hover:bg-color-danger rounded-xl"
               >
                 <FaRegEdit size={16} /> <span>Edit</span>
               </Link>

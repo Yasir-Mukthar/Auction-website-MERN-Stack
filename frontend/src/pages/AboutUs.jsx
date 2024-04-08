@@ -140,9 +140,7 @@ const AboutUs = () => {
             <h2 className="mb-2 text-4xl font-medium">
               Create, Sell & Earn at AuctionZ
             </h2>
-            <span>
-             Start Selling your Amazing Products now!
-            </span>
+            <span>Start Selling your Amazing Products now!</span>
           </div>
           <Link
             className="hover:scale-105 bg-theme-color px-5 py-3 rounded-xl text-white cursor-pointer font-bold tracking-wide hover:bg-hover transition-all duration-200  w-fit"

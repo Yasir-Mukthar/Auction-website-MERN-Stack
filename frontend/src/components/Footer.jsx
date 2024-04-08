@@ -10,7 +10,7 @@ const Footer = () => {
   }, [pathname]);
 
   return (
-    <footer className=" bg-theme-bg shadow w-full">
+    <footer className="absolute bottom-0 bg-theme-bg shadow w-full">
       <div className="lg:w-[80%] mx-auto p-4 md:py-8">
         <div className="sm:flex items-center justify-between">
           <Link
