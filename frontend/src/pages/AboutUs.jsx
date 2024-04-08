@@ -68,7 +68,7 @@ const AboutUs = () => {
             </div>
             <div className="text-body-text-color">
               <p className="mb-2">
-                We are the largest online auction platform dedicated to creative
+                We are an online auction platform dedicated to creative
                 digital assets. Here, artists, designers, and creators from all
                 corners of the globe come together to find, buy, and sell
                 exceptional digital works in a dynamic bidding environment.

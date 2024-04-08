@@ -43,8 +43,8 @@ const Header = () => {
       <div className="flex items-center px-1">
         <Link to="/dashboard" className=" no-underline">
           <h1 className="text-3xl font-bold text-white font-Roboto">
-            <span className="uppercase text-theme-color">A</span>uction
-            <span className="uppercase text-theme-color">z</span>
+            <span className="uppercase text-theme-color">B</span>id
+            <span className="uppercase text-theme-color">F</span>air
           </h1>
         </Link>
       </div>
