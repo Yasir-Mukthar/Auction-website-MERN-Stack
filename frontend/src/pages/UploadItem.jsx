@@ -1,33 +1,31 @@
 import { useEffect, useRef, useState } from "react";
-import { useDispatch ,useSelector} from "react-redux";
-import { createAuction ,reset} from "../store/auction/auctionSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+import { createAuction, reset } from "../store/auction/auctionSlice.js";
 import { getAllCategories } from "../store/category/categorySlice.js";
 import { getAllCities } from "../store/city/citySlice.js";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getAllAuctions } from "../store/auction/auctionSlice"
-
-
-
+import { getAllAuctions } from "../store/auction/auctionSlice";
+import { IoCloudUploadOutline } from "react-icons/io5";
 
 const UploadItem = () => {
   const dispatch = useDispatch();
   const [imgUrl, setImgUrl] = useState("");
   const imgRef = useRef(null);
-  const {auction, isLoading, isError, isSuccess, message} = useSelector(state => state.auction);
-  const {categories} = useSelector(state => state.category);
-  const {cities} = useSelector(state => state.city);
+  const { auction, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auction
+  );
+  const { categories } = useSelector((state) => state.category);
+  const { cities } = useSelector((state) => state.city);
   const navigate = useNavigate();
 
-useEffect(()=>{
-    dispatch(getAllCategories())
-    dispatch(getAllCities())
+  useEffect(() => {
+    dispatch(getAllCategories());
+    dispatch(getAllCities());
+  }, [dispatch]);
 
-},[dispatch])
-
-  
-console.log("categoreik   ",categories)
+  console.log("categoreik   ", categories);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -60,26 +58,20 @@ console.log("categoreik   ",categories)
       data.append("image", imgRef.current.files[0]);
     }
 
-    
-
     dispatch(createAuction(data));
     toast.success("Auction created successfully");
-    dispatch(getAllAuctions())
+    dispatch(getAllAuctions());
 
-dispatch(reset())
-
-    
+    dispatch(reset());
   };
 
   return (
-    <div className=" w-full min-h-screen max-h-[2000px] bg-body-bg ">
+    <div>
       <form
-        className="md:flex flex flex-col md:flex-row   gap-3 justify-center min-h-screen "
+        className="flex flex-col lg:flex-row gap-8 justify-center md:w-[80%] lg:w-[100%] m-auto px-4 py-20"
         onSubmit={handleProductUpload}
-
-
       >
-        <div className="md:w-[30%]   p-4 rounded-lg mt-10">
+        <div className="text-white lg:w-[22%] lg:min-w-[350px] ">
           <h1 className="text-white text-2xl font-bold mb-4">Upload Item</h1>
 
           {imgUrl ? (
@@ -87,20 +79,24 @@ dispatch(reset())
               src={imgUrl}
               alt="upload img"
               onClick={() => imgRef.current.click()}
-              className="w-full h-80  mb-4  
-                    rounded-lg border-2 border-solid border-red-300  object-contain  cursor-pointer
+              className="w-full h-80 
+                    rounded-lg border-2 border-solid p-2 object-contain cursor-pointer
                     "
             />
           ) : (
             <div
               onClick={() => imgRef.current.click()}
-              className="w-full h-80  mb-4
-                    rounded-lg border-2 border-solid border-red-300
+              className="w-full h-80
+              rounded-xl border-2 border-dashed border-border-info-color 
                     flex items-center justify-center
                     cursor-pointer
                     "
             >
-              <p className="text-white">Click to upload</p>
+              <div className="text-center flex flex-col items-center gap-2">
+                <IoCloudUploadOutline size={68} className="text-theme-color" />
+                <p>Click to Upload</p>
+                <span className="text-body-text-color">Max Size 1MB</span>
+              </div>
             </div>
           )}
 
@@ -111,17 +107,14 @@ dispatch(reset())
             ref={imgRef}
           />
         </div>
-
-        <div className="md:w-[50%]   p-7 rounded-lg mt-10 border-2 border-red-500 border-solid  ">
-          <div className=" mb-4">
-            <label htmlFor="product_name" className="text-white  mb-1">
-              Product Name
-            </label>
+        {/* INPUTS */}
+        <div className="flex flex-col gap-4 lg:w-[50%] inputs:outline-none p-8 inputs:px-4 inputs:py-3 inputs:rounded-xl select:px-4 select:py-3 select:rounded-xl select:cursor-pointer border border-border-info-color inputs:bg-theme-bg inputs:border inputs:border-border-info-color focus:inputs:border-theme-color select:border select:border-border-info-color inputs:placeholder-body-text-color text-slate-300 rounded-2xl [&_label]:mb-2 [&_label]:text-body-text-color [&_*]:transition-all">
+          <div className="grid">
+            <label htmlFor="product_name">Product Name</label>
             <input
               required
               id="product_name"
               type="text"
-              className="w-full py-3 mt-2 outline-none border-none rounded-lg"
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
@@ -129,50 +122,45 @@ dispatch(reset())
             />{" "}
           </div>
 
-          <div className=" mb-4">
-            <label htmlFor="category" className="text-white">
-              Category
-            </label>
+          <div className="grid">
+            <label htmlFor="category">Category</label>
             <select
-    required
-    id="category"
-    className="w-full block py-3 mt-2 rounded-lg outline-none border-none"
-    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-    value={formData.category} // Set the value attribute to formData.category
->
-    <option value="">Select Category</option>
-      {categories.data && categories.data.map((category) => (
-        <option key={category._id} value={category._id}>{category.name}</option>
-      ))}
-    </select>
-
-    
+              className="outline-none bg-theme-bg rounded-xl px-3 py-4 cursor-pointer focus:border-theme-color"
+              required
+              id="category"
+              onChange={(e) =>
+                setFormData({ ...formData, category: e.target.value })
+              }
+              value={formData.category} // Set the value attribute to formData.category
+            >
+              <option value="">Select Category</option>
+              {categories.data &&
+                categories.data.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))}
+            </select>
           </div>
-          <div className="md:flex  gap-5 items-center mb-4">
-            <div className="w-full">
-              <label htmlFor="start_time" className="text-white">
-                Start Time
-              </label>
+          <div className="grid  lg:grid-cols-2 gap-4 mlg:grid-cols-1">
+            <div className="grid">
+              <label htmlFor="start_time">Start Time</label>
               <input
                 required
                 id="startTime"
                 type="datetime-local"
-                className="w-full py-3 mt-2 rounded-lg outline-none "
                 onChange={(e) =>
                   setFormData({ ...formData, startTime: e.target.value })
                 }
                 value={formData.startTime}
               />
             </div>
-            <div className="w-full mt-4 md:mt-0">
-              <label htmlFor="end_time" className="text-white">
-                End Time
-              </label>
+            <div className="grid">
+              <label htmlFor="end_time">End Time</label>
               <input
                 required
                 id="endTime"
                 type="datetime-local"
-                className="w-full py-3 mt-2 rounded-lg outline-none "
                 onChange={(e) =>
                   setFormData({ ...formData, endTime: e.target.value })
                 }
@@ -181,62 +169,57 @@ dispatch(reset())
             </div>
           </div>
 
-          <div className="md:flex gap-5 items-center mb-4">
-            <div className="w-full">
-              <label htmlFor="starting_price" className="text-white">
-                Starting Price
-              </label>
+          <div className="grid lg:grid-cols-2 gap-4 mlg:grid-cols-1">
+            <div className="grid">
+              <label htmlFor="starting_price">Starting Price</label>
+
               <input
                 required
                 id="starting_price"
                 type="number"
-                className="w-full py-3 mt-2 outline-none  rounded-lg "
                 onChange={(e) =>
                   setFormData({ ...formData, startingPrice: e.target.value })
                 }
                 value={formData.startingPrice}
               />
             </div>
-            <div className="w-full mt-4 md:mt-0">
-              <label htmlFor="category" className="text-white">
-                Area
-              </label>
-
+            <div className="grid">
+              <label htmlFor="category">Area</label>
               <select
+                className="outline-none bg-theme-bg rounded-xl px-3 py-4 cursor-pointer focus:border-theme-color"
                 required
                 id="category"
-                className="w-full  py-3 mt-2 rounded-lg outline-none border-none "
                 onChange={(e) =>
                   setFormData({ ...formData, location: e.target.value })
                 }
                 value={formData.location}
               >
                 <option value="">Select Area</option>
-                {cities.data && cities.data.map((location) => (
-                    <option key={location._id} value={location._id}>{location.name}</option>
-                ))}
+                {cities.data &&
+                  cities.data.map((location) => (
+                    <option key={location._id} value={location._id}>
+                      {location.name}
+                    </option>
+                  ))}
               </select>
-
-
             </div>
           </div>
-          <label htmlFor="description" className="text-white ">
-            Description
-          </label>
-          <textarea
-            required
-            id="description"
-            rows="7"
-            className="w-full py-3 mb-4 mt-2 rounded-lg "
-            onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
-            }
-            value={formData.description}
-          />
-
+          <div className="grid">
+            <label htmlFor="description">Description</label>
+            <textarea
+              required
+              id="description"
+              rows="7"
+              className="outline-none bg-theme-bg rounded-xl px-3 py-4 border border-border-info-color focus:border-theme-color placeholder-body-text-color"
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
+              value={formData.description}
+            />
+          </div>
           <button
             type="submit"
-            className="w-full py-3 my-5 rounded-lg outline-none bg-theme-bg text-white"
+            className="px-3 py-4 rounded-xl text-white cursor-pointer font-bold tracking-wide w-full bg-theme-color hover:bg-color-danger"
           >
             Upload
           </button>

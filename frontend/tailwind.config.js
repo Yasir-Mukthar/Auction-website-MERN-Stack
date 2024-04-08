@@ -9,6 +9,7 @@ export default {
       },
       screens: {
         vsm: "400px",
+        mlg:{'max': '1200px'},
       },
       colors: {
         "body-bg": "#061224",
