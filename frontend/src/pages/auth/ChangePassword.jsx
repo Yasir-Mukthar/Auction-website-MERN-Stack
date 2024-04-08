@@ -88,7 +88,7 @@ const ChangePassword = () => {
 
         <button
           type="submit"
-          className="rounded-xl px-4 py-3 text-white cursor-pointer font-bold tracking-wide w-fit bg-color-danger"
+          className="rounded-xl px-4 py-3 text-white cursor-pointer font-bold tracking-wide w-fit bg-color-danger hover:bg-theme-color transition-all"
         >
           Change Password
         </button>

@@ -55,7 +55,7 @@ const AccountSetting = () => {
   };
 
   return (
-    <div className=" px-7 py-4 w-full bg-theme-bg text-body-text-color rounded-2xl">
+    <div className=" px-7 py-4 w-full bg-theme-bg text-slate-300 rounded-2xl ">
       <h2 className=" text-white font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">
         Account Settings
       </h2>
@@ -68,7 +68,7 @@ const AccountSetting = () => {
           className="w-full md:w-[200px] mb-4 rounded-lg border-2 object-contain cursor-pointer"
         />
         {/* INPUTS*/}
-        <div className="flex flex-col gap-4 inputs:outline-none inputs:px-3 inputs:py-4 inputs:rounded-xl inputs:bg-theme-bg2 [&_input[type=submit]]:bg-theme-color inputs:border inputs:border-border-info-color focus:inputs:border-theme-color select:border select:border-border-info-color  [&_*]:transition-all ">
+        <div className="flex flex-col gap-4 inputs:outline-none inputs:px-3 inputs:py-4 inputs:rounded-xl inputs:bg-theme-bg2 [&_input[type=submit]]:bg-theme-color [&_input:hover[type=submit]]:bg-color-danger inputs:border inputs:border-border-info-color focus:inputs:border-theme-color select:border select:border-border-info-color inputs:placeholder-body-text-color  [&_*]:transition-all ">
           <input
             type="file"
             className="hidden"
@@ -139,7 +139,7 @@ const AccountSetting = () => {
             }
           />
           <select
-            className="outline-none bg-theme-bg2 rounded-xl px-3 py-4 cursor-pointer focus:border-theme-color"
+            className="outline-none bg-theme-bg2 rounded-xl px-3 py-4 cursor-pointer focus:border-theme-color "
             value={formData.userType}
             name="userType"
             onChange={(e) =>
@@ -150,7 +150,7 @@ const AccountSetting = () => {
             <option value="seller">Seller</option>
           </select>
           <textarea
-            className="outline-none bg-theme-bg2 rounded-xl px-3 py-4 border border-border-info-color focus:border-theme-color"
+            className="outline-none bg-theme-bg2 rounded-xl px-3 py-4 border border-border-info-color focus:border-theme-color placeholder-body-text-color"
             cols="30"
             rows="10"
             placeholder="Description"
@@ -161,7 +161,7 @@ const AccountSetting = () => {
             }
           ></textarea>{" "}
           <input
-            className="text-white cursor-pointer font-bold tracking-wide w-36"
+            className="text-white cursor-pointer font-bold tracking-wide"
             type="submit"
             value="Update"
           />
