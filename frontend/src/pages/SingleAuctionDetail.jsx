@@ -79,11 +79,11 @@ const SingleAuctionDetail = () => {
 
   return (
     <div
-      className="flex place-content-between  py-10 px-5 lg:py-20  lg:px-10  items-start gap-7 flex-wrap md:flex-nowrap"
+      className="flex place-content-between  py-10 px-5 lg:py-20  lg:px-10  items-start gap-7 flex-wrap md:flex-nowrap "
       id="item01"
     >
       <img
-        className=" rounded-xl lg:min-w-48 w-full lg:w-[80%]  "
+        className=" rounded-xl  md:max-w-[45%]  w-full "
         src={singleAuction?.image}
         alt="product image"
       />
