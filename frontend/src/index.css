@@ -17,6 +17,7 @@ html {
 
 body {
   background-color: #061224;
+  min-width: 300px;
   margin-bottom: 200px;
 }
 .no-scrollbar::-webkit-scrollbar {

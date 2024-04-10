@@ -1,74 +1,69 @@
-import { Link,useNavigate } from "react-router-dom";
-import { useState ,useEffect} from "react";
-import { useDispatch,useSelector } from "react-redux";
-import {toast} from "react-toastify"
-import 'react-toastify/dist/ReactToastify.css';
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { register, reset } from "../../store/auth/authSlice";
-
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const Register = () => {
-
-  const [formData, setFormData] = useState({ fullName: "", email: "", password: "" });
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+  });
   // Redux dispatch and state
   const dispatch = useDispatch();
-  const {user,isLoading, isError, isSuccess, message} = useSelector(state => state.auth);
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
   const navigate = useNavigate();
-  
-  useEffect(()=>{
-    
-  
-    if(user) {
+
+  useEffect(() => {
+    if (user) {
       navigate("/");
     }
 
-    if(isSuccess){
+    if (isSuccess) {
       toast.success(message);
-      navigate('/login');
-    } 
-    if(isError){
+      navigate("/login");
+    }
+    if (isError) {
       toast.error(message);
       dispatch(reset());
     }
 
-
     return () => {
       dispatch(reset());
-    }
-
-
-  },[isError,isSuccess,user]);
-
-
+    };
+  }, [isError, isSuccess, user]);
 
   // Submit the form data to the server
   const handleRegister = async (e) => {
     e.preventDefault();
-   
 
     const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     if (!emailRegex.test(formData.email)) {
       toast.error("Email is invalid");
       return false;
-    }else if(!passwordRegex.test(formData.password)) {
-      toast.error("Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character");
+    } else if (!passwordRegex.test(formData.password)) {
+      toast.error(
+        "Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character"
+      );
       return false;
-    }else {
+    } else {
       console.log(formData);
       dispatch(register(formData));
-     
     }
-
-    
-
-   
-
   };
+  const [showPassword, setShowPassword] = useState(false);
 
-  
-
-
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-[#061224] text-[#7386a8]">
@@ -79,47 +74,60 @@ const Register = () => {
         </h1>
         <p className="m-2 text-xl">Create your new account</p>
         <p className="my-3 h-[1px] w-[80%] bg-[#747d9340]"></p>
-        <form className="flex w-[90%] flex-col sm:w-[90%]" onSubmit={handleRegister}>
-          <label  className="my-1 text-lg">
-            Full Name
-          </label>
+        <form
+          className="overflow-hidden flex w-[90%] flex-col sm:w-[90%] "
+          onSubmit={handleRegister}
+        >
+          <label className="my-1 text-lg">Full Name</label>
           <input
             type="text"
             placeholder="Your Name"
-            className="focus:border-1 rounded border-[1px] text-white  bg-[#0E294D] px-5 py-3 mb-2 outline-none focus:border-[#00A3FF]  border-none focus:border-1 focus:border-solid placeholder-body-text-color "
+            className=" w-full pl-5 py-3 rounded text-white bg-[#0E294D] placeholder-body-text-color outline-none mb-3 border border-border-info-color focus:border-theme-color"
             name="fullName"
             value={formData.fullName}
-            onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, fullName: e.target.value })
+            }
             required
             // add validation here
             minLength={5}
-
           />
-          <label className="my-1 text-lg">
-            Email Address
-          </label>
+          <label className="my-1 text-lg">Email Address</label>
           <input
             type="email"
             placeholder="Your Email"
-            className="focus:border-1 rounded text-white border-[1px] focus:border-[#00A3FF]  border-none focus:border-1 focus:border-solid bg-[#0E294D] px-5 py-3 outline-none  mb-2 placeholder-body-text-color"
+            className=" w-full pl-5 py-3 rounded text-white bg-[#0E294D] placeholder-body-text-color outline-none mb-3 border border-border-info-color focus:border-theme-color"
             name="email"
             value={formData.email}
-            onChange={(e)=> setFormData({...formData, email: e.target.value})}
-            required
-
-          />
-          <label  className="my-1 mt-2 text-lg">
-            Password
-          </label>
-          <input
-            type="password"
-            placeholder="Your Password"
-            className="focus:border-1 text-white rounded border-[1px] bg-[#0E294D] px-5 py-3 outline-none focus:border-[#00A3FF]  border-none focus:border-1 focus:border-solid mb-4 placeholder-body-text-color"
-            name="password"
-            value={formData.password}
-            onChange={(e)=> setFormData({...formData, password: e.target.value})}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             required
           />
+          <label className="my-1 text-lg">Password</label>
+          <div className=" pr-3 overflow-hidden flex justify-between items-center w-full rounded bg-[#0E294D] outline-none mb-4 border border-border-info-color ">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Your Password"
+              className=" w-full pl-5 py-3 bg-[#0E294D] text-white placeholder-body-text-color outline-none"
+              name="password"
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+              required
+            />
+            <button
+              className=" p-2 hover:bg-theme-bg rounded-full h-fit active:scale-90 hover: transition-all"
+              onClick={togglePasswordVisibility}
+            >
+              {showPassword ? (
+                <FaRegEye size={18} />
+              ) : (
+                <FaRegEyeSlash size={18} className=" text-gray-400 " />
+              )}
+            </button>
+          </div>
           <button
             type="submit"
             className="my-4 font-Roboto outline-none border-none w-full rounded bg-[#00A3FF] px-4 py-3 font-bold hover:bg-color-danger  text-[#ffffff]"
@@ -131,7 +139,10 @@ const Register = () => {
 
         <p>
           Already have an account?{" "}
-          <Link to="/login" className="font-bold text-[#29B6F6] hover:text-color-danger">
+          <Link
+            to="/login"
+            className="font-bold text-[#29B6F6] hover:text-color-danger"
+          >
             Sign In.
           </Link>
         </p>
