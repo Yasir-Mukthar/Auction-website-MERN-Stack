@@ -69,8 +69,8 @@ const Register = () => {
     <div className="flex min-h-screen w-full items-center justify-center bg-[#061224] text-[#7386a8]">
       <div className="flex w-[90%]  flex-col items-center justify-center rounded-xl bg-[#071B36] py-8 sm:w-2/5 sm:px-6">
         <h1 className="text-3xl font-bold text-white">
-          <span className="uppercase text-[#00A3FF]">A</span>uction
-          <span className="uppercase text-[#00A3FF]">z</span>
+          <span className="uppercase text-[#00A3FF]">B</span>id
+          <span className="uppercase text-[#00A3FF]">F</span>air
         </h1>
         <p className="m-2 text-xl">Create your new account</p>
         <p className="my-3 h-[1px] w-[80%] bg-[#747d9340]"></p>

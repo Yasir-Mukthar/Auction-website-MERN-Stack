@@ -14,6 +14,8 @@
     "axios": "^1.6.7",
     "country-state-city": "^3.2.1",
     "crypto-browserify": "^3.12.0",
+    "flowise-embed": "^1.2.1",
+    "flowise-embed-react": "^1.0.2",
     "framer-motion": "^11.0.8",
     "react": "^18.2.0",
     "react-countdown": "^2.3.5",
