@@ -73,23 +73,25 @@ const Login = () => {
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Your Password "
-              className=" w-full pl-5 py-3 bg-[#0E294D] placeholder-body-text-color outline-none "
+              className=" w-full pl-5 py-3 bg-[#0E294D] text-white placeholder-body-text-color outline-none "
               name="password"
               value={formData.password}
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
               }
             />
-            <button
-              className=" p-2 hover:bg-theme-bg rounded-full h-fit active:scale-90 hover: transition-all"
-              onClick={togglePasswordVisibility}
-            >
-              {showPassword ? (
-                <FaRegEye size={18} />
-              ) : (
-                <FaRegEyeSlash size={18} className=" text-gray-400 " />
-              )}
-            </button>
+            <abbr title="Show / Hide Password">
+              <button
+                className=" p-2 hover:bg-theme-bg rounded-full h-fit active:scale-90 hover: transition-all"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? (
+                  <FaRegEye size={18} />
+                ) : (
+                  <FaRegEyeSlash size={18} className=" text-gray-400 " />
+                )}
+              </button>
+            </abbr>
           </div>
           <Link
             to="/forgot-password"
