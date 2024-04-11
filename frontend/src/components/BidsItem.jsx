@@ -17,9 +17,9 @@ const BidsItem = () => {
       <h2 className="  text-white font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">
         Bids Items
       </h2>
-      <div className="overflow-auto px-4 bg-theme-bg2 rounded-2xl  max-h-[750px] border border-border-info-color  ">
-        <table className="text-left whitespace-nowrap w-full border-separate border-spacing-x-0 border-spacing-y-4 ">
-          <thead className="table-header-group">
+      <div className="overflow-auto no-scrollbar px-4 bg-theme-bg2 rounded-2xl  max-h-[750px] border border-border-info-color  ">
+        <table className="relative text-left whitespace-nowrap w-full border-separate border-spacing-x-0 border-spacing-y-4 ">
+          <thead className="sticky top-0 table-header-group">
             <tr className="capitalize table-row bg-theme-color [&_th]:table-cell [&_th]:pl-5 [&_th]:pr-3 [&_th]:py-3">
               <th className=" rounded-l-lg ">Product</th>
               <th>Catagory</th>
