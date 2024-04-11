@@ -5,8 +5,6 @@ import Auction from "../models/auction.model.js";
 
 
 
-
-
 // @desc Add bid on item
 // @route POST /api/v1/bids/:itemId
 // @access Private
@@ -20,23 +18,21 @@ const addBidOnItem = asyncHandler(async (req, res) => {
     }
     console.log(amount, "amount");
 
-    let item = await Auction.findById(req.params.id); // Find the item with that id in our database
+    let item = await Auction.findById(req.params.id); 
     if (!item) {
       return res.status(404).json(new ApiResponse(404, "Item not found"));
     }
     console.log(item, "item....");
 
-    //saving to bid model
     const newBid = new Bid({
       bidder: req.user._id,
       auction: req.params.id,
       bidAmount: req.body.amount,
     });
 
+    
     await newBid.save();
-
-    //bids: [{ type: mongoose.Schema.Types.ObjectId, ref: "Bid" }],
-
+    
     item.bids.push(newBid._id);
     item.startingPrice = amount;
 
@@ -44,13 +40,16 @@ const addBidOnItem = asyncHandler(async (req, res) => {
 
     return res
       .status(201)
-      .json(new ApiResponse(201, "Bid placed successfully", item));
+      .json(new ApiResponse(201, "Bid placed successfully", newBid));
   } catch (error) {
     return res
       .status(500)
       .json(new ApiResponse(500, error?.message || "Internal server error"));
   }
 });
+
+
+
 
 //@desc Get all a winner of an auction
 //@route GET /api/auctions/:id/winner

@@ -95,7 +95,7 @@ const UploadItem = () => {
               <div className="text-center flex flex-col items-center gap-2">
                 <IoCloudUploadOutline size={68} className="text-theme-color" />
                 <p>Click to Upload</p>
-                <span className="text-body-text-color">Max Size 1MB</span>
+                <span className="text-body-text-color">PNG,JPG,JPEG | Max Size 1MB</span>
               </div>
             </div>
           )}
@@ -105,6 +105,8 @@ const UploadItem = () => {
             className="hidden"
             onChange={(e) => setImgUrl(URL.createObjectURL(e.target.files[0]))}
             ref={imgRef}
+            accept=".png, .jpg, .jpeg"
+
           />
         </div>
         {/* INPUTS */}

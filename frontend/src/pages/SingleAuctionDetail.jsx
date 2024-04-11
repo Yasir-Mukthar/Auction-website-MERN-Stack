@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getSingleAuctionById } from "../store/auction/auctionSlice";
@@ -8,6 +8,8 @@ import { placeABid } from "../store/bid/bidSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { sendNewBidNotification } from "../store/notification/notificationSlice";
+import io from 'socket.io-client';
+
 
 const SingleAuctionDetail = () => {
   const [newBidAmount, setNewBidAmount] = useState("");
@@ -18,6 +20,13 @@ const SingleAuctionDetail = () => {
   const dispatch = useDispatch();
   const { singleAuction, isLoading } = useSelector((state) => state.auction);
   const [auctionStarted, setAuctionStarted] = useState(false);
+  const [singleAuctionData, setSingleAuctionData] = useState(singleAuction);
+  const [bidsData, setBidsData] = useState(singleAuction?.bids);
+
+  const socket = useMemo(() => io("http://localhost:8000"), []);
+  
+
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,10 +46,61 @@ const SingleAuctionDetail = () => {
   console.log(isLoading);
 
   useEffect(() => {
+   
+
     console.log("useEffect is running.....");
-    dispatch(getSingleAuctionById(params.id));
+    dispatch(getSingleAuctionById(params?.id));
   }, []);
 
+  useEffect(()=>{
+    
+setSingleAuctionData(singleAuction)
+setBidsData(singleAuction?.bids)
+  },[singleAuction])
+
+  useEffect(()=>{
+    socket.on("connect", () => {
+      console.log(`Client connected with the id: ${socket.id}`);
+    });
+    socket.emit("joinAuction", logInUser?._id);
+    socket.on("newUserJoined", (data) => {
+      console.log(data, "newUserJoined,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
+    });
+   
+   
+  
+  },[])
+
+  socket.on("newBidData", (data) => {
+    console.log(data, "newBidData,,,,,,,,,,,,,,,,,io,,,,,,io");
+
+    setSingleAuctionData({
+      ...singleAuctionData,
+      startingPrice:data.bidAmount,
+      // bids: [
+      //   ...bidsData,
+      //   {
+      //     bidder: {
+      //       profilePicture: data.profilePicture,
+      //       fullName: data.fullName,
+      //     },
+      //     bidAmount: data.bidAmount,
+      //     bidTime: data.bidTime,
+      //   },
+      // ],
+      
+      });
+      setBidsData([...bidsData,{
+        bidder: {
+          profilePicture: data.profilePicture,
+          fullName: data.fullName,
+        },
+        bidAmount: data.bidAmount,
+        bidTime: data.bidTime,
+      }]);
+    
+
+  });
   if (isLoading) {
     return <h1 className="text-center mt-10 text-lg text-white">Loading...</h1>;
   }
@@ -49,7 +109,7 @@ const SingleAuctionDetail = () => {
     return null; // or handle the case when singleAuction is undefined
   }
 
-  const placeBidHandle = (e) => {
+  const placeBidHandle =async (e) => {
     e.preventDefault();
 
     let bidData = {
@@ -62,8 +122,17 @@ const SingleAuctionDetail = () => {
     } else if (singleAuction?.endTime < new Date().getTime() / 1000) {
       toast.info("Auction time is over");
     } else {
-      dispatch(placeABid(bidData));
-      dispatch(
+     await dispatch(placeABid(bidData));
+     socket.emit('newBid',{
+      profilePicture: logInUser?.profilePicture,
+      fullName: logInUser?.fullName,
+      bidAmount: newBidAmount,
+      bidTime: new Date().getTime(),
+      auctionId:params.id
+    
+     })
+   
+     await dispatch(
         sendNewBidNotification({
           auctionId: params.id,
           type: "BID_PLACED",
@@ -191,7 +260,7 @@ const SingleAuctionDetail = () => {
 
             {/* map over bids array */}
             {singleAuction?.bids?.length > 0 ? (
-              singleAuction?.bids?.map((bid) => (
+              bidsData?.map((bid) => (
                 <BidCard key={bid._id} bid={bid} />
               ))
             ) : (
@@ -220,7 +289,7 @@ const SingleAuctionDetail = () => {
                     : "Starting Price"}
                 </h3>
                 <p className="text-body-text-color">
-                  ${singleAuction?.startingPrice}
+                  ${singleAuctionData?.startingPrice}
                 </p>
               </div>
               <div className="flex flex-col gap-2">
@@ -239,8 +308,8 @@ const SingleAuctionDetail = () => {
 
         {/* // detail about current bid and timer  */}
         <div className=" flex flex-col gap-4 pt-4 border-t border-border-info-color ">
-          {singleAuction?.status === "over" ? (
-            <div>
+          {singleAuction?.status === "over"? (
+             singleAuction?.bids?.length > 0 ? <div>
               <h1 className="font-bold text-white">Winner</h1>
               <div className="flex sm:gap-10 items-center border mt-2 justify-between md:w-[80%] py-1 px-2 md:px-5 border-theme-bg-light rounded-full">
                 <div className="flex gap-4 items-center text-white">
@@ -269,6 +338,9 @@ const SingleAuctionDetail = () => {
                 </div>
               </div>{" "}
             </div>
+            : <h1>No bids</h1>
+
+            
           ) : (
             <form
               className="flex justify-between flex-wrap gap-4 items-center"

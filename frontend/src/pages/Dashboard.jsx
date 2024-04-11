@@ -58,6 +58,8 @@ console.log("dkfkdjkkkkkkkkkkkkkkkkkk");
                 status={item?.status}
                 sellerImage={item?.seller?.profilePicture}
                 sellerName={item?.seller?.fullName}
+                sellerId={item?.seller?._id}
+                bidLength={item?.bids?.length}
                 winnerFullName={item?.winner?.bidder?.fullName}
                 winnerProfilePicture={item?.winner?.bidder?.profilePicture}
                 winnerBidAmount={item?.winner?.bidAmount}
