@@ -21,17 +21,18 @@ body {
   margin-bottom: 200px;
 }
 .no-scrollbar::-webkit-scrollbar {
-  width: 10px;
+  width: 12px;
 }
 
 .no-scrollbar::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 5px; /* Add this line */
+  background: #ffffff;
+  border-radius: 9999px; /* Add this line */
 }
 
 .no-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #0e294d;
-  border-radius: 5px; /* Add this line */
+  border: solid 1px #ffffff;
+  background-color: #aaaaaa;
+  border-radius: 9999px; /* Add this line */
 }
 
 .no-scrollbar::-webkit-scrollbar-thumb:hover {

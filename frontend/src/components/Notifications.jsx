@@ -37,7 +37,7 @@ const Notifications = () => {
   console.log(notificationData, " notificationsData........");
 
   return (
-    <div className="flex flex-col w-full px-7 py-4 bg-theme-bg text-body-text-color rounded-2xl">
+    <div className="overflow-auto flex flex-col w-full px-7 py-4 bg-theme-bg text-body-text-color rounded-2xl">
       <h2 className=" text-white font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">
         Notifications
       </h2>
@@ -48,7 +48,7 @@ const Notifications = () => {
         <FaRegCheckCircle className="mt-[-2px]" />{" "}
         <span> Mark all as read</span>
       </button>
-      <div className="flex flex-col gap-4 mt-10">
+      <div className="overflow-auto no-scrollbar p-5 border border-border-info-color rounded-2xl max-h-[750px] flex flex-col gap-4 mt-10">
         {notificationData?.map((notification) => (
           <Link
             to={notification?.link}
