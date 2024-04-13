@@ -107,14 +107,14 @@ const Header = () => {
               Profile
             </Link>
             <Link
-              to=""
+              to="/user-profile/manage-items"
               className="block no-underline text-white font-Roboto text-lg py-2 px-7 hover:bg-theme-bg-light"
               onClick={() => setSidebarOpen(false)}
             >
               Manage Items
             </Link>
             <Link
-              to=""
+              to="/contact-us"
               className="block no-underline text-white font-Roboto text-lg py-2 px-7 hover:bg-theme-bg-light"
               onClick={() => setSidebarOpen(false)}
             >
