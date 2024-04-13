@@ -7,19 +7,30 @@ import {
   markAllNotificationsAsRead,
   markNotificationAsRead,
 } from "../store/notification/notificationSlice";
+import socket from "../socket";
 
 const Notifications = () => {
   const dispatch = useDispatch();
   const { notifications } = useSelector((state) => state.notification);
   const [notificationData, setNotificationData] = useState();
+  const logInUser = JSON.parse(localStorage.getItem("user"));
+
 
   useEffect(() => {
     dispatch(getNotificationForUser());
+    socket.emit("joinAuction", logInUser?._id);
+
   }, [dispatch]); // This useEffect only runs when the component mounts
 
   useEffect(() => {
     setNotificationData(notifications);
     console.log(notifications, " notifications........ useeffect.........");
+    socket.on("newBidNotification", (data) => {
+      console.log(data, " new bid notification data from socket.,,,,,,,,,,,,,,,,,,,,,,,,..........");
+
+      dispatch(getNotificationForUser());
+     
+    });
   }, [notifications]); // This useEffect runs whenever notifications changes
 
   const handleMarkAllAsRead = async () => {
@@ -79,6 +90,9 @@ const Notifications = () => {
                     }`}
                   />
                   {new Date(notification?.createdAt).toLocaleString()}
+                  {/* {notification?.auction?.bids?.map((bid)=>(
+                    bid._id === 
+                  ))}  */}
                 </span>
               </div>
             </div>

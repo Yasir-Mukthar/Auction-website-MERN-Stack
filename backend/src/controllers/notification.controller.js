@@ -80,6 +80,14 @@ const getUserNotifications = asyncHandler(async (req, res) => {
     })
     .sort({ createdAt: -1 })
     .populate("auction", "name image")
+    .populate({
+      path: "auction",
+      populate: {
+        path: "bids",
+        model: "Bid",
+      },
+    
+    })
 
     if (!notifications) {
       return res

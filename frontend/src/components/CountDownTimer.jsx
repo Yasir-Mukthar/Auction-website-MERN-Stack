@@ -16,6 +16,9 @@ const CountDownTimer = (props) => {
   const [auctionStarted, setAuctionStarted] = useState(false);
   const [auctionEnded, setAuctionEnded] = useState(false);
 
+console.log("props", props);
+console.log(auctionEnded, auctionStarted, "auctionEnded, auctionStarted");
+  
   useEffect(() => {
     const interval = setInterval(() => {
       const currentTime = new Date().getTime();
@@ -28,28 +31,22 @@ const CountDownTimer = (props) => {
       if (auctionStarted && currentTime >= endTime && !auctionEnded) {
         setAuctionEnded(true);
         console.log("auction ended.......");
+      
         dispatch(updateAuctionStatus({ id: props?.id, status: "completed" }));
-        dispatch(selectAuctionWinner({ id: props?.id }));
+        dispatch(selectAuctionWinner({ id: props?.id }));      
         dispatch(reset())
+        props?.Winner()
+        // props?.winnerForDashboard()
         setAuctionStarted(false)
+console.log("auction ended.............,,,,,,,,,");
+        clearInterval(interval)
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [auctionStarted, startTime, endTime, dispatch, props?.id]);
+  }, [auctionStarted,auctionEnded,dispatch, startTime, endTime,  props?.id]);
 
-  const handleAuctionWinner = () => {
-    dispatch(updateAuctionStatus({ id: props?.id, status: "completed" }));
-    dispatch(selectAuctionWinner({ id: props?.id }));
-  };
-
-  const handleChangeAuctionStatus = () => {
-    console.log("auction handle status .............");
-    if (auctionStarted) {
-      // dispatch(updateAuctionStatus({ id: props?.id, status: "active" }));
-      // setAuctionStarted(false);
-    }
-  };
+  
 
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if (completed) {

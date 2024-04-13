@@ -1,20 +1,15 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
 import { reset } from "../store/auth/authSlice"
 import { getAllAuctions } from "../store/auction/auctionSlice"
 import { toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import CountDownTimer from "../components/CountDownTimer"
 import SingleAuction from "../components/SingleAuction"
 import SearchLocationCategory from "../components/SearchLocationCategory"
-import { getAllCategories } from "../store/category/categorySlice"
-import { getAllCities } from "../store/city/cityService"
 
 
 const Dashboard = () => {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const [auctionData , setAuctionData] = useState([])
 
     const {auction, isLoading, isError, isSuccess, message} = useSelector(state => state.auction)
@@ -27,7 +22,6 @@ useEffect(() => {
 
 useEffect(() => {
     if (isSuccess) {
-console.log("dkfkdjkkkkkkkkkkkkkkkkkk");
         setAuctionData(auction)
     } else if (isError) {
         toast.error(message)

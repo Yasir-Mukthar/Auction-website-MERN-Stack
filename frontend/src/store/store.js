@@ -1,5 +1,5 @@
 
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore} from '@reduxjs/toolkit';
 import authReducer from './auth/authSlice';
 import auctionReducer from './auction/auctionSlice';
 import categoryReducer from './category/categorySlice';
@@ -19,6 +19,12 @@ export const store= configureStore({
 
         
     }
+    ,
+    middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      
+      serializableCheck: false,
+    }),
 });
 
 

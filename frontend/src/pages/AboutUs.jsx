@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { FaLinkedinIn, FaGithub } from "react-icons/fa";
-import { FaArrowRightLong } from "react-icons/fa6";
 import aboutimg from "../assets/aboutus.png";
 import dev1 from "../assets/dev1.jpg";
 import dev2 from "../assets/dev2.jpg";
 import dev3 from "../assets/dev3.jpg";
+import CreateEarnHome from "../components/home/CreateEarnHome";
 
 const AboutUs = () => {
   const devs = [
@@ -135,23 +135,7 @@ const AboutUs = () => {
             ))}
           </div>
         </div>
-        <div className="flex flex-col gap-4 mb-10 px-11 py-20 mt-20 justify-center bg-theme-bg rounded-[20px]  bg-cover bg-hero-img">
-          <div>
-            <h2 className="mb-2 text-4xl font-medium">
-              Create, Sell & Earn at AuctionZ
-            </h2>
-            <span>Start Selling your Amazing Products now!</span>
-          </div>
-          <Link
-            className="hover:scale-105 bg-theme-color px-5 py-3 rounded-xl text-white cursor-pointer font-bold tracking-wide hover:bg-hover transition-all duration-200  w-fit"
-            to="/create-auction"
-          >
-            <div className="flex items-center gap-2">
-              <span>Get Started </span>
-              <FaArrowRightLong />
-            </div>
-          </Link>
-        </div>
+       <CreateEarnHome /> 
       </div>
     </>
   );

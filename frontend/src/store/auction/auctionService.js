@@ -45,6 +45,7 @@ const getSingleAuctionById = async (id) => {
   }
 };
 
+
 //update auction status
 
 const updateAuctionStatus = async (data) => {
@@ -125,7 +126,20 @@ const updateSingleAuction=async(data)=>{
     }
 }
 
+const getWinnerDetail=async(id)=>{
+    try{
+        const response = await axios.get(`${API_URL}/auctions/${id}/winner`);
+        console.log("response getWinnerDetail", response.data);
+        return response.data;
+    }catch(error){
+        const message = (error.response && error.response.data.message) || error.message;
+        console.error("Error with getWinnerDetail", error);
+        return {message, isError:true};
+    }
+}
+
 const auctionService = {
+  getWinnerDetail,
   createAuction,
   getAllAuctions,
   getSingleAuctionById,

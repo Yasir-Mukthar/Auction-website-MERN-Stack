@@ -414,6 +414,47 @@ if(auction.status === "over"){
   }
 });
 
+// @desc Get auction winner
+// @route GET /api/v1/auctions/:id/winner
+// @access Public
+
+const getAuctionWinner= asyncHandler(async (req, res) => {
+  
+  try {
+    const auction = await Auction.findById(req.params.id)
+    .populate(
+      {
+        path: "winner",
+  
+        populate: {
+          path: "bidder",
+          select: "fullName  profilePicture",
+        },
+      }
+    )
+      
+    if (!auction) {
+      return res.status(404).json(new ApiResponse(404, "Auction not found"));
+    }
+    if (auction.bids.length === 0) {
+      return res.status(404).json(new ApiResponse(404, "No bids found"));
+    }
+    const winner={
+      winnerFullName:auction?.winner?.bidder?.fullName,
+      winnerProfilePicture:auction?.winner?.bidder?.profilePicture,
+      winnerBidAmount:auction?.winner?.bidAmount,
+      winnerBidTime:auction?.winner?.bidTime
+    }
+
+return res.status(200).json(new ApiResponse(200, "Auction winner retrieved successfully", {winner:winner}));
+    
+  } catch (error) {
+    return res
+      .status(500)
+      .json(new ApiResponse(500, error?.message || "Internal server error"));
+  }
+});
+
 
 
 export {
@@ -425,4 +466,5 @@ export {
   getAuctionsByUser,
   deleteSingleAuctionById,
   updateSingleAuactionById,
+  getAuctionWinner,
 };

@@ -16,33 +16,81 @@ const EditAuction = () => {
   const dispatch = useDispatch();
 
   const { singleAuction, isLoading } = useSelector((state) => state.auction);
+  const [singleAuctionData, setSingleAuctionData] = useState(singleAuction);
   const [imgUrl, setImgUrl] = useState(singleAuction?.image || "");
   const imgRef = useRef(null);
   const { categories } = useSelector((state) => state.category);
   const { cities } = useSelector((state) => state.city);
   console.log("singleAuction........", singleAuction);
 
+
   useEffect(() => {
+    dispatch(getSingleAuctionById(id));
+  }, [id]);
+  
+  useEffect(() => {
+    if (singleAuction) {
+      setSingleAuctionData(singleAuction);
+    }
+    
+  }, [singleAuction]);
+
+  useEffect(() => {
+
     dispatch(getAllCategories());
     dispatch(getAllCities());
-    dispatch(getSingleAuctionById(id));
-  }, [dispatch, id]);
+  }, []);
+
+
+
+
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    startTime: "",
+    endTime: "",
+    category: "",
+    location: "",
+    startingPrice: 0,
+    imgUrl: "",
+  });
+  
+  
+  useEffect(() => {
+  
+      setFormData({
+        name: singleAuctionData?.name,
+        description: singleAuctionData?.description || "",
+        startTime: singleAuctionData?.startTime
+          ? new Date(singleAuctionData?.startTime).toISOString().slice(0, 16)
+          : "",
+        endTime: singleAuctionData?.endTime
+          ? new Date(singleAuctionData?.endTime).toISOString().slice(0, 16)
+          : "",
+        category: singleAuctionData?.category?._id || "",
+        location: singleAuctionData?.location?._id || "",
+        startingPrice: parseFloat(singleAuctionData?.startingPrice) || 0,
+        
+      });
+      setImgUrl(singleAuctionData?.image || "")
+    
+  }, [singleAuctionData]);
 
   console.log("categoreik   ", categories);
 
-  const [formData, setFormData] = useState({
-    name: singleAuction?.name || "",
-    description: singleAuction?.description || "",
-    startTime: singleAuction?.startTime
-      ? new Date(singleAuction?.startTime).toISOString().slice(0, 16)
-      : "",
-    endTime: singleAuction?.endTime
-      ? new Date(singleAuction?.endTime).toISOString().slice(0, 16)
-      : "",
-    category: singleAuction?.category?._id || "",
-    location: singleAuction?.location?._id || "",
-    startingPrice: parseFloat(singleAuction?.startingPrice) || 0,
-  });
+  // const [formData, setFormData] = useState({
+  //   name: singleAuctionData?.name || "",
+  //   description: singleAuction?.description || "",
+  //   startTime: singleAuction?.startTime
+  //     ? new Date(singleAuction?.startTime).toISOString().slice(0, 16)
+  //     : "",
+  //   endTime: singleAuction?.endTime
+  //     ? new Date(singleAuction?.endTime).toISOString().slice(0, 16)
+  //     : "",
+  //   category: singleAuction?.category?._id || "",
+  //   location: singleAuction?.location?._id || "",
+  //   startingPrice: parseFloat(singleAuction?.startingPrice) || 0,
+  // });
   console.log(formData, "formData....");
   const handleProductUpload = (e) => {
     e.preventDefault();

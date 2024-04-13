@@ -138,6 +138,37 @@ const getBidsByUser = asyncHandler(async (req, res) => {
 });
 
 
+// @desc Get all bids by Auction ID
+// @route GET /api/bids/get-all-bids/:auctionId
+// @access Public
+
+const getAllBidsByAuctionId = asyncHandler(async (req, res) => {
+  try {
+
+    const bids = await Bid.find({ auction: req.params.auctionId }).populate(
+      "bidder",
+      "fullName profilePicture"
+    )
+    .sort({ createdAt: -1 })
+
+    if (!bids) {
+      return res.status(404).json(new ApiResponse(404, "No bids found"));
+    }
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "All bids by auction", {bids: bids}));
+    
+  } catch (error) {
+    return res
+      .status(500)
+      .json(new ApiResponse(500, error?.message || "Internal server error"));
+    
+  }
+
+  
+});
+
 
 
 
@@ -155,7 +186,8 @@ const getBidsByUser = asyncHandler(async (req, res) => {
 export { 
   addBidOnItem, 
   getWinnerOfAuction,
-  getBidsByUser
+  getBidsByUser,
+  getAllBidsByAuctionId
 };
 
 

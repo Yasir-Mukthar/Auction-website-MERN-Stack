@@ -105,6 +105,17 @@ export const updateSingleAuction=createAsyncThunk(
   }
 })
 
+export const getWinnerDetail=createAsyncThunk(
+  "auction/winnerDetail", async (id, thunkAPI) => {
+    try {
+      return await auctionService.getWinnerDetail(id);
+      
+    } catch (error) {
+      const message = (error.response && error.response.data.message) || error.message;
+      return thunkAPI.rejectWithValue({ message, isError: true }); 
+    }
+    }  
+);
 
 
 
@@ -112,6 +123,7 @@ const initialState = {
   auction: [],
   singleAuction : {},
   sellerAuction:[],
+  auctionWinnerDetail:null,
   isLoading: false,
   isError: false,
   isSuccess: false,
@@ -127,6 +139,7 @@ const auctionSlice = createSlice({
       state.isLoading = false;
       state.message = "";
     },
+   
   },
   extraReducers: (builder) => {
     builder.addCase(createAuction.pending, (state) => {
@@ -213,7 +226,9 @@ const auctionSlice = createSlice({
       state.isLoading = false;
       state.isError = false;
       state.isSuccess = true;
-      state.message = action.payload.message;
+      state.message = action.payload.message; 
+      state.auctionWinnerDetail = action.payload.data;
+
     });
     builder.addCase(selectAuctionWinner.rejected, (state, action) => {
       state.isLoading = false;
@@ -276,6 +291,29 @@ const auctionSlice = createSlice({
       state.isSuccess = false;
       state.message = action.payload.message;
     });
+    builder.addCase(getWinnerDetail.pending, (state) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = "";
+    });
+    builder.addCase(getWinnerDetail.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = true;
+      state.message = action.payload.message;
+      state.auctionWinnerDetail = action.payload.data;
+    });
+    builder.addCase(getWinnerDetail.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.isSuccess = false;
+      state.message = action.payload.message;
+    });
+     
+      
+      // Handle other actions...
+    
 
 
     

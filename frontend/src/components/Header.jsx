@@ -7,6 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useLocation } from "react-router-dom";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { getNotificationForUser } from "../store/notification/notificationSlice";
+import socket from "../socket";
+
 
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -15,6 +17,8 @@ const Header = () => {
   const { notifications } = useSelector((state) => state.notification);
   let navigate = useNavigate();
   let location = useLocation();
+  const logInUser = JSON.parse(localStorage.getItem("user"));
+
 
   console.log(notifications, "notifications............ header......");
   //i want a length of isRead ===false
@@ -26,6 +30,13 @@ const Header = () => {
   useEffect(() => {}, [user]);
   useEffect(() => {
     dispatch(getNotificationForUser());
+    socket.on("newBidNotification", (data) => {
+      console.log(data, " new bid notification data from socket.,,,,,,,,,,,,,,,,,,,,,,,,..........");
+      socket.emit("joinAuction", logInUser?._id);
+
+      dispatch(getNotificationForUser());
+     
+    });
 
     console.log(notifications, "notification dispatch............");
   }, [location]);

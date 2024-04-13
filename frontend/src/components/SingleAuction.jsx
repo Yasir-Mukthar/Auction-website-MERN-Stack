@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import CountDownTimer from "../components/CountDownTimer";
+import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
 const SingleAuction = ({
@@ -19,6 +20,11 @@ const SingleAuction = ({
   winnerBidAmount,
   winnerBidTime,
 }) => {
+  // const [statusData, setStatusData] = useState(status);
+
+  // const handleWinner = () => {
+  //   setStatusData("over");
+  // }
 
   const logInUser = JSON.parse(localStorage.getItem("user"));
 
@@ -36,6 +42,7 @@ const SingleAuction = ({
             endTime={endTime}
             status={status}
             id={id}
+            // winnerForDashboard={handleWinner}
           />
         </div>
       </div>
@@ -55,20 +62,20 @@ const SingleAuction = ({
 
       {/* show the winner of auction */}
 
-      {status === "over" ? (
-        bidLength > 0  ?
+      {SingleAuction?.status === "over" ? (
+        
         <div className="flex justify-between item-center my-2">
-          <div className="flex flex-col ">
-            <p className="font-bold text-[12px]">Winner</p>
-            <p className="font-bold mt-2">{winnerFullName}</p>
+           <div className="flex flex-col ">
+            <p className="text-[12px]">Current Bid</p>
+            <p className="mt-2">$ {startingPrice}</p>
           </div>
           <Link
             to={`/single-auction-detail/${id}`}
             className=" bg-theme-color hover:bg-color-danger text-white text-sm font-bold  rounded-md my-auto px-3 py-2  text-center no-underline"
           >
-            View Winner
+            View 
           </Link>
-        </div> : <h1>no bid</h1>
+        </div> 
       ) : (
         <div className="flex justify-between item-center my-2">
           <div className="flex flex-col ">

@@ -18,9 +18,9 @@ const ManageItems = () => {
   }, [dispatch]);
   console.log(sellerAuction, "sellerAuction....");
 
-  const handleDeleteAuction = (id) => {
+  const handleDeleteAuction =async (id) => {
     console.log(id, "delete id....");
-    dispatch(deleteSingleAuctionById(id));
+   await dispatch(deleteSingleAuctionById(id));
     dispatch(getSellerAuction());
   };
 
