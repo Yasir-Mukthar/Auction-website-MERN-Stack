@@ -1,48 +1,46 @@
-import { useDispatch, useSelector } from "react-redux"
-import { useEffect, useState } from "react"
-import { reset } from "../store/auth/authSlice"
-import { getAllAuctions } from "../store/auction/auctionSlice"
-import { toast } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
-import SingleAuction from "../components/SingleAuction"
-import SearchLocationCategory from "../components/SearchLocationCategory"
-
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { reset } from "../store/auth/authSlice";
+import { getAllAuctions } from "../store/auction/auctionSlice";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import SingleAuction from "../components/SingleAuction";
+import SearchLocationCategory from "../components/SearchLocationCategory";
 
 const Dashboard = () => {
-    const dispatch = useDispatch()
-    const [auctionData , setAuctionData] = useState([])
+  const dispatch = useDispatch();
+  const [auctionData, setAuctionData] = useState([]);
 
-    const {auction, isLoading, isError, isSuccess, message} = useSelector(state => state.auction)
-   console.log(auctionData);
+  const { auction, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auction
+  );
+  console.log(auctionData);
 
-useEffect(() => {
-    dispatch(getAllAuctions())
+  useEffect(() => {
+    dispatch(getAllAuctions());
     console.log("dispatched");
-}, [])
+  }, []);
 
-useEffect(() => {
+  useEffect(() => {
     if (isSuccess) {
-        setAuctionData(auction)
+      setAuctionData(auction);
     } else if (isError) {
-        toast.error(message)
+      toast.error(message);
     }
-}, [auction])
+  }, [auction]);
 
-
-  
-    
   return (
     <div className="flex flex-col min-h-screen w-full  bg-[#061224] text-[#7386a8]">
-        <div className="">
-            <SearchLocationCategory />
-        </div>
+      <div className="">
+        <SearchLocationCategory />
+      </div>
 
-        <div className="flex flex-wrap justify-center"> {
-           auctionData &&  auctionData.map((item, index) => (
-                <div
-                 key={index}
-                  className=" m-2 flex flex-wrap gap-1">
-                <SingleAuction
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 md:grid-cols-3 lg:grid-cols-4 max-w-[1400px] mx-auto">
+        {" "}
+        {auctionData &&
+          auctionData.map((item, index) => (
+            <div key={index}>
+              <SingleAuction
                 name={item?.name}
                 startingPrice={item?.startingPrice}
                 image={item?.image}
@@ -58,16 +56,12 @@ useEffect(() => {
                 winnerProfilePicture={item?.winner?.bidder?.profilePicture}
                 winnerBidAmount={item?.winner?.bidAmount}
                 winnerBidTime={item?.winner?.bidTime}
-                  />
-               
-               
-                </div>
-            ))
+              />
+            </div>
+          ))}{" "}
+      </div>
 
-        }            </div>
-
-        
-        {/* <div>
+      {/* <div>
             <h1 className="text-2xl font-semibold text-white">Dashboard</h1>
             <div className="flex flex-wrap gap-4">
                 {auctionData.map((item, index) => (
@@ -84,10 +78,8 @@ useEffect(() => {
                 ))}
             </div>
         </div> */}
-      
     </div>
   );
 };
-  
 
-export default Dashboard
+export default Dashboard;

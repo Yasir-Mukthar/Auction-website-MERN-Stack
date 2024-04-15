@@ -38,3 +38,9 @@ body {
 .no-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #29b6f6;
 }
+
+.text-stroke {
+  color: transparent;
+  -webkit-text-stroke: 2px #29B6F6;
+  -webkit-text-fill-color: transparent;
+}

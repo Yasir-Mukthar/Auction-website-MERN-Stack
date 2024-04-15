@@ -1,3 +1,5 @@
+import { transform } from "framer-motion";
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -58,12 +60,22 @@ export default {
             opacity: 1,
           },
 
-          "90%": { visibility: "hidden", opacity: 0 },
+          "100%": { visibility: "hidden", opacity: 0 },
+        },
+        floatkey: {
+          "0,100%": {
+            transform: "translate(0,0)",
+          },
+
+          "50%": {
+            transform: "translate(0,10px)",
+          },
         },
       },
       animation: {
         fadein: "fadeinkey 300ms ",
         fadeout: "fadeoutkey 300ms",
+        float: "floatkey 3s ease-in-out infinite",
       },
     },
   },
