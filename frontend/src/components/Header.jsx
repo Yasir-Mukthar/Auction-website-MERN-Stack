@@ -51,15 +51,15 @@ const Header = () => {
 
   return (
     <div className="flex justify-between items-center px-5 sm:px-14 bg-body-bg py-4 border-b border-border-info-color">
-      <div className="flex items-center px-1">
-        <Link to="/dashboard" className=" no-underline">
+      <div className="flex items-center px-1 z-[1]">
+        <Link to="/dashboard" className=" no-underline ">
           <h1 className="text-3xl font-bold text-white font-Roboto">
             <span className="uppercase text-theme-color">B</span>id
             <span className="uppercase text-theme-color">F</span>air
           </h1>
         </Link>
       </div>
-      <div className="flex items-center cursor-pointer">
+      <div className="flex items-center cursor-pointer z-[1]">
         {user ? (
           <div className="flex justify-center items-center">
             <img

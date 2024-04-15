@@ -1,12 +1,12 @@
-import { useDispatch, useSelector } from "react-redux"
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { reset } from "../store/auth/authSlice"
-import { getAllAuctions } from "../store/auction/auctionSlice"
-import { toast } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
-import { getAllCategories } from "../store/category/categorySlice"
-import { getAllCities } from "../store/city/citySlice"
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { reset } from "../store/auth/authSlice";
+import { getAllAuctions } from "../store/auction/auctionSlice";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { getAllCategories } from "../store/category/categorySlice";
+import { getAllCities } from "../store/city/citySlice";
 
 // const categories = [
 //   //key value, name
@@ -31,36 +31,30 @@ import { getAllCities } from "../store/city/citySlice"
 //   { _id: "4", name: "Multan", value: "multan" },
 // ];
 
-
 const SearchLocationCategory = () => {
-    const [filter , setFilter] = useState({
-        location: "",
-        category: "",
-        itemName:   ""
-    })
+  const [filter, setFilter] = useState({
+    location: "",
+    category: "",
+    itemName: "",
+  });
 
+  const { categories } = useSelector((state) => state.category);
+  const { cities } = useSelector((state) => state.city);
+  const dispatch = useDispatch();
 
-    const {categories} = useSelector(state => state.category)
-    const {cities} = useSelector(state => state.city);
-    const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getAllCategories());
+    dispatch(getAllCities());
+  }, []);
 
+  // console.log(categories, "categories")
+  // console.log(cities, "cities")
 
-    useEffect(()=>{
-        dispatch(getAllCategories())
-        dispatch(getAllCities())
-    },[])
+  const SearchByFilter = () => {
+    console.log(filter, "filter ssss ");
 
-   // console.log(categories, "categories")
-   // console.log(cities, "cities")
-
-const SearchByFilter=() => {
-    console.log(filter, "filter ssss ")
-
-    dispatch(getAllAuctions(filter))
-   
-}
-    
-
+    dispatch(getAllAuctions(filter));
+  };
 
   return (
     <div className="flex justify-center items-center my-5 min-h-[100px]">
@@ -68,8 +62,8 @@ const SearchByFilter=() => {
         <select
           required
           id="category"
-          className="bg-[#061224] px-1 text-[#7386a8] w-full block sm:w-auto sm:inline  py-3  rounded-lg outline-none border"
-          onChange={(e) => setFilter({...filter, location: e.target.value}) }
+          className="bg-[#061224] px-2 text-[#7386a8] w-full block sm:w-auto sm:inline  py-3  rounded-lg outline-none border border-border-info-color cursor-pointer"
+          onChange={(e) => setFilter({ ...filter, location: e.target.value })}
         >
           <option value="">Select Location</option>
           {cities.data &&
@@ -83,8 +77,8 @@ const SearchByFilter=() => {
         <select
           required
           id="category"
-          className="bg-[#061224] px-1 text-[#7386a8] w-full mt-2 sm:w-auto   sm:ml-4 block sm:inline   py-3  rounded-lg outline-none border"
-          onChange={(e)=> setFilter({...filter, category: e.target.value})}
+          className="bg-[#061224] px-2 text-[#7386a8] w-full mt-2 sm:w-auto   sm:ml-4 block sm:inline   py-3  rounded-lg outline-none border border-border-info-color cursor-pointer"
+          onChange={(e) => setFilter({ ...filter, category: e.target.value })}
         >
           <option value="">Select Category</option>
           {categories.data &&
@@ -97,13 +91,14 @@ const SearchByFilter=() => {
         <input
           type="text"
           placeholder="Search Name"
-          className="bg-[#061224] py-3 px-2 text-[#7386a8] mt-2 block sm:w-auto sm:inline rounded-lg  border border-solid sm:mx-4 outline-none placeholder:text-[#7386a8]"
+          className="bg-[#061224] py-3 px-3 text-[#7386a8] mt-2 block sm:w-auto sm:inline rounded-lg  border border-border-info-color sm:mx-4 outline-none placeholder:text-[#7386a8]"
           value={filter.itemName}
-          onChange={(e)=> setFilter({...filter, itemName: e.target.value})}
+          onChange={(e) => setFilter({ ...filter, itemName: e.target.value })}
         />
-        <button className="bg-theme-color mt-2  hover:bg-color-danger text-white text-sm font-bold  rounded-md my-auto px-3 py-2  text-center no-underline border-none"
-        onClick={()=>SearchByFilter()}
->
+        <button
+          className="bg-theme-color mt-2  hover:bg-color-danger text-white text-sm font-bold  rounded-md my-auto px-3 py-2  text-center no-underline border-none"
+          onClick={() => SearchByFilter()}
+        >
           Search
         </button>
       </div>

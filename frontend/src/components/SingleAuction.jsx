@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import CountDownTimer from "../components/CountDownTimer";
 import { useState } from "react";
-
+import { RiShoppingBagFill } from "react-icons/ri";
 // eslint-disable-next-line react/prop-types
 const SingleAuction = ({
   name,
@@ -30,9 +30,9 @@ const SingleAuction = ({
 
   return (
     <div className=" bg-theme-bg rounded-lg flex flex-col p-3  text-white  ">
-      <div className="w-80 h-80  rounded-md relative bg-white ">
+      <div className=" h-full w-full rounded-md relative bg-white overflow-hidden ">
         <img
-          className="w-full h-full rounded-md object-contain  "
+          className="w-full sm:h-[300px]   rounded-md object-contain hover:scale-105 transition-all duration-300  "
           src={image}
           alt="item image"
         />
@@ -46,7 +46,7 @@ const SingleAuction = ({
           />
         </div>
       </div>
-      <h3 className="my-3">{name}</h3>
+      <h3 className="my-3 text-xl font-semibold">{name}</h3>
       <div className="flex justify-start items-center">
         <div>
           <img
@@ -63,20 +63,6 @@ const SingleAuction = ({
       {/* show the winner of auction */}
 
       {SingleAuction?.status === "over" ? (
-        
-        <div className="flex justify-between item-center my-2">
-           <div className="flex flex-col ">
-            <p className="text-[12px]">Current Bid</p>
-            <p className="mt-2">$ {startingPrice}</p>
-          </div>
-          <Link
-            to={`/single-auction-detail/${id}`}
-            className=" bg-theme-color hover:bg-color-danger text-white text-sm font-bold  rounded-md my-auto px-3 py-2  text-center no-underline"
-          >
-            View 
-          </Link>
-        </div> 
-      ) : (
         <div className="flex justify-between item-center my-2">
           <div className="flex flex-col ">
             <p className="text-[12px]">Current Bid</p>
@@ -84,14 +70,29 @@ const SingleAuction = ({
           </div>
           <Link
             to={`/single-auction-detail/${id}`}
-            className={`   text-white text-sm font-bold  rounded-md my-auto px-3 py-2  text-center no-underline 
+            className=" bg-theme-color hover:bg-color-danger text-white text-sm font-bold  rounded-md my-auto px-3 py-2  text-center no-underline"
+          >
+            View
+          </Link>
+        </div>
+      ) : (
+        <div className="flex justify-between item-center my-2 border-t border-border-info-color py-1">
+          <div className="flex flex-col ">
+            <p className="text-[12px]">Current Bid</p>
+            <p className="mt-2">$ {startingPrice}</p>
+          </div>
+          <Link
+            to={`/single-auction-detail/${id}`}
+            className={` flex items-center gap-1 text-white text-sm font-bold  rounded-md my-auto px-3 py-2  text-center no-underline 
           ${
             sellerId === logInUser?._id
               ? "bg-theme-bg2 text-body-text-color  border border-border-info-color "
               : "bg-color-primary border cursor-pointer border-border-info-color hover:bg-color-danger"
           }`}
           >
-            Place Bid
+            {" "}
+            <RiShoppingBagFill size={18} className="mt-[-2px]" />
+            <span>Place Bid</span>
           </Link>
         </div>
       )}
