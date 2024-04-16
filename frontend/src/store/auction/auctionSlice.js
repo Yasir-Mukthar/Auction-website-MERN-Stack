@@ -118,12 +118,26 @@ export const getWinnerDetail=createAsyncThunk(
 );
 
 
+export const getLiveAuctions=createAsyncThunk(
+  "auction/getLiveAuctions", async (_, thunkAPI) => {
+    try {
+      return await auctionService.getLiveAuctions();
+    } catch (error) {
+      const message = (error.response && error.response.data.message) || error.message;
+      return thunkAPI.rejectWithValue({ message, isError: true });
+    }
+  
+  }
+)
+
+
 
 const initialState = {
   auction: [],
   singleAuction : {},
   sellerAuction:[],
   auctionWinnerDetail:null,
+  liveAuctions:[],
   isLoading: false,
   isError: false,
   isSuccess: false,
@@ -310,8 +324,23 @@ const auctionSlice = createSlice({
       state.isSuccess = false;
       state.message = action.payload.message;
     });
-     
-      
+    builder.addCase(getLiveAuctions.pending, (state) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = "";
+    });
+    builder.addCase(getLiveAuctions.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.liveAuctions = action.payload.data;
+    });
+    builder.addCase(getLiveAuctions.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.isSuccess = false;
+      state.message = action.payload.message;
+    });
+    
       // Handle other actions...
     
 

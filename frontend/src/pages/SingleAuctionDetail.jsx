@@ -385,7 +385,7 @@ const SingleAuctionDetail = () => {
       </div>
       <div className="mx-8">
 
-      <LiveHome />
+      {/* <LiveHome /> */}
 
       </div>
     </>

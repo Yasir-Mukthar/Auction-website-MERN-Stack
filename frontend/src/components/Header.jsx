@@ -102,7 +102,7 @@ const Header = () => {
             </Link>
             <Link
               onClick={() => setNavbarOpen(!navbarOpen)}
-              className="text-white font-Roboto text-lg mx-3 order-3"
+              className="text-white font-Roboto sm:hidden text-lg mx-3 order-3"
             >
               {navbarOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
             </Link>

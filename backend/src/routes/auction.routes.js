@@ -7,7 +7,8 @@ import { createAuction,
         getAuctionsByUser,
         deleteSingleAuctionById,
         updateSingleAuactionById,
-        getAuctionWinner
+        getAuctionWinner,
+        getLiveAuctions
     } from "../controllers/auction.controller.js";
 import { verifyAdmin, verifyUser,verifySeller } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -19,7 +20,7 @@ const router = Router();
 
 // router.route("/register").post(registerUser);
 
-
+router.route("/live-auctions").get(getLiveAuctions);
 router.route("/:id/winner").get(getAuctionWinner);
 router.route("/").post( getAllAuctions);
 router.route("/:id/status").post(updateAuctionStatus);

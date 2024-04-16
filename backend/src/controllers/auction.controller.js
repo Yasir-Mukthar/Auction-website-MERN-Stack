@@ -457,6 +457,40 @@ return res.status(200).json(new ApiResponse(200, "Auction winner retrieved succe
 
 
 
+// @desc Get LIVE 10 auctions 
+// @route GET /api/v1/auctions/live
+// @access Public
+
+const getLiveAuctions = asyncHandler(async (req, res) => {
+  try {
+    const auctions = await Auction.find({ status: "active" })
+      .limit(10)
+      .populate("seller", "fullName email phone location profilePicture")
+      .populate({
+        path: "winner",
+
+        populate: {
+          path: "bidder",
+          select: "fullName  profilePicture",
+        },
+      });
+
+    if (!auctions) {
+      return res.status(404).json(new ApiResponse(404, "No auctions found"));
+    }
+    return res.json(
+      new ApiResponse(200, "Auctions retrieved successfully", auctions)
+    );
+  } catch (error) {
+    // Handle the error
+    return res
+      .status(500)
+      .json(new ApiResponse(500, error?.message || "Internal server error"));
+  }
+});
+
+
+
 export {
   createAuction,
   getAllAuctions,
@@ -467,4 +501,5 @@ export {
   deleteSingleAuctionById,
   updateSingleAuactionById,
   getAuctionWinner,
+  getLiveAuctions,
 };

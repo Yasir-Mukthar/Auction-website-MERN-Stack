@@ -1,4 +1,7 @@
 import SingleAuction from "../SingleAuction";
+import { useSelector,useDispatch } from "react-redux";
+import { getLiveAuctions } from "../../store/auction/auctionSlice";
+import { useEffect, useState } from "react";
 
 const data = [
   {
@@ -144,6 +147,19 @@ const data = [
 ];
 
 const LiveHome = () => {
+  const dispatch=useDispatch();
+  const {liveAuctions} = useSelector((state) => state.auction);
+  const [liveAuctionsData, setLiveAuctionsData] = useState([]);
+
+  useEffect(() => {
+    dispatch(getLiveAuctions())
+  } , []);
+
+  useEffect(() => {
+
+      setLiveAuctionsData(liveAuctions);
+    
+  }, [liveAuctions]);
   return (
     <>
       <div id="livehome">
@@ -171,19 +187,19 @@ const LiveHome = () => {
           slides-per-view="1"
           space-between="16"
         >
-          {data.map((item) => (
-            <swiper-slide key={item.id}>
+          {liveAuctionsData?.map((item) => (
+            <swiper-slide key={item._id}>
               <SingleAuction
-                name={item.name}
-                startingPrice={item.startingPrice}
-                image={item.image}
-                endTime={item.endTime}
-                startTime={item.startTime}
-                id={item.id}
-                status={item.status}
-                sellerImage={item.sellerImage}
-                sellerName={item.sellerName}
-                sellerId={item.sellerId}
+                name={item?.name}
+                startingPrice={item?.startingPrice}
+                image={item?.image}
+                endTime={item?.endTime}
+                startTime={item?.startTime}
+                id={item?._id}
+                status={item?.status}
+                sellerImage={item?.seller?.profilePicture}
+                sellerName={item?.seller?.fullName}
+                sellerId={item?.sellerId}
               />
             </swiper-slide>
           ))}
