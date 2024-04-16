@@ -8,17 +8,18 @@ import { useLocation } from "react-router-dom";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { getNotificationForUser } from "../store/notification/notificationSlice";
 import socket from "../socket";
-
+import { FaBars, FaTimes } from "react-icons/fa";
 
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [navbarOpen, setNavbarOpen] = useState(false);
+
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { notifications } = useSelector((state) => state.notification);
   let navigate = useNavigate();
   let location = useLocation();
   const logInUser = JSON.parse(localStorage.getItem("user"));
-
 
   console.log(notifications, "notifications............ header......");
   //i want a length of isRead ===false
@@ -29,16 +30,17 @@ const Header = () => {
 
   useEffect(() => {}, [user]);
   useEffect(() => {
-    if(logInUser){
+    if (logInUser) {
       dispatch(getNotificationForUser());
-
     }
     socket.on("newBidNotification", (data) => {
-      console.log(data, " new bid notification data from socket.,,,,,,,,,,,,,,,,,,,,,,,,..........");
+      console.log(
+        data,
+        " new bid notification data from socket.,,,,,,,,,,,,,,,,,,,,,,,,.........."
+      );
       socket.emit("joinAuction", logInUser?._id);
 
       dispatch(getNotificationForUser());
-     
     });
 
     console.log(notifications, "notification dispatch............");
@@ -53,7 +55,7 @@ const Header = () => {
   };
 
   return (
-    <div className="flex justify-between items-center px-5 sm:px-14 bg-body-bg py-4 border-b border-border-info-color">
+    <div className="flex justify-between items-center px-2  sm:px-14 bg-body-bg py-4 border-b border-border-info-color">
       <div className="flex items-center px-1 z-[1]">
         <Link to="/dashboard" className=" no-underline ">
           <h1 className="text-3xl font-bold text-white font-Roboto">
@@ -63,19 +65,18 @@ const Header = () => {
         </Link>
       </div>
       <div className="hidden sm:block">
-      <Link to="/" className="text-white font-Roboto text-lg mx-3">
-        home
-      </Link>
-      <Link to="/" className="text-white font-Roboto text-lg mx-3">
-        home
-      </Link>
-      <Link to="/" className="text-white font-Roboto text-lg mx-3">
-        home
-      </Link>
-      <Link to="/" className="text-white font-Roboto text-lg mx-3">
-        home
-      </Link>
-
+        <Link to="/" className="text-white font-Roboto text-lg mx-3">
+          home
+        </Link>
+        <Link to="/" className="text-white font-Roboto text-lg mx-3">
+          home
+        </Link>
+        <Link to="/" className="text-white font-Roboto text-lg mx-3">
+          home
+        </Link>
+        <Link to="/" className="text-white font-Roboto text-lg mx-3">
+          home
+        </Link>
       </div>
       <div className="flex items-center cursor-pointer z-[1]">
         {user ? (
@@ -99,14 +100,28 @@ const Header = () => {
 
               <IoIosNotificationsOutline className="text-white text-xl cursor-pointer " />
             </Link>
+            <Link
+              onClick={() => setNavbarOpen(!navbarOpen)}
+              className="text-white font-Roboto text-lg mx-3 order-3"
+            >
+              {navbarOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+            </Link>
           </div>
         ) : (
+          <>
           <Link
             to="/login"
-            className="bg-blue-500 no-underline font-Roboto text-base  hover:bg-color-danger transition-all duration-150 text-white py-2 px-3 rounded-md text-md font-semibold"
+            className="bg-blue-500 no-underline font-Roboto text-base  hover:bg-color-danger transition-all duration-150 text-white py-1 sm:py-2 sm:px-3 px-2 rounded-md text-md font-semibold"
           >
             Sign In
           </Link>
+           <Link
+           onClick={() => setNavbarOpen(!navbarOpen)}
+           className="text-white font-Roboto sm:hidden text-lg mx-3 order-3 z-50"
+         >
+           {navbarOpen ? <FaTimes size={25} /> : <FaBars size={25} />}
+         </Link>
+         </>
         )}
       </div>
 
@@ -125,16 +140,17 @@ const Header = () => {
               Profile
             </Link>
             <Link
-              to={user.userType==="seller" ? "/user-profile/manage-items" : "/user-profile/bids-items"}
+              to={
+                user.userType === "seller"
+                  ? "/user-profile/manage-items"
+                  : "/user-profile/bids-items"
+              }
               className="block no-underline text-white font-Roboto text-lg py-2 px-7 hover:bg-theme-bg-light"
               onClick={() => setSidebarOpen(false)}
             >
-              {
-                user.userType === "seller" ? "Manage Items" : "Bids Items"
-              }
+              {user.userType === "seller" ? "Manage Items" : "Bids Items"}
             </Link>
-        
-          
+
             <Link
               to="/user-profile/account-settings"
               className="block no-underline text-white font-Roboto text-lg py-2 px-7 hover:bg-theme-bg-light"
@@ -154,6 +170,30 @@ const Header = () => {
           </nav>
         </div>
       ) : null}
+      {navbarOpen && (
+        <ul className="flex flex-col justify-center items-center absolute top-16 left-0 w-full h-screen bg-gradient-to-b from-black to-gray-800 text-gray-500 z-10">
+          <li className="px-4 cursor-pointer capitalize py-6 text-4xl">
+            <Link to="/" onClick={() => setNavbarOpen(!navbarOpen)}>
+              home
+            </Link>
+          </li>
+          <li className="px-4 cursor-pointer capitalize py-6 text-4xl">
+            <Link to="/" onClick={() => setNavbarOpen(!navbarOpen)}>
+              home
+            </Link>
+          </li>
+          <li className="px-4 cursor-pointer capitalize py-6 text-4xl">
+            <Link to="/" onClick={() => setNavbarOpen(!navbarOpen)}>
+              home
+            </Link>
+          </li>
+          <li className="px-4 cursor-pointer capitalize py-6 text-4xl">
+            <Link to="/" onClick={() => setNavbarOpen(!navbarOpen)}>
+              home
+            </Link>
+          </li>
+        </ul>
+      )}
     </div>
   );
 };
