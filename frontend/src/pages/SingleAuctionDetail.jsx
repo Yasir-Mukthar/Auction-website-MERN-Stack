@@ -10,7 +10,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { sendNewBidNotification } from "../store/notification/notificationSlice";
 import socket from "../socket";
 import { getAllBidsForAuction } from "../store/bid/bidSlice";
-import LiveHome from "../components/home/LiveHome";
 
 const SingleAuctionDetail = () => {
   const [newBidAmount, setNewBidAmount] = useState("");
@@ -385,7 +384,6 @@ const SingleAuctionDetail = () => {
       </div>
       <div className="mx-8">
 
-      {/* <LiveHome /> */}
 
       </div>
     </>

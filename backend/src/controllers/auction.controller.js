@@ -490,6 +490,39 @@ const getLiveAuctions = asyncHandler(async (req, res) => {
 });
 
 
+// @desc Get UPCOMING 10 auctions
+// @route GET /api/v1/auctions/upcoming-auctions
+// @access Public
+
+const getUpcomingAuctions = asyncHandler(async (req, res) => {
+  try {
+    const auctions = await Auction.find({ status: "upcoming" })
+      .limit(10)
+      .populate("seller", "fullName email phone location profilePicture")
+      .populate({
+        path: "winner",
+
+        populate: {
+          path: "bidder",
+          select: "fullName  profilePicture",
+        },
+      });
+
+    if (!auctions) {
+      return res.status(404).json(new ApiResponse(404, "No auctions found"));
+    }
+    return res.json(
+      new ApiResponse(200, "Auctions retrieved successfully", auctions)
+    );
+  } catch (error) {
+    // Handle the error
+    return res
+      .status(500)
+      .json(new ApiResponse(500, error?.message || "Internal server error"));
+  }
+});
+
+
 
 export {
   createAuction,
@@ -502,4 +535,5 @@ export {
   updateSingleAuactionById,
   getAuctionWinner,
   getLiveAuctions,
+  getUpcomingAuctions,
 };

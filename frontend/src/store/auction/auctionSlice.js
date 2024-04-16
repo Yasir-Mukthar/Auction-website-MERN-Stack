@@ -130,6 +130,18 @@ export const getLiveAuctions=createAsyncThunk(
   }
 )
 
+export const getUpcomingAuctions=createAsyncThunk(
+  "auction/getUpcomingAuctions", async (_, thunkAPI) => {
+    try {
+      return await auctionService.getUpcomingAuctions();
+    } catch (error) {
+      const message = (error.response && error.response.data.message) || error.message;
+      return thunkAPI.rejectWithValue({ message, isError: true });
+    }
+  
+  }
+)
+
 
 
 const initialState = {
@@ -138,6 +150,7 @@ const initialState = {
   sellerAuction:[],
   auctionWinnerDetail:null,
   liveAuctions:[],
+  upComingAuctions:[],
   isLoading: false,
   isError: false,
   isSuccess: false,
@@ -340,6 +353,23 @@ const auctionSlice = createSlice({
       state.isSuccess = false;
       state.message = action.payload.message;
     });
+    builder.addCase(getUpcomingAuctions.pending, (state) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = "";
+    });
+    builder.addCase(getUpcomingAuctions.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.upComingAuctions = action.payload.data;
+    });
+    builder.addCase(getUpcomingAuctions.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.isSuccess = false;
+      state.message = action.payload.message;
+    });
+
     
       // Handle other actions...
     

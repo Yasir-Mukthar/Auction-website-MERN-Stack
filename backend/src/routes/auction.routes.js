@@ -8,7 +8,8 @@ import { createAuction,
         deleteSingleAuctionById,
         updateSingleAuactionById,
         getAuctionWinner,
-        getLiveAuctions
+        getLiveAuctions,
+        getUpcomingAuctions
     } from "../controllers/auction.controller.js";
 import { verifyAdmin, verifyUser,verifySeller } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -19,7 +20,7 @@ import { upload } from "../middlewares/multer.middleware.js";
 const router = Router();
 
 // router.route("/register").post(registerUser);
-
+router.route("/upcoming-auctions").get(getUpcomingAuctions);
 router.route("/live-auctions").get(getLiveAuctions);
 router.route("/:id/winner").get(getAuctionWinner);
 router.route("/").post( getAllAuctions);

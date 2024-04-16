@@ -151,6 +151,19 @@ const getLiveAuctions=async()=>{
     }
 }
 
+const getUpcomingAuctions=async()=>{
+  try{
+      const response = await axios.get(`${API_URL}/auctions/upcoming-auctions`);
+      console.log("response getLiveAuctions", response.data);
+      return response.data;
+  }catch(error){
+      const message = (error.response && error.response.data.message) || error.message;
+      console.error("Error with getLiveAuctions", error);
+      return {message, isError:true};
+  }
+}
+
+
 const auctionService = {
   getWinnerDetail,
   createAuction,
@@ -161,7 +174,8 @@ const auctionService = {
   getSellerAuction,
   deleteSingleAuctionById,
   updateSingleAuction,
-  getLiveAuctions
+  getLiveAuctions,
+  getUpcomingAuctions
 };
 
 export default auctionService;
