@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { FaUserPlus } from "react-icons/fa6";
 import { FaRegEdit } from "react-icons/fa";
-import { AiFillLike, AiFillDollarCircle } from "react-icons/ai";
+import { AiFillLike } from "react-icons/ai";
 import { BsCurrencyExchange } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +15,7 @@ const ProfileComponent = () => {
     dispatch(getCurrentUser());
     console.log("useEffect........");
   }, []);
-
+  useEffect(() => {}, [user]);
   console.log(user, "user............");
 
   return (
@@ -97,10 +97,7 @@ const ProfileComponent = () => {
                   {user?.gender ? user.gender : "-"}
                 </span>
               </li>
-              <li>
-                Date of Birth:{" "}
-                <span className="float-right font-normal">25/10/1995</span>
-              </li>
+            
               <li>
                 Location:{" "}
                 <span className="float-right font-normal">

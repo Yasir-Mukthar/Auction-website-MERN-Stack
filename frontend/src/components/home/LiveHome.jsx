@@ -149,20 +149,19 @@ const LiveHome = () => {
       <div id="livehome">
         <div className="flex gap-2 items-center mb-5">
           <div>
-            <span class="absolute animate-ping flex rounded-full h-3 w-3 bg-sky-500"></span>
-            <span class="relative flex rounded-full h-3 w-3 bg-sky-500"></span>
+            <span className="absolute animate-ping flex rounded-full h-3 w-3 bg-sky-500"></span>
+            <span className="relative flex rounded-full h-3 w-3 bg-sky-500"></span>
           </div>
           <h2 className="text-2xl font-bold text-white">Live Auctions</h2>
         </div>
         <swiper-container
           breakpoints={JSON.stringify({
             768: {
-              slidesPerView: 3,              
+              slidesPerView: 3,
             },
 
             1024: {
               slidesPerView: 4,
-              
             },
           })}
           style={{
@@ -173,14 +172,13 @@ const LiveHome = () => {
           space-between="16"
         >
           {data.map((item) => (
-            <swiper-slide>
+            <swiper-slide key={item.id}>
               <SingleAuction
                 name={item.name}
                 startingPrice={item.startingPrice}
                 image={item.image}
                 endTime={item.endTime}
                 startTime={item.startTime}
-                key={item.id}
                 id={item.id}
                 status={item.status}
                 sellerImage={item.sellerImage}

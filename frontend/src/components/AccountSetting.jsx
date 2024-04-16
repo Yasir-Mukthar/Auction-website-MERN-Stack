@@ -20,6 +20,8 @@ const AccountSetting = () => {
     console.log("useEffect........");
     dispatch(getCurrentUser());
   }, []);
+  useEffect(() => {}, [user]);
+
 
   const [imgUrl, setImgUrl] = useState(user?.profilePicture);
   const imgRef = useRef(null);

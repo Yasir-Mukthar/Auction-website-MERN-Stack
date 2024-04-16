@@ -26,7 +26,7 @@ const HeroHome = () => {
           <div className="flex gap-4">
             <Link
               className="hover:scale-105 flex border border-border-info-color px-5 py-3 mt-2 rounded-xl text-white cursor-pointer font-bold tracking-wide hover:bg-hover transition-all duration-200  w-fit"
-              to="#"
+              to="/dashboard"
             >
               <div className="flex items-center gap-2">
                 <RiFindReplaceLine />

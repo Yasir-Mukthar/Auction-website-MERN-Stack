@@ -6,6 +6,8 @@ import ManageItems from "../components/ManageItems";
 import BidsItem from "../components/BidsItem";
 import Notifications from "../components/Notifications";
 import AccountSetting from "../components/AccountSetting";
+import {SellerRoutes} from '../auth/Protected'
+
 
 
 
@@ -29,12 +31,18 @@ const UserProfile = () => {
         <Sidebar />
         <Routes>
           <Route path="/profile" element={<ProfileComponent />} />
-          <Route path="/manage-items" element={<ManageItems />} />
+
+          <Route element={<SellerRoutes />}>
+            <Route path="/manage-items" element={<ManageItems />} />
+
+          </Route>
           <Route path="/bids-items" element={<BidsItem />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/account-settings" element={<AccountSetting />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/logout" element={<ChangePassword />} />
+          <Route path='*' element={<h1 className='text-white'>Not Found</h1>} />
+
 
         </Routes>
       </div>

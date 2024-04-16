@@ -153,11 +153,9 @@ const UpcommingHome = () => {
           breakpoints={JSON.stringify({
             768: {
               slidesPerView: 3,
-             
             },
             1024: {
               slidesPerView: 4,
-              
             },
           })}
           style={{
@@ -168,14 +166,13 @@ const UpcommingHome = () => {
           space-between="16"
         >
           {data.map((item) => (
-            <swiper-slide>
+            <swiper-slide key={item.id}>
               <SingleAuction
                 name={item.name}
                 startingPrice={item.startingPrice}
                 image={item.image}
                 endTime={item.endTime}
                 startTime={item.startTime}
-                key={item.id}
                 id={item.id}
                 status={item.status}
                 sellerImage={item.sellerImage}

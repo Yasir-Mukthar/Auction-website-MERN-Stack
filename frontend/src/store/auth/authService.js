@@ -34,6 +34,7 @@ const logout = async () => {
 
     const response = await axios.post(`${API_URL}/users/logout`,{},{withCredentials: true});
     localStorage.removeItem('user');
+    window.location.href = '/';
     return response.data;
 };
 

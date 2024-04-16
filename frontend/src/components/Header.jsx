@@ -13,7 +13,7 @@ import socket from "../socket";
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const dispatch = useDispatch();
-  const { user, message } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const { notifications } = useSelector((state) => state.notification);
   let navigate = useNavigate();
   let location = useLocation();
@@ -29,7 +29,10 @@ const Header = () => {
 
   useEffect(() => {}, [user]);
   useEffect(() => {
-    dispatch(getNotificationForUser());
+    if(logInUser){
+      dispatch(getNotificationForUser());
+
+    }
     socket.on("newBidNotification", (data) => {
       console.log(data, " new bid notification data from socket.,,,,,,,,,,,,,,,,,,,,,,,,..........");
       socket.emit("joinAuction", logInUser?._id);
@@ -58,6 +61,21 @@ const Header = () => {
             <span className="uppercase text-theme-color">F</span>air
           </h1>
         </Link>
+      </div>
+      <div className="hidden sm:block">
+      <Link to="/" className="text-white font-Roboto text-lg mx-3">
+        home
+      </Link>
+      <Link to="/" className="text-white font-Roboto text-lg mx-3">
+        home
+      </Link>
+      <Link to="/" className="text-white font-Roboto text-lg mx-3">
+        home
+      </Link>
+      <Link to="/" className="text-white font-Roboto text-lg mx-3">
+        home
+      </Link>
+
       </div>
       <div className="flex items-center cursor-pointer z-[1]">
         {user ? (
@@ -107,34 +125,22 @@ const Header = () => {
               Profile
             </Link>
             <Link
-              to="/user-profile/manage-items"
+              to={user.userType==="seller" ? "/user-profile/manage-items" : "/user-profile/bids-items"}
               className="block no-underline text-white font-Roboto text-lg py-2 px-7 hover:bg-theme-bg-light"
               onClick={() => setSidebarOpen(false)}
             >
-              Manage Items
+              {
+                user.userType === "seller" ? "Manage Items" : "Bids Items"
+              }
             </Link>
+        
+          
             <Link
-              to="/contact-us"
+              to="/user-profile/account-settings"
               className="block no-underline text-white font-Roboto text-lg py-2 px-7 hover:bg-theme-bg-light"
               onClick={() => setSidebarOpen(false)}
             >
-              Contact
-            </Link>
-            {user && user.userType === "seller" ? (
-              <Link
-                to="/create-auction"
-                className="block no-underline text-white font-Roboto text-lg py-2 px-7 hover:bg-theme-bg-light"
-                onClick={() => setSidebarOpen(false)}
-              >
-                Upload items
-              </Link>
-            ) : null}
-            <Link
-              to="/change-password"
-              className="block no-underline text-white font-Roboto text-lg py-2 px-7 hover:bg-theme-bg-light"
-              onClick={() => setSidebarOpen(false)}
-            >
-              Change Password
+              Account Setting
             </Link>
             <Link
               onClick={() => {

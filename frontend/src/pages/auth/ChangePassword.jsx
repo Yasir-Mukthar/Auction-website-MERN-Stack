@@ -1,6 +1,4 @@
-import { useNavigate } from "react-router-dom";
-
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,22 +11,6 @@ const ChangePassword = () => {
   });
 
   const dispatch = useDispatch();
-  const { isSuccess, isError, message } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success(message);
-      navigate("/");
-    }
-    if (isError) {
-      toast.error(message);
-    }
-
-    return () => {
-      dispatch(reset());
-    };
-  }, [isSuccess, isError]);
 
   const handleChangeCurrentPassword = (e) => {
     e.preventDefault();
