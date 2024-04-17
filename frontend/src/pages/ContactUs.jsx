@@ -1,7 +1,30 @@
 import { Link } from "react-router-dom";
 import { IoLocationOutline, IoCallOutline, IoMailOutline } from "react-icons/io5";
+import  { useRef } from 'react';
+import emailjs from '@emailjs/browser';
+
 
 const ContactUs = () => {
+
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm('service_qvbrhqd', 'template_llfzueg', form.current, {
+        publicKey: 'e2FbflmSwNqyMF6op',
+      })
+      .then(
+        () => {
+          console.log('SUCCESS!');
+        },
+        (error) => {
+          console.log('FAILED...', error.text);
+        },
+      );
+  };
+
   return (
     <>
       <div className="text-white flex items-center justify-center flex-col h-[280px] bg-hero-img bg-cover">
@@ -46,6 +69,19 @@ const ContactUs = () => {
           </div>
         </div>
       </div>
+
+
+      <form ref={form} onSubmit={sendEmail} className="text-white">
+      <label>Name</label>
+      <input type="text" name="from_name" placeholder="name" />
+      <input type="text" value="Yasir" className='hidden' name="to_name" />
+
+      <label>Email</label>
+      <input type="email" name="user_email" placeholder="email" />
+      <label>Message</label>
+      <textarea name="message" placeholder="message" />
+      <input type="submit" value="Send" />
+    </form>
     </>
   );
 };

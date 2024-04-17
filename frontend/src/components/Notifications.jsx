@@ -59,7 +59,9 @@ const Notifications = () => {
         <FaRegCheckCircle className="mt-[-2px]" />{" "}
         <span> Mark all as read</span>
       </button>
-      <div className="overflow-auto no-scrollbar p-5 border border-border-info-color rounded-2xl max-h-[750px] flex flex-col gap-4 mt-10">
+      {
+        notificationData?.length > 0 ?(
+          <div className="overflow-auto no-scrollbar p-5 border border-border-info-color rounded-2xl max-h-[750px] flex flex-col gap-4 mt-10">
         {notificationData?.map((notification) => (
           <Link
             to={notification?.link}
@@ -99,6 +101,11 @@ const Notifications = () => {
           </Link>
         ))}
       </div>
+        ):
+        <div className="flex items-center justify-center h-[500px]">
+          <h1 className="text-white">No Notifications</h1>
+        </div> }
+      
     </div>
   );
 };

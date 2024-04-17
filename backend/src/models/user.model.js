@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
   city: { type: String },
   gender: { type: String },
   description: { type: String },
+  paymentVerified: { type: Boolean, default: false },
 
   
   products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],

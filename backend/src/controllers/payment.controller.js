@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import PaymentMethod from "../models/userPaymentMethod.model.js";
 import Stripe from "stripe";
+import User from "../models/user.model.js";
 const stripe = new Stripe(process.env.STRIPE_KEY);
 
 // recluze
@@ -100,6 +101,15 @@ const updatePaymentMethod = asyncHandler(async (req, res) => {
     await stripe.paymentMethods.detach(stripeCustomer?.paymentMethodId);
     stripeCustomer.paymentMethodId = paymentMethodId;
     await stripeCustomer.save();
+
+    //finde user and update verifiedPayment
+    const user = await User.findById(getUserId);
+    if(!user){
+      return res.status(404).json(new ApiResponse(404, "User not found"));
+    }
+    user.paymentVerified = true;
+    await user.save();
+
 
     res.status(200).json({ message: "Payment method updated successfully" });
   } catch (error) {
