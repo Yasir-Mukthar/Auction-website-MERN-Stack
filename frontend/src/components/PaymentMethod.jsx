@@ -43,7 +43,7 @@ const CheckoutForm = () => {
     });
 
     if (error) {
-      console.log("[error]", error);
+      console.log("[error]", error.message);
     } else {
       console.log("[PaymentMethod]", paymentMethod);
 
@@ -64,13 +64,13 @@ const CheckoutForm = () => {
     //       console.error(error);
     //     });
 
-//       axios.post('http://localhost:4000/update-payment-method', { customerId: 'cus_Pvby11RKwu2XPI', paymentMethodId: paymentMethod.id })
-//   .then(response => {
-//     console.log(response.data);
-//   })
-//   .catch(error => {
-//     console.error(error);
-//   });
+      axios.post('http://localhost:8000/api/v1/payments/update-payment-method', { paymentMethodId: paymentMethod.id },{ withCredentials: true })
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.error(error);
+  });
     }
   };
 
