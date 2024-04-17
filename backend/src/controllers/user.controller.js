@@ -2,26 +2,19 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
-
 import User from "../models/user.model.js";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
+import PaymentMethod from "../models/userPaymentMethod.model.js";
+import Stripe from 'stripe';
+const stripe= new Stripe(process.env.STRIPE_KEY);
+
 
 // @desc Register user
 // @route POST /api/v1/users/register
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-  //get user details form frontend
-  //validation - not empty
-  //check if user exists ; username , email
-  //check for images, and avatar
-  //upload to cloudinary
-  //create user object
-  //remove password and refresh token from user object
-  //check for user creation
-  //return response
-
+  
   const { fullName, email, password } = req.body;
 
   if (fullName == "") {
@@ -41,6 +34,16 @@ const registerUser = asyncHandler(async (req, res) => {
     return res.status(409).json(new ApiResponse(409, "User already exists"));
   }
 
+  const customer=await stripe.customers.create({
+    email:email,
+    name:fullName
+});
+
+
+if(!customer){
+  return res.status(500).json(new ApiResponse(500, "Error creating user. Please try again"));
+}
+
   const user = await User.create({
     fullName: fullName.toLowerCase(),
     email,
@@ -53,21 +56,23 @@ const registerUser = asyncHandler(async (req, res) => {
     return res.status(500).json(new ApiResponse(500, "Error creating user"));
   }
 
+  //create payment method
+  const paymentMethod = await PaymentMethod.create({
+    stripeCustomerId: customer.id,
+    userId: createdUser._id,
+  });
+
   return res
     .status(201)
     .json(new ApiResponse(201, "User Registered successfully", createdUser));
 });
 
+
+
 // @desc Login user
 // @route POST /api/v1/users/login
 // @access Public
 const loginUser = asyncHandler(async (req, res) => {
-  //req body data
-  //user naem and email validation
-  // check if user exists
-  //compare password
-  //generate access and refresh token
-  //return in cookies
 
   const { email, password } = req.body;
 
@@ -113,11 +118,7 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route POST /api/v1/users/forgot-password
 // @access Public
 const forgetPasswordSendEmail = asyncHandler(async (req, res) => {
-  //get user email
-  //check if user exists
-  //generate reset token
-  //send reset token to user email
-  //return response
+
   const { email } = req.body;
   if (!email) {
     res.status(400).json(new ApiResponse(400, "Email is required"));

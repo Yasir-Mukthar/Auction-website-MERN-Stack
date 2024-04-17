@@ -90,6 +90,14 @@ const Sidebar = () => {
           </li>
           <li>
             <Link
+              className="flex  py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500"
+              to="/user-profile/payment-method"
+            >
+              Payment
+            </Link>
+          </li>
+          <li>
+            <Link
               className="flex py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500"
               onClick={() => {
                 logoutHandle();

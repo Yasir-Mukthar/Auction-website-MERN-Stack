@@ -7,6 +7,7 @@ import BidsItem from "../components/BidsItem";
 import Notifications from "../components/Notifications";
 import AccountSetting from "../components/AccountSetting";
 import {SellerRoutes} from '../auth/Protected'
+import PaymentMethod from "../components/PaymentMethod";
 
 
 
@@ -40,6 +41,8 @@ const UserProfile = () => {
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/account-settings" element={<AccountSetting />} />
           <Route path="/change-password" element={<ChangePassword />} />
+          <Route path="/payment-method" element={<PaymentMethod />} />
+
           <Route path="/logout" element={<ChangePassword />} />
           <Route path='*' element={<h1 className='text-white'>Not Found</h1>} />
 
