@@ -45,7 +45,7 @@ const HeroHome = () => {
           </div>
         </div>
         <div className="w-full lg:p-20 animate-float ">
-          <img src={herovector} alt="" />
+          <img src={herovector} alt="Hero-img" />
         </div>
       </div>
     </>

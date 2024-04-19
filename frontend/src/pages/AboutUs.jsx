@@ -52,7 +52,7 @@ const AboutUs = () => {
         </div>
       </div>
       {/* About US PARENT */}
-      <div className="text-white flex flex-col gap-8 pt-20 px-6 lg:px-11 ">
+      <div className="text-white flex flex-col gap-20 pt-20 px-6 lg:px-11 ">
         {/* ABOUT US Section */}
         <div className="flex items-center gap-4 flex-wrap lg:flex-nowrap">
           <img className="min-w-48 " src={aboutimg} alt="aboutusimage" />
@@ -68,10 +68,10 @@ const AboutUs = () => {
             </div>
             <div className="text-body-text-color">
               <p className="mb-2">
-                We are an online auction platform dedicated to creative
-                digital assets. Here, artists, designers, and creators from all
-                corners of the globe come together to find, buy, and sell
-                exceptional digital works in a dynamic bidding environment.
+                We are an online auction platform dedicated to creative digital
+                assets. Here, artists, designers, and creators from all corners
+                of the globe come together to find, buy, and sell exceptional
+                digital works in a dynamic bidding environment.
               </p>
               <p className="mb-2">
                 Need that perfect stock video clip to elevate your production?
@@ -135,7 +135,52 @@ const AboutUs = () => {
             ))}
           </div>
         </div>
-       <CreateEarnHome /> 
+        <div className="max-w-[1500px] m-auto">
+          <div className="mb-10 text-center">
+            <span className="text-lg tracking-[5px] uppercase text-theme-color font-semibold">
+              Process
+            </span>
+            <h2 className="mt-2 text-4xl font-medium">
+              Create And Sell{" "}
+              <span className="text-color-primary">Your Products</span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 m-auto gap-5   w-full  md:grid-cols-2 lg:grid-cols-4">
+            <div className="flex flex-col text-white gap-4 justify-start p-8 rounded-2xl bg-theme-bg ">
+              <h2 className="text-5xl font-bold text-stroke">01</h2>
+              <h3 className="text-2xl font-bold">Setup your Account</h3>
+              <p className="text-body-text-color">
+                Register for a free account and unlock the power to sell
+                anything, anytime.
+              </p>
+            </div>
+            <div className="flex flex-col text-white gap-4 justify-start p-8 rounded-2xl bg-theme-bg ">
+              <h2 className="text-5xl font-bold text-stroke">02</h2>
+              <h3 className="text-2xl font-bold">Create Your Auction</h3>
+              <p className="text-body-text-color">
+                Create a compelling listing that showcases your item and
+                attracts potential buyers.
+              </p>
+            </div>
+            <div className="flex flex-col text-white gap-4 justify-start p-8 rounded-2xl bg-theme-bg ">
+              <h2 className="text-5xl font-bold text-stroke">03</h2>
+              <h3 className="text-2xl font-bold">Add Starting Price for Bid</h3>
+              <p className="text-body-text-color">
+                Determine your starting bid and consider a reserve price for
+                added control.
+              </p>
+            </div>
+            <div className="flex flex-col text-white gap-4 justify-start p-8 rounded-2xl bg-theme-bg ">
+              <h2 className="text-5xl font-bold text-stroke">04</h2>
+              <h3 className="text-2xl font-bold">List Product for Sale</h3>
+              <p className="text-body-text-color">
+                Publish your Product and watch the bids come in, turning your
+                unused items into revenue.
+              </p>
+            </div>
+          </div>
+        </div>
+        <CreateEarnHome />
       </div>
     </>
   );
