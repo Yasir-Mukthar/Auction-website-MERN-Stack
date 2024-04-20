@@ -14,6 +14,7 @@ import { getAllBidsForAuction } from "../store/bid/bidSlice";
 const SingleAuctionDetail = () => {
   const [newBidAmount, setNewBidAmount] = useState("");
   const logInUser = JSON.parse(localStorage.getItem("user"));
+  const {user} = useSelector((state)=>state.auth)
   const [activeTab, setActiveTab] = useState("description");
   const params = useParams();
   const dispatch = useDispatch();
@@ -103,7 +104,7 @@ console.log(bidsData, "bidsData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   console.log("useEffect is running.new new....");
     socket.on('newBidData', async(data)=>{
       console.log(data, "newBidData,,,,,,,,,,,,,,,,,io,,,,,,io");
-   await   setBidsData([{
+      setBidsData([{
         _id: new Date().getTime(),
         bidder: {
           fullName: data.fullName,
@@ -172,8 +173,10 @@ console.log(singleAuctionData, "singleAuctionData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   const placeBidHandle = async (e) => {
     e.preventDefault();
     console.log((singleAuctionData, "singleAuctionData............"));
-
-    let bidData = {
+if(user?.paymentVerified === false){
+  toast.info("Please verify your payment method to place a bid. Go to settings...")
+} 
+let bidData = {
       id: params.id,
       amount:Math.floor(newBidAmount),
     };
@@ -315,7 +318,7 @@ console.log(singleAuctionData, "singleAuctionData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
               } no-scrollbar`}
             >
               {/* map over bids array */}
-              {singleAuction?.bids?.length > 0 ? (
+              {(singleAuction?.bids?.length > 0 || bidsData.length > 0) ? (
                 bidsData?.map((bid) => <BidCard key={bid._id} bid={bid} />)
               ) : (
                 <h1 className="text-white">No bids yet</h1>
@@ -414,7 +417,9 @@ console.log(singleAuctionData, "singleAuctionData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
                     required
                   />
                   {logInUser ? (
-                    <button
+                   
+                   user?.paymentVerified ? (
+ <button
                       type="submit"
                       disabled={
                         singleAuction?.seller?._id === logInUser?._id
@@ -433,6 +438,17 @@ console.log(singleAuctionData, "singleAuctionData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
                     >
                       Place Bid
                     </button>
+                   )
+                   :
+                   (
+<Link
+                      to="/user-profile/payment-method"
+                      className="bg-color-primary py-2 px-4 rounded-lg cursor-pointer text-white"
+                    >
+                      Attach Payment Method to Bid
+                    </Link>
+                   )
+                   
                   ) : (
                     <Link
                       to="/login"

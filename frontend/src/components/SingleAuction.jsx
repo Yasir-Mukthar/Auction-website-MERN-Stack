@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import CountDownTimer from "../components/CountDownTimer";
 import { useState } from "react";
 import { RiShoppingBagFill } from "react-icons/ri";
+import socket from "../socket";
 // eslint-disable-next-line react/prop-types
 const SingleAuction = ({
   name,
@@ -20,11 +21,13 @@ const SingleAuction = ({
   winnerBidAmount,
   winnerBidTime,
 }) => {
-  // const [statusData, setStatusData] = useState(status);
+   const [statusData, setStatusData] = useState(status);
 
-  // const handleWinner = () => {
-  //   setStatusData("over");
-  // }
+   socket.on("setStatus",async()=>{
+    await setStatusData("over")
+    console.log("handlewinner func in dashboard.,,,,,,,,,,");
+   })
+  
 
   const logInUser = JSON.parse(localStorage.getItem("user"));
 
@@ -42,7 +45,6 @@ const SingleAuction = ({
             endTime={endTime}
             status={status}
             id={id}
-            // winnerForDashboard={handleWinner}
           />
         </div>
       </div>
@@ -62,15 +64,15 @@ const SingleAuction = ({
 
       {/* show the winner of auction */}
 
-      {SingleAuction?.status === "over" ? (
-        <div className="flex justify-between item-center my-2">
-          <div className="flex flex-col ">
+      { statusData==="over" ? (
+        <div className="flex justify-between item-center my-2 border-t border-border-info-color ">
+          {/* <div className="flex flex-col ">
             <p className="text-[12px]">Current Bid</p>
             <p className="mt-2">$ {startingPrice}</p>
-          </div>
+          </div> */}
           <Link
             to={`/single-auction-detail/${id}`}
-            className=" bg-theme-color hover:bg-color-danger text-white text-sm font-bold  rounded-md my-auto px-3 py-2  text-center no-underline"
+            className=" bg-theme-color hover:bg-color-danger text-white text-sm font-bold  rounded-md my-auto  py-2 w-full  text-center no-underline mt-3"
           >
             View
           </Link>

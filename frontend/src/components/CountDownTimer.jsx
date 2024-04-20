@@ -25,18 +25,17 @@ console.log(auctionEnded, auctionStarted, "auctionEnded, auctionStarted");
       if (!auctionStarted && currentTime >= startTime && currentTime < endTime) {
         console.log("auction started.......");
         setAuctionStarted(true);
-        dispatch(updateAuctionStatus({ id: props?.id, status: "active" }));
-        dispatch(reset())
+        //dispatch(updateAuctionStatus({ id: props?.id, status: "active" }));
+        //dispatch(reset())
       }
       if (auctionStarted && currentTime >= endTime && !auctionEnded) {
         setAuctionEnded(true);
         console.log("auction ended.......");
       
-        dispatch(updateAuctionStatus({ id: props?.id, status: "completed" }));
+       // dispatch(updateAuctionStatus({ id: props?.id, status: "completed" }));
         dispatch(selectAuctionWinner({ id: props?.id }));      
         dispatch(reset())
         props?.Winner()
-        // props?.winnerForDashboard()
         setAuctionStarted(false)
 console.log("auction ended.............,,,,,,,,,");
         clearInterval(interval)

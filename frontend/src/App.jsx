@@ -29,13 +29,13 @@ const App = () => {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/errorpage" element={<ErrorPage />} />
+          {/* <Route path="/errorpage" element={<ErrorPage />} /> */}
           <Route
             path="/single-auction-detail/:id"
             element={<SingleAuctionDetail />}
           />
 
-          <Route path="*" element={<h1 className="text-white">Not Found</h1>} />
+          <Route path="*" element={<ErrorPage />} />
 
           <Route element={<PublicRoute />}>
             <Route
