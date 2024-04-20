@@ -137,7 +137,9 @@ const getAllAuctions = asyncHandler(async (req, res) => {
           path: "bidder",
           select: "fullName  profilePicture",
         },
-      });
+      })
+      //show new ones
+      .sort({ createdAt: -1 });
 
     if (!auctions) {
       return res.status(404).json(new ApiResponse(404, "No auctions found"));

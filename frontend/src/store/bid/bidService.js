@@ -23,6 +23,8 @@ export const getBidsAuctionsByUser=async()=>{
 
 export const getAllBidsForAuction=async(id)=>{
     const response = await axios.get(`${API_URL}/bids/get-all-bids/${id}`, {withCredentials:true});
+    console.log("response getallBids for Auctions,,,,,,,,...",response.data);
+
     return response.data;
 }
 

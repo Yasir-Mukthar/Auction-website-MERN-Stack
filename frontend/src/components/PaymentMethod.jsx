@@ -7,19 +7,31 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import axios from "axios";
+import { useSelector,useDispatch } from "react-redux";
+import { getCurrentUser } from "../store/auth/authSlice";
 const stripe = await loadStripe(
-    "pk_test_51Oktd0SFo6ikMNdBYu3icDP4fdkOtxImlSZMcqCnXsmRMG3lNy7lELJaRbfZIbkbeYCUccuWpcDt6IkMoAfj1D6r004Rsy2XI5"
-  ); 
+  "pk_test_51Oktd0SFo6ikMNdBYu3icDP4fdkOtxImlSZMcqCnXsmRMG3lNy7lELJaRbfZIbkbeYCUccuWpcDt6IkMoAfj1D6r004Rsy2XI5"
+);
 
 const CheckoutForm = () => {
-    const stripe = useStripe();
+  const { user } = useSelector((state) => state.auth);
+  const stripe = useStripe();
   const elements = useElements();
+  const dispatch=useDispatch()
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
 
+  console.log(user, "user in payment method..........");
+  useEffect(()=>{
 
+  },[user])
+
+  useEffect(()=>{
+    dispatch(getCurrentUser())
+    
+  },[])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -49,36 +61,51 @@ const CheckoutForm = () => {
 
       // Send paymentMethod.id to your server
       //use axios
-    //   axios
-    //     .post("http://localhost:8000/api/v1/payments/add-payment-method", {
-    //       paymentMethodId: paymentMethod.id,
-    //     }, { withCredentials: true })
-    //     .then((response) => {
-    //       if (response.status === 200) {
-    //         console.log(response.data); // Should log "Payment method added successfully"
-    //       } else {
-    //         console.log("Failed to add payment method");
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //     });
+      if (user?.paymentVerified){
+        axios
+          .post(
+            "http://localhost:8000/api/v1/payments/update-payment-method",
+            { paymentMethodId: paymentMethod.id },
+            { withCredentials: true }
+          )
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
 
-      axios.post('http://localhost:8000/api/v1/payments/update-payment-method', { paymentMethodId: paymentMethod.id },{ withCredentials: true })
-  .then(response => {
-    console.log(response.data);
-  })
-  .catch(error => {
-    console.error(error);
-  });
+          console.log("Payment method updating........");
+
+        } else {
+        axios
+          .post(
+            "http://localhost:8000/api/v1/payments/add-payment-method",
+            {
+              paymentMethodId: paymentMethod.id,
+            },
+            { withCredentials: true }
+          )
+          .then((response) => {
+            if (response.status === 200) {
+              console.log(response.data); // Should log "Payment method added successfully"
+            } else {
+              console.log("Failed to add payment method");
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+          console.log("Payment method adding........");
+
+      }
     }
   };
 
-
   return (
     <div>
-        <h1 className="text-white">Payment Method</h1>
-        <form
+      <h1 className="text-white">Payment Method</h1>
+      <form
         onSubmit={handleSubmit}
         className="max-w-md mx-auto p-6 bg-blue-50 rounded-md"
       >
@@ -112,31 +139,33 @@ const CheckoutForm = () => {
           disabled={!stripe}
           className="mt-4 w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
-          Add Card
+          {user?.paymentVerified
+            ? "Update Payment Method"
+            : "Add Payment Method"}
         </button>
       </form>
     </div>
-  )
-}
+  );
+};
 
 const PaymentMethod = () => {
-    // const [stripe, setStripe] = useState(null);
-  
-    // useEffect(() => {
-    //   const fetchStripe = async () => {
-    //     const stripe = await loadStripe(
-    //       "pk_test_51Oktd0SFo6ikMNdBYu3icDP4fdkOtxImlSZMcqCnXsmRMG3lNy7lELJaRbfZIbkbeYCUccuWpcDt6IkMoAfj1D6r004Rsy2XI5"
-    //     ); // Replace with your public key
-    //     setStripe(stripe);
-    //   };
-  
-    //   fetchStripe();
-    // }, []);
-    return (
-      <Elements stripe={stripe}>
-        <CheckoutForm />
-      </Elements>
-    );
-  };
+  // const [stripe, setStripe] = useState(null);
 
-export default PaymentMethod
+  // useEffect(() => {
+  //   const fetchStripe = async () => {
+  //     const stripe = await loadStripe(
+  //       "pk_test_51Oktd0SFo6ikMNdBYu3icDP4fdkOtxImlSZMcqCnXsmRMG3lNy7lELJaRbfZIbkbeYCUccuWpcDt6IkMoAfj1D6r004Rsy2XI5"
+  //     ); // Replace with your public key
+  //     setStripe(stripe);
+  //   };
+
+  //   fetchStripe();
+  // }, []);
+  return (
+    <Elements stripe={stripe}>
+      <CheckoutForm />
+    </Elements>
+  );
+};
+
+export default PaymentMethod;

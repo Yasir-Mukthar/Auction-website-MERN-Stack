@@ -103,7 +103,7 @@ const updatePaymentMethod = asyncHandler(async (req, res) => {
     await stripeCustomer.save();
 
     //finde user and update verifiedPayment
-    const user = await User.findById(getUserId);
+    const user = await User.findById({ _id: getUserId});
     if(!user){
       return res.status(404).json(new ApiResponse(404, "User not found"));
     }

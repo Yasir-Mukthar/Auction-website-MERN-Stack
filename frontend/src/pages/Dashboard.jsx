@@ -29,6 +29,10 @@ const Dashboard = () => {
     }
   }, [auction]);
 
+  if(isLoading){
+    return <h1 className="text-white">Loading...</h1>
+  }
+
   return (
     <div className="flex flex-col min-h-screen w-full  bg-[#061224] text-[#7386a8]">
       <div className="">

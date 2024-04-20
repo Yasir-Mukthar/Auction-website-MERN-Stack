@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getSingleAuctionById } from "../store/auction/auctionSlice";
+import { getSingleAuctionById, reset } from "../store/auction/auctionSlice";
 import CountDownTimer from "../components/CountDownTimer";
 import BidCard from "../components/BidCard";
 import { placeABid } from "../store/bid/bidSlice";
@@ -17,15 +17,16 @@ const SingleAuctionDetail = () => {
   const [activeTab, setActiveTab] = useState("description");
   const params = useParams();
   const dispatch = useDispatch();
-  const { singleAuction, isLoading } = useSelector((state) => state.auction);
+  const { singleAuction } = useSelector((state) => state.auction);
   const { bids } = useSelector((state) => state.bid);
   const [auctionStarted, setAuctionStarted] = useState(false);
-  const [singleAuctionData, setSingleAuctionData] = useState(
-    singleAuction?.startingPrice
-  );
+  const [singleAuctionData, setSingleAuctionData] = useState();
+  console.log((singleAuctionData, "singleAuctionData............"));
   const [auctionWinnerDetailData, setAuctionWinnerDetailData] = useState();
   const [bidsData, setBidsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
+console.log(bidsData, "bidsData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
   useEffect(() => {
     const interval = setInterval(() => {
       const currentTime = new Date().getTime();
@@ -54,33 +55,96 @@ const SingleAuctionDetail = () => {
     );
   });
 
-  useEffect(() => {
-    console.log(
-      "useeffect to check auctiondatadata,,,,,,,llll,,,,",
-      auctionWinnerDetailData
-    );
-  }, [auctionWinnerDetailData]);
+  // useEffect(() => {
+  //   console.log(
+  //     "useeffect to check auctiondatadata,,,,,,,llll,,,,",
+  //     auctionWinnerDetailData
+  //   );
+  // }, [auctionWinnerDetailData]);
 
   const handleWinner = () => {
     socket.emit("selectWinner", params?.id);
   };
+
   console.log(params.id);
   console.log(singleAuction);
   console.log(isLoading);
 
   useEffect(() => {
-    console.log("useEffect is running.....");
-    dispatch(getSingleAuctionById(params?.id));
-    dispatch(getAllBidsForAuction(params?.id));
-  }, []);
+    setIsLoading(true);
 
-  useEffect(() => {
-    function setData() {
-      //setSingleAuctionData(singleAuction);
-      setBidsData(bids);
-    }
-    setData();
-  }, [singleAuction, bids]);
+    Promise.all([
+      dispatch(getSingleAuctionById(params?.id)),
+    ]).then(() => {
+      setIsLoading(false);
+    });
+    dispatch(getAllBidsForAuction(params?.id))
+
+  
+  },[params?.id])
+
+
+
+    // console.log("useEffect is running.....");
+    // dispatch(reset())
+    
+
+    // dispatch(getAllBidsForAuction(params?.id));
+    //dispatch(reset())
+
+    //setBidsData(bids);
+    //setSingleAuctionData(singleAuction?.startingPrice || singleAuctionData);
+  
+ 
+
+  
+  
+    
+  console.log("useEffect is running.new new....");
+    socket.on('newBidData', async(data)=>{
+      console.log(data, "newBidData,,,,,,,,,,,,,,,,,io,,,,,,io");
+   await   setBidsData([{
+        _id: new Date().getTime(),
+        bidder: {
+          fullName: data.fullName,
+          profilePicture: data.profilePicture,
+        },
+        bidAmount:data.bidAmount,
+        bidTime: data.bidTime,
+        auction:data.auctionId
+
+      }, ...bidsData])
+
+
+      console.log(singleAuctionData, "singleAuctionData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
+      setSingleAuctionData(prevState => ({
+        ...prevState,
+        startingPrice: data.bidAmount
+      }));
+console.log(singleAuctionData, "singleAuctionData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
+
+      console.log(bidsData, "bidsData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
+     // handleNewBid()
+    });
+  useEffect(()=>{
+    console.log("useEffect is running.new new bidsdata bidsdata bidsdata....");
+  },[bidsData])
+   
+ 
+  useEffect(()=>{
+    setBidsData(bids);
+    setSingleAuctionData(singleAuction)
+  
+  },[bids,singleAuction])
+
+
+  // useEffect(() => {
+  //   function setData() {
+  //     //setSingleAuctionData(singleAuction);
+  //     setBidsData(bids);
+  //   }
+  //   setData();
+  // }, [bids,singleAuction ]);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -95,45 +159,43 @@ const SingleAuctionDetail = () => {
     });
   }, []);
 
-  socket.on("newBidData", (data) => {
-    console.log(data, "newBidData,,,,,,,,,,,,,,,,,io,,,,,,io");
-    setSingleAuctionData(data.bidAmount);
-    dispatch(getAllBidsForAuction(params?.id));
-  });
-  if (isLoading) {
-    return <h1 className="text-center mt-10 text-lg text-white">Loading...</h1>;
-  }
 
-  if (!singleAuction) {
-    return null;
-  }
+  // socket.on("newBidData", (data) => {
+  //   console.log(data, "newBidData,,,,,,,,,,,,,,,,,io,,,,,,io");
+  //   setSingleAuctionData(data.bidAmount);
+  //  // dispatch(getAllBidsForAuction(params?.id));
+  // });
+ 
+
+
 
   const placeBidHandle = async (e) => {
     e.preventDefault();
+    console.log((singleAuctionData, "singleAuctionData............"));
 
     let bidData = {
       id: params.id,
-      amount: newBidAmount,
+      amount:Math.floor(newBidAmount),
     };
-    if (newBidAmount <= (singleAuction?.startingPrice || singleAuctionData)) {
+    if (Math.floor(newBidAmount) <= (singleAuctionData?.startingPrice )) {
       toast.info("Bid amount should be greater than the currnt bid");
       console.log(new Date().getTime() / 1000 + " seconds");
     } else if (singleAuction?.endTime < new Date().getTime() / 1000) {
       toast.info("Auction time is over");
     } else {
-      await dispatch(placeABid(bidData));
+       dispatch(placeABid(bidData));
       setNewBidAmount("");
-      setSingleAuctionData(newBidAmount);
+     // setSingleAuctionData(newBidAmount);
 
       socket.emit("newBid", {
         profilePicture: logInUser?.profilePicture,
         fullName: logInUser?.fullName,
-        bidAmount: newBidAmount,
+        bidAmount:  Math.floor(newBidAmount),
         bidTime: new Date().getTime(),
         auctionId: params.id,
       });
 
-      socket.emit("sendNewBidNotification", {
+     await socket.emit("sendNewBidNotification", {
         auctionId: params.id,
         type: "BID_PLACED",
         newBidAmount: newBidAmount,
@@ -141,7 +203,7 @@ const SingleAuctionDetail = () => {
         id: logInUser?._id,
       });
       setActiveTab("bids");
-      await dispatch(
+      dispatch(
         sendNewBidNotification({
           auctionId: params.id,
           type: "BID_PLACED",
@@ -150,6 +212,9 @@ const SingleAuctionDetail = () => {
       );
     }
   };
+  if (isLoading) {
+    return <h1 className="text-center mt-10 text-lg text-white">Loading...</h1>;
+  }
 
   // Rest of your code
 
@@ -272,7 +337,7 @@ const SingleAuctionDetail = () => {
                     : "Starting Price"}
                 </h3>
                 <p className="text-body-text-color">
-                  ${singleAuctionData || singleAuction?.startingPrice}
+                  ${( singleAuctionData?.startingPrice)}
                 </p>
               </div>
               <div className="flex flex-col gap-2">

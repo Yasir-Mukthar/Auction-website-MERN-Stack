@@ -24,6 +24,7 @@ export const socketIoConnectioin = () => {
       //send message to all users who are in users
       console.log(data, "new bid data............");
       //send them
+      console.log(users, "users...........,,,,,,,,,new bide data.");
       users.forEach((user) => {
         io.to(user.socketId).emit("newBidData", data);
       });
