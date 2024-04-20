@@ -17,7 +17,7 @@ import UserProfile from "./pages/UserProfile";
 import EditAuction from "./pages/EditAuction";
 import ErrorPage from "./pages/ErrorPage";
 import Protected, { PublicRoute, SellerRoutes } from "./auth/Protected";
-
+import Loading from "./pages/Loading";
 const App = () => {
   return (
     <>
@@ -30,6 +30,8 @@ const App = () => {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/errorpage" element={<ErrorPage />} />
+          <Route path="/loading" element={<Loading />} />
+
           <Route
             path="/single-auction-detail/:id"
             element={<SingleAuctionDetail />}
