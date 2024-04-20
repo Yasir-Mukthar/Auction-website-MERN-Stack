@@ -17,7 +17,7 @@ import UserProfile from "./pages/UserProfile";
 import EditAuction from "./pages/EditAuction";
 import ErrorPage from "./pages/ErrorPage";
 import Protected, { PublicRoute, SellerRoutes } from "./auth/Protected";
-
+import Loading from "./pages/Loading";
 const App = () => {
   return (
     <>
