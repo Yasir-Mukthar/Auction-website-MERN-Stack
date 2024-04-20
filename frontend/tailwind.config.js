@@ -71,11 +71,22 @@ export default {
             transform: "translate(0,10px)",
           },
         },
+        counterspin: {
+          to: {
+            transform: "rotate(-360deg) ",
+          },
+        },
+        clockspin: {
+          to: {
+            transform: "rotate(360deg) ",
+          },
+        },
       },
       animation: {
         fadein: "fadeinkey 300ms ",
         fadeout: "fadeoutkey 300ms",
         float: "floatkey 3s ease-in-out infinite",
+        counterspin: "counterspin 2s infinite",
       },
     },
   },

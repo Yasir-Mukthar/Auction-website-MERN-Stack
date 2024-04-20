@@ -66,16 +66,16 @@ const Header = () => {
       </div>
       <div className="hidden sm:block">
         <Link to="/" className="text-white font-Roboto text-lg mx-3">
-          home
+          Home
         </Link>
         <Link to="/" className="text-white font-Roboto text-lg mx-3">
           home
         </Link>
-        <Link to="/" className="text-white font-Roboto text-lg mx-3">
-          home
+        <Link to="/contact-us" className="text-white font-Roboto text-lg mx-3">
+          Contact
         </Link>
-        <Link to="/" className="text-white font-Roboto text-lg mx-3">
-          home
+        <Link to="/about-us" className="text-white font-Roboto text-lg mx-3">
+          About
         </Link>
       </div>
       <div className="flex items-center cursor-pointer z-[1]">
@@ -109,19 +109,19 @@ const Header = () => {
           </div>
         ) : (
           <>
-          <Link
-            to="/login"
-            className="bg-blue-500 no-underline font-Roboto text-base  hover:bg-color-danger transition-all duration-150 text-white py-1 sm:py-2 sm:px-3 px-2 rounded-md text-md font-semibold"
-          >
-            Sign In
-          </Link>
-           <Link
-           onClick={() => setNavbarOpen(!navbarOpen)}
-           className="text-white font-Roboto sm:hidden text-lg mx-3 order-3 z-50"
-         >
-           {navbarOpen ? <FaTimes size={25} /> : <FaBars size={25} />}
-         </Link>
-         </>
+            <Link
+              to="/login"
+              className="bg-blue-500 no-underline font-Roboto text-base  hover:bg-color-danger transition-all duration-150 text-white py-1 sm:py-2 sm:px-3 px-2 rounded-md text-md font-semibold"
+            >
+              Sign In
+            </Link>
+            <Link
+              onClick={() => setNavbarOpen(!navbarOpen)}
+              className="text-white font-Roboto sm:hidden text-lg mx-3 order-3 z-50"
+            >
+              {navbarOpen ? <FaTimes size={25} /> : <FaBars size={25} />}
+            </Link>
+          </>
         )}
       </div>
 

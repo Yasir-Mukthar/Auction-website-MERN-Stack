@@ -89,8 +89,16 @@ const ContactUs = () => {
               name="to_name"
             />
             <input type="email" name="user_email" placeholder="Email" />
-            <textarea name="message" placeholder="Write your Message" className="outline-none bg-theme-bg2 rounded-xl px-3 py-4 border border-border-info-color focus:border-theme-color placeholder-body-text-color min-h-[200px]" />
-            <input type="submit" value="Send Message" className="text-white cursor-pointer font-bold tracking-wide " />
+            <textarea
+              name="message"
+              placeholder="Write your Message"
+              className="outline-none bg-theme-bg2 rounded-xl px-3 py-4 border border-border-info-color focus:border-theme-color placeholder-body-text-color min-h-[200px]"
+            />
+            <input
+              type="submit"
+              value="Send Message"
+              className="text-white cursor-pointer font-bold tracking-wide border-none"
+            />
           </form>
         </div>
       </div>
