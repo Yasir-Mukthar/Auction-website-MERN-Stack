@@ -38,6 +38,8 @@ const ManageItems = () => {
               <th>Bid</th>
               <th>Status</th>
               <th>Your Bid</th>
+              <th>Winner</th>
+
               <th className="rounded-r-lg">Action</th>
             </tr>
           </thead>
@@ -70,6 +72,9 @@ const ManageItems = () => {
                 </td>
                 <td>
                   <span>{auction?.startingPrice}</span>
+                </td>
+                <td>
+                  <span>{auction?.winner?.bidder?.fullName || "----"}</span>
                 </td>
                 <td className="link:mr-2 capitalize rounded-r-lg">
                   <Link

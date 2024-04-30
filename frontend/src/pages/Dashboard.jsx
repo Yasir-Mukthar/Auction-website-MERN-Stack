@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SingleAuction from "../components/SingleAuction";
 import SearchLocationCategory from "../components/SearchLocationCategory";
+import Loading from "../components/Loading";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -29,9 +30,9 @@ const Dashboard = () => {
     }
   }, [auction]);
 
-  // if(isLoading){
-  //   return <h1 className="text-white">Loading...</h1>
-  // }
+  if(isLoading){
+    return <Loading />
+  }
 
   return (
     <div className="flex flex-col min-h-screen w-full  bg-[#061224] text-[#7386a8]">
@@ -65,23 +66,7 @@ const Dashboard = () => {
           ))}{" "}
       </div>
 
-      {/* <div>
-            <h1 className="text-2xl font-semibold text-white">Dashboard</h1>
-            <div className="flex flex-wrap gap-4">
-                {auctionData.map((item, index) => (
-                    <div key={index} className="flex flex-col gap-5">
-                        <span>{item.name}</span>
-                        <span>{item.startingPrice}</span>
-                        <span>{item.category}</span>
-                        <span>{item.startTime}</span>
-                        <span>{item.endTime}</span>
-                        <CountDownTimer startTime={item.startTime} endTime={item.endTime}/>
-                        <span>{item.location}</span>
-                        <span>{item.description}</span>
-                    </div>
-                ))}
-            </div>
-        </div> */}
+    
     </div>
   );
 };

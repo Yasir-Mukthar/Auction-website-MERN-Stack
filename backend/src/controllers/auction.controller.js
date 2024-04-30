@@ -4,6 +4,7 @@ import ApiResponse from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import Auction from "../models/auction.model.js";
 import Bid from "../models/bid.model.js";
+import { populate } from "dotenv";
 
 // name: { type: String, required: true },
 //   description: { type: String },
@@ -248,7 +249,8 @@ const getBidsAuctionsByUser = asyncHandler(async (req, res) => {
       populate: {
         path: "category",
         select: "name",
-      },
+       
+      }
     })
     .sort({ createdAt: -1 });
     // it is not showing in reverse order
@@ -280,7 +282,14 @@ const getAuctionsByUser = asyncHandler(async (req, res) => {
     const auctions = await Auction.find({ seller: req.user._id }).populate(
       "category",
       "name"
-    );
+    )
+    .populate({
+      path: "winner",
+      populate: {
+        path: "bidder",
+        select: "fullName",
+      }})
+      .sort({createdAt:-1})
 
     if (!auctions) {
       return res.status(404).json(new ApiResponse(404, "No auctions found"));

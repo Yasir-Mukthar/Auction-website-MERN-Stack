@@ -6,6 +6,7 @@ import { FaEye } from "react-icons/fa";
 const BidsItem = () => {
   const dispatch = useDispatch();
   const { bids } = useSelector((state) => state.bid);
+  const {user}=useSelector(state=>state.auth)
   console.log(bids, "bids....");
   useEffect(() => {
     dispatch(getBidsAuctionsByUser());
@@ -26,7 +27,10 @@ const BidsItem = () => {
               <th>Status</th>
               <th>Bid</th>
               <th>Your Bid</th>
+              <th>Winner</th>
+
               <th className=" rounded-r-lg">Action</th>
+
             </tr>
           </thead>
           <tbody className="table-row-group">
@@ -58,6 +62,9 @@ const BidsItem = () => {
                 </td>
                 <td>
                   <span>{bid?.bidAmount}</span>
+                </td>
+                <td>
+                  <span>{bid?.auction?.winner === user?._id ? `You Won` :  "----"}</span>
                 </td>
                 <td className="capitalize rounded-r-lg flex justify-center items-center">
                   <Link

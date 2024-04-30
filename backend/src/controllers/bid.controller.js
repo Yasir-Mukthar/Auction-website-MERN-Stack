@@ -172,17 +172,6 @@ const getAllBidsByAuctionId = asyncHandler(async (req, res) => {
 
 
 
-
-// bidder: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-//   auction: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "Auction",
-//     required: true,
-//   },
-//   bidAmount: { type: Number, required: true },
-//   bidTime: { type: Date, default: Date.now },
-//   isWinningBid: { type: Boolean, default: false },
-
 export { 
   addBidOnItem, 
   getWinnerOfAuction,

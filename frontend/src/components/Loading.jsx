@@ -1,4 +1,3 @@
-import React from "react";
 import { VscLoading } from "react-icons/vsc";
 function Loading() {
   return (
@@ -12,7 +11,7 @@ function Loading() {
           size={70}
           className="absolute text-color-primary animate-[counterspin_1s_linear_infinite]"
         />
-        <span className="mt-[200px]">Loading your assets</span>
+        {/* <span className="mt-[200px]">Loading your assets</span> */}
       </div>
     </>
   );

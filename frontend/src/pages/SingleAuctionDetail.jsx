@@ -10,11 +10,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { sendNewBidNotification } from "../store/notification/notificationSlice";
 import socket from "../socket";
 import { getAllBidsForAuction } from "../store/bid/bidSlice";
+import Loading from "../components/Loading";
 
 const SingleAuctionDetail = () => {
   const [newBidAmount, setNewBidAmount] = useState("");
   const logInUser = JSON.parse(localStorage.getItem("user"));
-  const {user} = useSelector((state)=>state.auth)
+  const { user } = useSelector((state) => state.auth);
   const [activeTab, setActiveTab] = useState("description");
   const params = useParams();
   const dispatch = useDispatch();
@@ -27,7 +28,10 @@ const SingleAuctionDetail = () => {
   const [bidsData, setBidsData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-console.log(bidsData, "bidsData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
+  console.log(
+    bidsData,
+    "bidsData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
+  );
   useEffect(() => {
     const interval = setInterval(() => {
       const currentTime = new Date().getTime();
@@ -56,13 +60,6 @@ console.log(bidsData, "bidsData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
     );
   });
 
-  // useEffect(() => {
-  //   console.log(
-  //     "useeffect to check auctiondatadata,,,,,,,llll,,,,",
-  //     auctionWinnerDetailData
-  //   );
-  // }, [auctionWinnerDetailData]);
-
   const handleWinner = () => {
     socket.emit("selectWinner", params?.id);
   };
@@ -74,78 +71,56 @@ console.log(bidsData, "bidsData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   useEffect(() => {
     setIsLoading(true);
 
-    Promise.all([
-      dispatch(getSingleAuctionById(params?.id)),
-    ]).then(() => {
+    Promise.all([dispatch(getSingleAuctionById(params?.id))]).then(() => {
       setIsLoading(false);
     });
-    dispatch(getAllBidsForAuction(params?.id))
+    dispatch(getAllBidsForAuction(params?.id));
+  }, [params?.id]);
 
-  
-  },[params?.id])
-
-
-
-    // console.log("useEffect is running.....");
-    // dispatch(reset())
-    
-
-    // dispatch(getAllBidsForAuction(params?.id));
-    //dispatch(reset())
-
-    //setBidsData(bids);
-    //setSingleAuctionData(singleAuction?.startingPrice || singleAuctionData);
-  
- 
-
-  
-  
-    
   console.log("useEffect is running.new new....");
-    socket.on('newBidData', async(data)=>{
-      console.log(data, "newBidData,,,,,,,,,,,,,,,,,io,,,,,,io");
-      setBidsData([{
+  socket.on("newBidData", async (data) => {
+    console.log(data, "newBidData,,,,,,,,,,,,,,,,,io,,,,,,io");
+    setBidsData([
+      {
         _id: new Date().getTime(),
         bidder: {
           fullName: data.fullName,
           profilePicture: data.profilePicture,
         },
-        bidAmount:data.bidAmount,
+        bidAmount: data.bidAmount,
         bidTime: data.bidTime,
-        auction:data.auctionId
+        auction: data.auctionId,
+      },
+      ...bidsData,
+    ]);
 
-      }, ...bidsData])
+    console.log(
+      singleAuctionData,
+      "singleAuctionData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
+    );
+    setSingleAuctionData((prevState) => ({
+      ...prevState,
+      startingPrice: data.bidAmount,
+    }));
+    console.log(
+      singleAuctionData,
+      "singleAuctionData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
+    );
 
-
-      console.log(singleAuctionData, "singleAuctionData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
-      setSingleAuctionData(prevState => ({
-        ...prevState,
-        startingPrice: data.bidAmount
-      }));
-console.log(singleAuctionData, "singleAuctionData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
-
-      console.log(bidsData, "bidsData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
-     // handleNewBid()
-    });
-  useEffect(()=>{
+    console.log(
+      bidsData,
+      "bidsData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
+    );
+    // handleNewBid()
+  });
+  useEffect(() => {
     console.log("useEffect is running.new new bidsdata bidsdata bidsdata....");
-  },[bidsData])
-   
- 
-  useEffect(()=>{
+  }, [bidsData]);
+
+  useEffect(() => {
     setBidsData(bids);
-    setSingleAuctionData(singleAuction)
-  
-  },[bids,singleAuction])
-
-
-  // useEffect(() => {
-  //   function setData() {
-  //     //setSingleAuctionData(singleAuction);
-  //     setBidsData(bids);
-  //   }
-  //   setData();
-  // }, [bids,singleAuction ]);
+    setSingleAuctionData(singleAuction);
+  }, [bids, singleAuction]);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -160,45 +135,37 @@ console.log(singleAuctionData, "singleAuctionData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
     });
   }, []);
 
-
-  // socket.on("newBidData", (data) => {
-  //   console.log(data, "newBidData,,,,,,,,,,,,,,,,,io,,,,,,io");
-  //   setSingleAuctionData(data.bidAmount);
-  //  // dispatch(getAllBidsForAuction(params?.id));
-  // });
- 
-
-
-
   const placeBidHandle = async (e) => {
     e.preventDefault();
     console.log((singleAuctionData, "singleAuctionData............"));
-if(user?.paymentVerified === false){
-  toast.info("Please verify your payment method to place a bid. Go to settings...")
-} 
-let bidData = {
+    if (user?.paymentVerified === false) {
+      toast.info(
+        "Please verify your payment method to place a bid. Go to settings..."
+      );
+    }
+    let bidData = {
       id: params.id,
-      amount:Math.floor(newBidAmount),
+      amount: Math.floor(newBidAmount),
     };
-    if (Math.floor(newBidAmount) <= (singleAuctionData?.startingPrice )) {
+    if (Math.floor(newBidAmount) <= singleAuctionData?.startingPrice) {
       toast.info("Bid amount should be greater than the currnt bid");
       console.log(new Date().getTime() / 1000 + " seconds");
     } else if (singleAuction?.endTime < new Date().getTime() / 1000) {
       toast.info("Auction time is over");
     } else {
-       dispatch(placeABid(bidData));
+      dispatch(placeABid(bidData));
       setNewBidAmount("");
-     // setSingleAuctionData(newBidAmount);
+      // setSingleAuctionData(newBidAmount);
 
       socket.emit("newBid", {
         profilePicture: logInUser?.profilePicture,
         fullName: logInUser?.fullName,
-        bidAmount:  Math.floor(newBidAmount),
+        bidAmount: Math.floor(newBidAmount),
         bidTime: new Date().getTime(),
         auctionId: params.id,
       });
 
-     await socket.emit("sendNewBidNotification", {
+      await socket.emit("sendNewBidNotification", {
         auctionId: params.id,
         type: "BID_PLACED",
         newBidAmount: newBidAmount,
@@ -216,7 +183,7 @@ let bidData = {
     }
   };
   if (isLoading) {
-    return <h1 className="text-center mt-10 text-lg text-white">Loading...</h1>;
+    return <Loading />;
   }
 
   // Rest of your code
@@ -318,7 +285,7 @@ let bidData = {
               } no-scrollbar`}
             >
               {/* map over bids array */}
-              {(singleAuction?.bids?.length > 0 || bidsData.length > 0) ? (
+              {singleAuction?.bids?.length > 0 || bidsData.length > 0 ? (
                 bidsData?.map((bid) => <BidCard key={bid._id} bid={bid} />)
               ) : (
                 <h1 className="text-white">No bids yet</h1>
@@ -340,7 +307,7 @@ let bidData = {
                     : "Starting Price"}
                 </h3>
                 <p className="text-body-text-color">
-                  ${( singleAuctionData?.startingPrice)}
+                  ${singleAuctionData?.startingPrice}
                 </p>
               </div>
               <div className="flex flex-col gap-2">
@@ -361,6 +328,7 @@ let bidData = {
           <div className=" flex flex-col gap-4 pt-4 border-t border-border-info-color ">
             {singleAuction?.status === "over" || auctionWinnerDetailData ? (
               bidsData.length > 0 ? (
+               <>
                 <div>
                   <h1 className="font-bold text-white">Winner</h1>
                   <div className="flex sm:gap-10 items-center border mt-2 justify-between md:w-[80%] py-1 px-2 md:px-5 border-theme-bg-light rounded-full">
@@ -398,6 +366,8 @@ let bidData = {
                     </div>
                   </div>{" "}
                 </div>
+                
+               </>
               ) : (
                 <h1 className="text-white">No bids</h1>
               )
@@ -417,38 +387,34 @@ let bidData = {
                     required
                   />
                   {logInUser ? (
-                   
-                   user?.paymentVerified ? (
- <button
-                      type="submit"
-                      disabled={
-                        singleAuction?.seller?._id === logInUser?._id
-                          ? true
-                          : false || !auctionStarted
-                      }
-                      className={`bg-color-primary py-2 px-4 rounded-lg  text-white ${
-                        singleAuction?.seller?._id === logInUser?._id
-                          ? "bg-theme-bg2 text-body-text-color cursor-not-allowed border border-border-info-color hover:border-color-danger"
-                          : "bg-color-primary border cursor-pointer border-border-info-color hover:bg-color-danger"
-                      } ${
-                        !auctionStarted
-                          ? "bg-theme-bg2 text-body-text-color "
-                          : "bg-color-primary "
-                      } `}
-                    >
-                      Place Bid
-                    </button>
-                   )
-                   :
-                   (
-<Link
-                      to="/user-profile/payment-method"
-                      className="bg-color-primary py-2 px-4 rounded-lg cursor-pointer text-white"
-                    >
-                      Attach Payment Method to Bid
-                    </Link>
-                   )
-                   
+                    user?.paymentVerified ? (
+                      <button
+                        type="submit"
+                        disabled={
+                          singleAuction?.seller?._id === logInUser?._id
+                            ? true
+                            : false || !auctionStarted
+                        }
+                        className={`bg-color-primary py-2 px-4 rounded-lg  text-white ${
+                          singleAuction?.seller?._id === logInUser?._id
+                            ? "bg-theme-bg2 text-body-text-color cursor-not-allowed border border-border-info-color hover:border-color-danger"
+                            : "bg-color-primary border cursor-pointer border-border-info-color hover:bg-color-danger"
+                        } ${
+                          !auctionStarted
+                            ? "bg-theme-bg2 text-body-text-color "
+                            : "bg-color-primary "
+                        } `}
+                      >
+                        Place Bid
+                      </button>
+                    ) : (
+                      <Link
+                        to="/user-profile/payment-method"
+                        className="bg-color-primary py-2 px-4 rounded-lg cursor-pointer text-white"
+                      >
+                        Attach Payment Method to Bid
+                      </Link>
+                    )
                   ) : (
                     <Link
                       to="/login"
@@ -463,10 +429,7 @@ let bidData = {
           </div>
         </div>
       </div>
-      <div className="mx-8">
-
-
-      </div>
+      <div className="mx-8"></div>
     </>
   );
 };
