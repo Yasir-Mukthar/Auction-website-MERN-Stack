@@ -74,7 +74,7 @@ const ContactUs = () => {
         </div>
         <div className="px-5 py-10 bg-theme-bg text-slate-300 rounded-2xl">
           <h2 className=" text-white font-bold text-3xl pb-3 mb-5 ">
-            Get into Touch
+            Contact Form
           </h2>
           <form
             ref={form}

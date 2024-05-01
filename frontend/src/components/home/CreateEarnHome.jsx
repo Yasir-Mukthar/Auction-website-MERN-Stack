@@ -8,7 +8,8 @@ const CreateEarnHome = () => {
     <div className="flex flex-col gap-4 mb-10 px-11 py-20 mt-20 justify-center bg-theme-bg rounded-[20px]  bg-cover bg-hero-img">
     <div>
       <h2 className="mb-2 text-4xl font-medium">
-        Create, Sell & Earn at AuctionZ
+        Create, Sell & Earn at <span className="uppercase text-theme-color">B</span>id
+              <span className="uppercase text-theme-color">F</span>air
       </h2>
       <span>Start Selling your Amazing Products now!</span>
     </div>

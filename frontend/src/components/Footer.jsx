@@ -52,7 +52,7 @@ const Footer = () => {
                 to="/contact-us"
                 className=" text-white no-underline hover:text-theme-color"
               >
-                Contact
+                Contact Us
               </Link>
             </li>
           </ul>
