@@ -534,6 +534,29 @@ const getUpcomingAuctions = asyncHandler(async (req, res) => {
 });
 
 
+// @desc update payment status of auction
+// @route PUT /api/v1/auctions/update-payment-status/:id
+// @access Private
+
+const updatePaymentStatus = asyncHandler(async (req, res) => {
+  try {
+    const auction = await Auction.findById(req.params.id);
+    if (!auction) {
+      return res.status(404).json(new ApiResponse(404, "Auction not found"));
+    }
+    auction.paid = true;
+    await auction.save();
+    return res.json(
+      new ApiResponse(200, "Auction payment status updated successfully", auction)
+    );
+  } catch (error) {
+    return res
+      .status(500)
+      .json(new ApiResponse(500, error?.message || "Internal server error"));
+  }
+})
+
+
 
 export {
   createAuction,
@@ -547,4 +570,5 @@ export {
   getAuctionWinner,
   getLiveAuctions,
   getUpcomingAuctions,
+  updatePaymentStatus,
 };

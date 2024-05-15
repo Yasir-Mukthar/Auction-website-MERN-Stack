@@ -17,6 +17,7 @@ import UserProfile from "./pages/UserProfile";
 import EditAuction from "./pages/EditAuction";
 import ErrorPage from "./pages/ErrorPage";
 import Protected, { PublicRoute, SellerRoutes } from "./auth/Protected";
+import PaymentSuccess from "./pages/PaymentSuccess";
 const App = () => {
   return (
     <>
@@ -48,8 +49,10 @@ const App = () => {
           <Route element={<Protected />}>
             <Route path="/user-profile/*" element={<UserProfile />} />
             <Route path="/edit-auction/:id" element={<EditAuction />} />
+            <Route path="/success/:id" element={<PaymentSuccess />} />
             <Route element={<SellerRoutes />}>
               <Route path="/create-auction" element={<UploadItem />} />
+
             </Route>
           </Route>
         </Routes>

@@ -44,7 +44,7 @@ const ManageItems = () => {
             </tr>
           </thead>
           <tbody className="table-row-group">
-            {sellerAuction?.auctions?.map((auction) => (
+            {sellerAuction?.auctions?.length===0 ? <tr><h1 className="text-center ">No Item</h1></tr>: sellerAuction?.auctions?.map((auction) => (
               <tr
                 key={auction?._id}
                 className="table-row bg-theme-bg [&_td]:table-cell [&_td]:pl-5 [&_td]:pr-3 [&_td]:py-3"

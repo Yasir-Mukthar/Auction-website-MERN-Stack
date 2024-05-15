@@ -162,6 +162,20 @@ const getUpcomingAuctions=async()=>{
       return {message, isError:true};
   }
 }
+const updatePaymentStatus=async(id)=>{
+  try{
+      const response = await axios.put(`${API_URL}/auctions/update-payment-status/${id}`,{
+          withCredentials:true
+      });
+      console.log("response getLiveAuctions", response.data);
+      return response.data;
+  }catch(error){
+      const message = (error.response && error.response.data.message) || error.message;
+      console.error("Error with getLiveAuctions", error);
+      return {message, isError:true};
+  }
+
+}
 
 
 const auctionService = {
@@ -175,7 +189,8 @@ const auctionService = {
   deleteSingleAuctionById,
   updateSingleAuction,
   getLiveAuctions,
-  getUpcomingAuctions
+  getUpcomingAuctions,
+  updatePaymentStatus,
 };
 
 export default auctionService;

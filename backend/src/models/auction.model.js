@@ -18,6 +18,10 @@ const auctionSchema = new mongoose.Schema({
   image:{type:String,required:true},
   startingPrice: { type: Number, required: true },
   reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
+  paid:{
+    type:Boolean,
+    default:false
+  },
 }, 
 {
   timestamps: true,

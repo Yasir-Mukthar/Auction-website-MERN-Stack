@@ -8,6 +8,8 @@ import Notifications from "../components/Notifications";
 import AccountSetting from "../components/AccountSetting";
 import {SellerRoutes} from '../auth/Protected'
 import PaymentMethod from "../components/PaymentMethod";
+import Cart from "../components/Cart";
+import ErrorPage from "./ErrorPage";
 
 
 
@@ -42,9 +44,10 @@ const UserProfile = () => {
           <Route path="/account-settings" element={<AccountSetting />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/payment-method" element={<PaymentMethod />} />
+          <Route path="/cart" element={<Cart />} />
 
           <Route path="/logout" element={<ChangePassword />} />
-          <Route path='*' element={<h1 className='text-white'>Not Found</h1>} />
+          <Route path="*" element={<ErrorPage />} />
 
 
         </Routes>

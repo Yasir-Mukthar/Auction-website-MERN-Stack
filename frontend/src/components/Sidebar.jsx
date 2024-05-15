@@ -93,7 +93,7 @@ const Sidebar = () => {
               className="flex  py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500"
               to="/user-profile/payment-method"
             >
-              Payment
+              Payment Method
             </Link>
           </li>
           <li>

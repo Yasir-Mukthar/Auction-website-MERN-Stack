@@ -68,12 +68,20 @@ const Header = () => {
         <Link to="/" className="text-white font-Roboto text-lg mx-3">
           Home
         </Link>
+
         <Link to="/contact-us" className="text-white font-Roboto text-lg mx-3">
           Contact Us
         </Link>
         <Link to="/about-us" className="text-white font-Roboto text-lg mx-3">
           About Us
         </Link>
+        {
+          user && (
+            <Link to="/user-profile/cart" className="text-white font-Roboto text-lg mx-3">
+          Cart
+        </Link>
+          )
+        }
       </div>
       <div className="flex items-center cursor-pointer z-[1]">
         {user ? (
@@ -171,14 +179,10 @@ const Header = () => {
         <ul className=" flex sm:hidden flex-col justify-center items-center absolute top-16 left-0 w-full h-screen bg-gradient-to-b from-theme-bg2 to-theme-bg text-body-text-color z-10 [&_li]:flex [&_li]:w-full link:w-full link:px-4 link:py-6 hover:link:bg-theme-bg2 text-center ">
           <li className="cursor-pointer capitalize text-4xl">
             <Link to="/" onClick={() => setNavbarOpen(!navbarOpen)}>
-              home
+              Home
             </Link>
           </li>
-          <li className="cursor-pointer capitalize text-4xl">
-            <Link to="/" onClick={() => setNavbarOpen(!navbarOpen)}>
-              Help
-            </Link>
-          </li>
+          
           <li className="cursor-pointer capitalize text-4xl">
             <Link to="/contact-us" onClick={() => setNavbarOpen(!navbarOpen)}>
               Contact
@@ -188,6 +192,15 @@ const Header = () => {
             <Link to="/about-us" onClick={() => setNavbarOpen(!navbarOpen)}>
               About
             </Link>
+          </li>
+          <li className="cursor-pointer capitalize text-4xl">
+          {
+          user && (
+            <Link to="/user-profile/cart" className="text-white font-Roboto text-lg mx-3">
+          Cart
+        </Link>
+          )
+        }
           </li>
         </ul>
       )}

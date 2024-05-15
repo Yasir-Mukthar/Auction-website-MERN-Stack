@@ -27,7 +27,6 @@ const BidsItem = () => {
               <th>Status</th>
               <th>Bid</th>
               <th>Your Bid</th>
-              <th>Winner</th>
 
               <th className=" rounded-r-lg">Action</th>
 
@@ -63,9 +62,7 @@ const BidsItem = () => {
                 <td>
                   <span>{bid?.bidAmount}</span>
                 </td>
-                <td>
-                  <span>{bid?.auction?.winner === user?._id ? `You Won` :  "----"}</span>
-                </td>
+                
                 <td className="capitalize rounded-r-lg flex justify-center items-center">
                   <Link
                     className="text-theme-color hover:text-white hover:bg-theme-color rounded-lg border-2 border-theme-color p-2  transition-all"
