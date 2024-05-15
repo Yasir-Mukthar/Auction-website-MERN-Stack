@@ -10,7 +10,7 @@ import axios from "axios";
 import { useSelector,useDispatch } from "react-redux";
 import { getCurrentUser } from "../store/auth/authSlice";
 const stripe = await loadStripe(
-  "pk_test_51Oktd0SFo6ikMNdBYu3icDP4fdkOtxImlSZMcqCnXsmRMG3lNy7lELJaRbfZIbkbeYCUccuWpcDt6IkMoAfj1D6r004Rsy2XI5"
+  "pk_test_51P5t81Lvvxf0OOpItZ5a94EMI92eFidBTy8oWVF7XTsHTwu17Q9BB292AQjV6s3fjSoWdp60vlG1jG090s6QgDm100UKAL5SIR"
 );
 
 const CheckoutForm = () => {

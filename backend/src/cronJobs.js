@@ -4,6 +4,7 @@ import moment from "moment"
 import Auction from './models/auction.model.js';
 import Bid from './models/bid.model.js';
 import Notification from './models/notification.model.js';
+import Cart from './models/cart.model.js';
 import { io } from "./index.js";
 
 
@@ -49,6 +50,20 @@ async function selectAuctionWinner(auctionId) {
   await auction.save();
 
   await sendNotification(winnerUser,auction )
+  
+
+//first find the  user in cart then add item to that cart
+  const userCart=await Cart.findOne({user:winnerUser.bidder._id});
+  if(!userCart){
+      await Cart.create({products:[auction._id],user:winnerUser.bidder._id});
+  }else{
+      userCart.products.push(auction._id);
+      await userCart.save();
+  }
+
+  console.log(cartItem);
+  
+  
 
 }
 

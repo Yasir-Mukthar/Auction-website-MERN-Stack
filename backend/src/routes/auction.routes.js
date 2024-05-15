@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { createAuction,
+import { 
+        createAuction,
         getAllAuctions, 
         getSingleAuctionById,
         updateAuctionStatus,
@@ -9,7 +10,8 @@ import { createAuction,
         updateSingleAuactionById,
         getAuctionWinner,
         getLiveAuctions,
-        getUpcomingAuctions
+        getUpcomingAuctions,
+        updatePaymentStatus
     } from "../controllers/auction.controller.js";
 import { verifyAdmin, verifyUser,verifySeller } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -31,6 +33,7 @@ router.route("/update/:id").put(verifyUser, verifySeller,upload.single("image") 
 router.route("/user-auctions").get(verifyUser,verifySeller, getAuctionsByUser);
 router.route("/create-auction").post(verifyUser,verifySeller,  upload.single("image"), createAuction);
 router.route("/:id").get(getSingleAuctionById);
+router.route("/update-payment-status/:id").put(verifyUser,updatePaymentStatus )
 
 
 
