@@ -160,11 +160,11 @@ const paymentCheckout = asyncHandler(async (req, res) => {
 
     console.log("checklk..,,,,");
     const session = await stripe.checkout.sessions.create({
-      line_items: req.body.lineItems,
+      line_items: req.body.sendProductData.lineItems,
       customer: stripeCustomer.StripeCustomerId,
       mode: "payment",
       payment_method_types: ["card"],
-      success_url: "http://localhost:5173/success",
+      success_url: `http://localhost:5173/success/${req.body.sendProductData.id}`,
       cancel_url: "http://localhost:5173/cancel",
     });
     console.log("chkkkkkkkkkkkkkk,,,");

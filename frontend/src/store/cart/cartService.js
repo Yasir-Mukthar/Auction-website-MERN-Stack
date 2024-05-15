@@ -20,14 +20,21 @@ export const getCartItems=async ()=>{
     return response.data.data;
 }
 
-
+export const deleteCartItem=async(id)=>{
+    const response = await axios.delete(`${API_URL}/cart/${id}`,{
+        withCredentials:true
+    });
+    console.log('response delete cart', response.data);
+    return response.data.data;
+}
 
 
 
 
 
 const cartService= {
-    getCartItems
+    getCartItems,
+    deleteCartItem
 }
 
 

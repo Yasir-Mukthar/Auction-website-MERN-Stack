@@ -64,16 +64,11 @@ const redirectToCheckout = async (product) => {
         quantity: 1,
       },
     ];
-    // const { data } = await axios.post("http://localhost:8000/api/v1/payments/checkout", {
-    //   lineItems,
-    // },{
-
-    //     withCredentials:true
-    // });
+   const sendProductData={id:product._id, lineItems:lineItems}
     const {data}= await axios.post(
         "http://localhost:8000/api/v1/payments/checkout",
         {
-          lineItems,
+          sendProductData,
         },
         {
           withCredentials: true,

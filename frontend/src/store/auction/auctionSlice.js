@@ -142,6 +142,17 @@ export const getUpcomingAuctions=createAsyncThunk(
   }
 )
 
+export const updatePaymentStatus=createAsyncThunk(
+  "auction/updatePaymentStatus", async (id, thunkAPI) => {
+    try {
+      return await auctionService.updatePaymentStatus(id);
+    } catch (error) {
+      const message = (error.response && error.response.data.message) || error.message;
+      return thunkAPI.rejectWithValue({ message, isError: true });
+    }
+  
+  }
+)
 
 
 const initialState = {
@@ -368,7 +379,26 @@ const auctionSlice = createSlice({
       state.isError = true;
       state.isSuccess = false;
       state.message = action.payload.message;
-    });
+    })
+    builder.addCase(updatePaymentStatus.pending, (state) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = "";
+    })
+    builder.addCase(updatePaymentStatus.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = true;
+      state.message = action.payload.message;
+    })
+    builder.addCase(updatePaymentStatus.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.isSuccess = false;
+      state.message = action.payload.message;
+    })
+
 
     
       // Handle other actions...
