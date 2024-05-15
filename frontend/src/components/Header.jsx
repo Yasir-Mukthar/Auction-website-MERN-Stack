@@ -68,12 +68,12 @@ const Header = () => {
         <Link to="/" className="text-white font-Roboto text-lg mx-3">
           Home
         </Link>
-        
+
         <Link to="/contact-us" className="text-white font-Roboto text-lg mx-3">
-          Contact
+          Contact Us
         </Link>
         <Link to="/about-us" className="text-white font-Roboto text-lg mx-3">
-          About
+          About Us
         </Link>
         {
           user && (
