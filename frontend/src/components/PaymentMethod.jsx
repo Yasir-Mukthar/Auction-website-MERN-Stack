@@ -103,18 +103,18 @@ const CheckoutForm = () => {
   };
 
   return (
-    <div>
-      <h1 className="text-white">Payment Method</h1>
+    <div className=" px-7 pt-4 pb-10 w-full bg-theme-bg  rounded-2xl ">
+      <h1 className=" text-white font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">Payment Method</h1>
       <form
         onSubmit={handleSubmit}
-        className="max-w-md mx-auto p-6 bg-blue-50 rounded-md"
+        className="flex flex-col lg:w-[50%] gap-4 inputs:outline-none inputs:px-3 inputs:py-4 inputs:rounded-xl inputs:white [&_button[type=submit]]:bg-theme-color [&_button:hover[type=submit]]:bg-color-danger inputs:border inputs:border-border-info-color focus:inputs:border-theme-color select:border select:border-border-info-color inputs:placeholder-body-text-color  [&_*]:transition-all "
       >
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Full Name on card"
-          className="mt-4 w-full py-2 px-4 border border-gray-300 rounded-md mb-4"
+          
           required
         />
         <input
@@ -123,7 +123,7 @@ const CheckoutForm = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
-          className="mt-4 w-full py-2 px-4 border border-gray-300 rounded-md mb-4"
+          
         />
         <input
           type="text"
@@ -131,13 +131,13 @@ const CheckoutForm = () => {
           onChange={(e) => setAddress(e.target.value)}
           placeholder="Address"
           required
-          className="mt-4 w-full py-2 px-4 border border-gray-300 rounded-md mb-4"
+          
         />
-        <CardElement className="mt-4 w-full py-3 px-4 border border-gray-300 rounded-md mb-4 bg-white" />
+        <CardElement className=" outline-none px-3 py-4 rounded-xl bg-white border border-border-info-color focus:border-theme-color placeholder-body-text-color " />
         <button
           type="submit"
           disabled={!stripe}
-          className="mt-4 w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+          className="px-3 py-4 rounded-xl text-white cursor-pointer font-bold tracking-wide"
         >
           {user?.paymentVerified
             ? "Update Payment Method"
