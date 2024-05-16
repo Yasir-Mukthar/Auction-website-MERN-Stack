@@ -96,11 +96,11 @@ alert("succes")    }
                    
                    {
                     item.products.map((product)=>(
-                        <div key={product._id} className="flex justify-between items-center">
+                        <div key={product._id} className="flex justify-between items-center border-2 border-yellow-500">
                             <div>
                                 <img className="w-20" src={product.image} alt={product.name} />
                                 <h3>{product.name}</h3>
-                                <p>{product.startingPrice}</p>
+                                <p>${product.startingPrice}</p>
                             </div>
                             <Link to={`/single-auction-detail/${product._id}`} className="text-theme-color">View Product</Link>
                             <button onClick={()=>redirectToCheckout(product)}>Go to Checkout</button>
