@@ -75,13 +75,14 @@ const Header = () => {
         <Link to="/about-us" className="text-white font-Roboto text-lg mx-3">
           About Us
         </Link>
-        {
-          user && (
-            <Link to="/user-profile/cart" className="text-white font-Roboto text-lg mx-3">
-          Cart
-        </Link>
-          )
-        }
+        {user && (
+          <Link
+            to="/user-profile/cart"
+            className="text-white font-Roboto text-lg mx-3"
+          >
+            Cart
+          </Link>
+        )}
       </div>
       <div className="flex items-center cursor-pointer z-[1]">
         {user ? (
@@ -93,17 +94,17 @@ const Header = () => {
               className="w-10 h-10 rounded-full order-2 cursor-pointer"
               onClick={() => setSidebarOpen(!sidebarOpen)}
             />
-            <Link
-              to="/user-profile/notifications"
-              className="mr-2 bg-theme-bg  rounded-full p-2 relative"
-            >
+            <Link to="/user-profile/notifications" className="mr-2">
               {unReadNotifications.length > 0 ? (
                 <span className="absolute right-0 top-0 w-[18px] h-[18px] flex items-center justify-center bg-theme-color rounded-full  text-white text-xs font-bold">
                   {unReadNotifications.length}
                 </span>
               ) : null}
 
-              <IoIosNotificationsOutline className="text-white text-xl cursor-pointer " />
+              <IoIosNotificationsOutline
+                size={37}
+                className="text-white text-xl cursor-pointer bg-theme-bg hover:text-theme-color rounded-full p-2 transition-all "
+              />
             </Link>
             <Link
               onClick={() => setNavbarOpen(!navbarOpen)}
@@ -182,7 +183,7 @@ const Header = () => {
               Home
             </Link>
           </li>
-          
+
           <li className="cursor-pointer capitalize text-4xl">
             <Link to="/contact-us" onClick={() => setNavbarOpen(!navbarOpen)}>
               Contact
@@ -194,13 +195,14 @@ const Header = () => {
             </Link>
           </li>
           <li className="cursor-pointer capitalize text-4xl">
-          {
-          user && (
-            <Link to="/user-profile/cart" className="text-white font-Roboto text-lg mx-3">
-          Cart
-        </Link>
-          )
-        }
+            {user && (
+              <Link
+                to="/user-profile/cart"
+                className="text-white font-Roboto text-lg mx-3"
+              >
+                Cart
+              </Link>
+            )}
           </li>
         </ul>
       )}
