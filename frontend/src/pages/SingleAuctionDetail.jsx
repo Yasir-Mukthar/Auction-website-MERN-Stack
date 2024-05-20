@@ -11,6 +11,7 @@ import { sendNewBidNotification } from "../store/notification/notificationSlice"
 import socket from "../socket";
 import { getAllBidsForAuction } from "../store/bid/bidSlice";
 import Loading from "../components/Loading";
+import LiveHome from "../components/home/LiveHome"
 
 const SingleAuctionDetail = () => {
   const [newBidAmount, setNewBidAmount] = useState("");
@@ -429,7 +430,9 @@ const SingleAuctionDetail = () => {
           </div>
         </div>
       </div>
-      <div className="mx-8"></div>
+      <div className="mx-8">
+        <LiveHome></LiveHome>
+      </div>
     </>
   );
 };
