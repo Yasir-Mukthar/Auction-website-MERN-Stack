@@ -59,14 +59,14 @@ export default {
             visibility: "visible",
             opacity: 1,
           },
-
+          
           "100%": { visibility: "hidden", opacity: 0 },
         },
         floatkey: {
           "0,100%": {
             transform: "translate(0,0)",
           },
-
+          
           "50%": {
             transform: "translate(0,10px)",
           },
@@ -81,12 +81,26 @@ export default {
             transform: "rotate(360deg) ",
           },
         },
+        successkey: {
+          "0%": {
+            transform: "translate(0,100px)",
+            visibility: "hidden",
+            opacity: 0,
+          },
+
+          "100%": {
+            transform: "translate(0,0)",
+            visibility: "visible",
+            opacity: 1,
+          },
+        },
       },
       animation: {
         fadein: "fadeinkey 300ms ",
         fadeout: "fadeoutkey 300ms",
         float: "floatkey 3s ease-in-out infinite",
         counterspin: "counterspin 2s infinite",
+        successpayment: "successkey 1s ease-in-out"
       },
     },
   },
