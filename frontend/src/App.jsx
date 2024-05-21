@@ -16,14 +16,28 @@ import SingleAuctionDetail from "./pages/SingleAuctionDetail";
 import UserProfile from "./pages/UserProfile";
 import EditAuction from "./pages/EditAuction";
 import ErrorPage from "./pages/ErrorPage";
-import Protected, { PublicRoute, SellerRoutes } from "./auth/Protected";
+import Protected, { PublicRoute, SellerRoutes, AdminRoutes } from "./auth/Protected";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import Admin from "./admin/Admin"
+import { useSelector } from "react-redux";
+import AdminFooter from "./admin/components/Footer"
+import AdminHeader from "./admin/components/Header"
+import AdminLogin from "./admin/pages/Login"
+import AdminDashboard from "./admin/Admin"
+
+
 const App = () => {
+
+const { user } = useSelector((state) => state.auth);
+
+console.log(user,"...")
   return (
     <>
       <BrowserRouter>
-        <Header />
+      {user && user.userType !== "admin" ? <Header /> : <AdminHeader />}
+ 
         <Routes>
+          {/* <Route path="/admin/login" element={<AdminLogin />} /> */}
           <Route path="/" element={<Home />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/contact-us" element={<ContactUs />} />
@@ -52,12 +66,20 @@ const App = () => {
             <Route path="/success/:id" element={<PaymentSuccess />} />
             <Route element={<SellerRoutes />}>
               <Route path="/create-auction" element={<UploadItem />} />
+              <Route path="/user-profile/manage-items" element={<UserProfile />} />
+
 
             </Route>
+           
           </Route>
+          {/* <Route element={<AdminRoutes />}> */}
+              <Route path="/admin/*" element={<AdminDashboard />} />
+              
+            {/* </Route> */}
         </Routes>
 
-        <Footer />
+{user && user.userType !== "admin" ? <Footer />: <AdminFooter /> }
+
       </BrowserRouter>
       <ToastContainer />
     </>

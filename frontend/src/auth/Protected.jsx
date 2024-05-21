@@ -26,6 +26,21 @@ const PublicRoute = () => {
   return auth ? null : <Outlet />;
 };
 
+
+const AdminPublicRoute = () => {
+  const auth = useAuth();
+  const navigate = useNavigate();
+  console.log(auth, "auth.,,,,,,,,.......public....");
+
+  useEffect(() => {
+    if (auth) {
+      navigate("/admin/dashboard");
+    }
+  }, [auth, navigate]);
+
+  return auth ? null : <Outlet />;
+};
+
 const Protected = () => {
   const auth = useAuth();
   const navigate = useNavigate();
@@ -33,6 +48,19 @@ const Protected = () => {
   useEffect(() => {
     if (!auth) {
       navigate("/login");
+    }
+  }, [auth, navigate]);
+
+  return auth ? <Outlet /> : null;
+};
+
+const AdminProtected = () => {
+  const auth = useAuth();
+  const navigate = useNavigate();
+  console.log(auth, "auth.,,,,,,,,.......protected....");
+  useEffect(() => {
+    if (!auth) {
+      navigate("/admin/login");
     }
   }, [auth, navigate]);
 
@@ -53,5 +81,22 @@ console.log(auth, "auth.,,,,,seller routes,,,...........");
   return auth && user.userType === "seller" ? <Outlet /> : null;
 }
 
-export { PublicRoute,SellerRoutes };
+const AdminRoutes=()=>{
+  const {user}=useSelector((state)=>state.auth);
+    const auth = useAuth();
+    const navigate = useNavigate();
+  console.log(auth, "auth.,,,,,seller routes,,,...........");
+  if (auth && user.userType !== "admin") {
+    navigate("/dashboard");
+  }
+    useEffect(() => {
+      if (auth && user.userType !== "admin") {
+        navigate("/dashboard");
+      }
+    }, [auth, navigate]);
+  
+    return auth && user.userType === "admin" ? <Outlet /> : null;
+  }
+
+export { PublicRoute,SellerRoutes, AdminRoutes,AdminProtected , AdminPublicRoute};
 export default Protected;

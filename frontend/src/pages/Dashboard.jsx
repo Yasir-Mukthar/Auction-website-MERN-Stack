@@ -8,6 +8,7 @@ import SingleAuction from "../components/SingleAuction";
 import SearchLocationCategory from "../components/SearchLocationCategory";
 import Loading from "../components/Loading";
 
+
 const Dashboard = () => {
   const dispatch = useDispatch();
   const [auctionData, setAuctionData] = useState([]);

@@ -139,6 +139,8 @@ const getAllAuctions = asyncHandler(async (req, res) => {
           select: "fullName  profilePicture",
         },
       })
+      .populate("category", "name")
+      .populate("location", "name")
       //show new ones
       .sort({ createdAt: -1 });
 
