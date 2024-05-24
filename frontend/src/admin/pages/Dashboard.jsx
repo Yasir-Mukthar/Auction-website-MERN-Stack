@@ -17,6 +17,7 @@ import EditAuction from "../components/EditAuction";
  import ErrorPage from "./ErrorPage";
 import AllCategories from "../components/AllCategories";
 import EditCategory from "../components/EditCategory";
+import CreateCategory from "../components/CreateCategory";
 
 const Dashboard = () => {
   return (
@@ -39,6 +40,7 @@ const Dashboard = () => {
           <Route path="/auctions/view/:id" element={<ProfileComponent />} />
           <Route path="/categories/*" element={<AllCategories />} />
           <Route path="/categories/edit/:id" element={<EditCategory />} />
+          <Route path="/categories/create-category" element={<CreateCategory />} />
           {/* <Route path="/profile" element={<ProfileComponent />} />
 
           <Route element={<SellerRoutes />}>
