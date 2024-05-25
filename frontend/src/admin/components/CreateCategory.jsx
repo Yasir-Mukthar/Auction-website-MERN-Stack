@@ -53,7 +53,7 @@ const CreateCategory = () => {
   return (
     <div>
       <form
-        className="flex flex-col lg:flex-row gap-8 justify-center md:w-[80%] lg:w-[100%] m-auto px-4 py-20"
+        className="flex flex-col lg:flex-row gap-8 justify-center lg:w-[100%] m-auto px-4"
         onSubmit={handleProductUpload}
       >
         <div className="text-white lg:w-[22%] lg:min-w-[350px] ">

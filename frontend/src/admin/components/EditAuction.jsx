@@ -11,8 +11,6 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
-
 const EditAuction = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -25,26 +23,20 @@ const EditAuction = () => {
   const { cities } = useSelector((state) => state.city);
   console.log("singleAuction........", singleAuction);
 
-
   useEffect(() => {
     dispatch(getSingleAuctionById(id));
   }, [id]);
-  
+
   useEffect(() => {
     if (singleAuction) {
       setSingleAuctionData(singleAuction);
     }
-    
   }, [singleAuction]);
 
   useEffect(() => {
-
     dispatch(getAllCategories());
     dispatch(getAllCities());
   }, []);
-
-
-
 
   const [formData, setFormData] = useState({
     name: "",
@@ -56,26 +48,22 @@ const EditAuction = () => {
     startingPrice: 0,
     imgUrl: "",
   });
-  
-  
+
   useEffect(() => {
-  
-      setFormData({
-        name: singleAuctionData?.name,
-        description: singleAuctionData?.description || "",
-        startTime: singleAuctionData?.startTime
-          ? new Date(singleAuctionData?.startTime).toISOString().slice(0, 16)
-          : "",
-        endTime: singleAuctionData?.endTime
-          ? new Date(singleAuctionData?.endTime).toISOString().slice(0, 16)
-          : "",
-        category: singleAuctionData?.category?._id || "",
-        location: singleAuctionData?.location?._id || "",
-        startingPrice: parseFloat(singleAuctionData?.startingPrice) || 0,
-        
-      });
-      setImgUrl(singleAuctionData?.image || "")
-    
+    setFormData({
+      name: singleAuctionData?.name,
+      description: singleAuctionData?.description || "",
+      startTime: singleAuctionData?.startTime
+        ? new Date(singleAuctionData?.startTime).toISOString().slice(0, 16)
+        : "",
+      endTime: singleAuctionData?.endTime
+        ? new Date(singleAuctionData?.endTime).toISOString().slice(0, 16)
+        : "",
+      category: singleAuctionData?.category?._id || "",
+      location: singleAuctionData?.location?._id || "",
+      startingPrice: parseFloat(singleAuctionData?.startingPrice) || 0,
+    });
+    setImgUrl(singleAuctionData?.image || "");
   }, [singleAuctionData]);
 
   console.log("categoreik   ", categories);
@@ -127,7 +115,7 @@ const EditAuction = () => {
   return (
     <div>
       <form
-        className="flex flex-col lg:flex-row gap-8 justify-center md:w-[80%] lg:w-[100%] m-auto px-4 py-20"
+        className="flex flex-col lg:flex-row gap-8 justify-center lg:w-[100%] m-auto px-4"
         onSubmit={handleProductUpload}
       >
         <div className="text-white lg:w-[22%] lg:min-w-[350px] ">
@@ -139,7 +127,7 @@ const EditAuction = () => {
               alt="upload img"
               onClick={() => imgRef.current.click()}
               className="w-full h-80 
-                    rounded-lg border-2 border-solid p-2 object-contain cursor-pointer"
+                    rounded-lg border-2 border-border-info-color border-solid p-2 object-contain cursor-pointer"
             />
           ) : (
             <div
@@ -162,7 +150,7 @@ const EditAuction = () => {
           />
         </div>
 
-        <div className="flex flex-col gap-4 lg:w-[50%] inputs:outline-none p-8 inputs:px-4 inputs:py-3 inputs:rounded-xl select:px-4 select:py-3 select:rounded-xl select:cursor-pointer border border-border-info-color inputs:bg-theme-bg inputs:border inputs:border-border-info-color focus:inputs:border-theme-color select:border select:border-border-info-color inputs:placeholder-body-text-color text-slate-300 rounded-2xl [&_label]:mb-2 [&_label]:text-body-text-color [&_*]:transition-all">
+        <div className="flex flex-col gap-4 lg:w-[70%] inputs:outline-none p-8 inputs:px-4 inputs:py-3 inputs:rounded-xl select:px-4 select:py-3 select:rounded-xl select:cursor-pointer border border-border-info-color inputs:bg-theme-bg inputs:border inputs:border-border-info-color focus:inputs:border-theme-color select:border select:border-border-info-color inputs:placeholder-body-text-color text-slate-300 rounded-2xl [&_label]:mb-2 [&_label]:text-body-text-color [&_*]:transition-all">
           <div className="grid">
             <label htmlFor="product_name" className="text-white  mb-1">
               Product Name

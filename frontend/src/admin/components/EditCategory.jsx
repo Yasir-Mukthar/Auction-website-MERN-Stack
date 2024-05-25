@@ -90,7 +90,7 @@ const EditCategory = () => {
   return (
     <div>
       <form
-        className="flex flex-col lg:flex-row gap-8 justify-center md:w-[80%] lg:w-[100%] m-auto px-4 py-20"
+        className="flex flex-col lg:flex-row gap-8 justify-center lg:w-[100%] m-auto px-4"
         onSubmit={handleProductUpload}
       >
         <div className="text-white lg:w-[22%] lg:min-w-[350px] ">
@@ -125,7 +125,7 @@ const EditCategory = () => {
           />
         </div>
 
-        <div className="flex flex-col gap-4 lg:w-[50%] inputs:outline-none p-8 inputs:px-4 inputs:py-3 inputs:rounded-xl select:px-4 select:py-3 select:rounded-xl select:cursor-pointer border border-border-info-color inputs:bg-theme-bg inputs:border inputs:border-border-info-color focus:inputs:border-theme-color select:border select:border-border-info-color inputs:placeholder-body-text-color text-slate-300 rounded-2xl [&_label]:mb-2 [&_label]:text-body-text-color [&_*]:transition-all">
+        <div className="flex flex-col gap-4 lg:w-[80%] inputs:outline-none p-8 inputs:px-4 inputs:py-3 inputs:rounded-xl select:px-4 select:py-3 select:rounded-xl select:cursor-pointer border border-border-info-color inputs:bg-theme-bg inputs:border inputs:border-border-info-color focus:inputs:border-theme-color select:border select:border-border-info-color inputs:placeholder-body-text-color text-slate-300 rounded-2xl [&_label]:mb-2 [&_label]:text-body-text-color [&_*]:transition-all">
           <div className="grid">
             <label htmlFor="product_name" className="text-white  mb-1">
               Category Name
