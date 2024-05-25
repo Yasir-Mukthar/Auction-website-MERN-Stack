@@ -1,3 +1,14 @@
+import { TbCategoryPlus } from "react-icons/tb";
+import { MdSkipPrevious, MdSkipNext } from "react-icons/md";
+import {
+  FaCaretUp,
+  FaCaretDown,
+  FaCaretRight,
+  FaCaretLeft,
+  FaEye,
+  FaRegEdit,
+} from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTable, useSortBy, usePagination, useFilters } from "react-table";
@@ -8,16 +19,14 @@ import {
   getCategoriesMoreDetail,
   getTopCategories,
 } from "../../store/category/categorySlice.js";
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-
-
-
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import { FaFilePdf } from "react-icons/fa6";
 const AllCategories = () => {
   const dispatch = useDispatch();
   const [filterInput, setFilterInput] = useState("");
   const [filterField, setFilterField] = useState("name");
-  const { categories, categoriesDetail,topCategories } = useSelector(
+  const { categories, categoriesDetail, topCategories } = useSelector(
     (state) => state.category
   );
   console.log(topCategories);
@@ -58,11 +67,19 @@ const AllCategories = () => {
         Header: "Actions",
         accessor: "actions",
         Cell: ({ row: { original } }) => (
-          <div>
+          <div className="flex gap-2">
             <button onClick={() => handleDeleteCategory(original.actions)}>
-              Delete
+              <MdDeleteForever
+                size={38}
+                className=" inline mt-[-3px] text-color-danger hover:text-white hover:bg-color-danger rounded-lg border-2 border-color-danger  px-[6px] py-[3px] transition-all"
+              />
             </button>
-            <Link to={`/admin/categories/edit/${original.actions}`}>Edit</Link>
+            <Link to={`/admin/categories/edit/${original.actions}`}>
+              <FaRegEdit
+                size={38}
+                className="inline mt-[-3px] text-theme-color hover:text-white hover:bg-theme-color rounded-lg border-2 border-theme-color  px-2 py-[5px] transition-all"
+              />
+            </Link>
           </div>
         ),
       },
@@ -73,7 +90,7 @@ const AllCategories = () => {
   useEffect(() => {
     dispatch(getAllCategories());
     dispatch(getCategoriesMoreDetail());
-    dispatch(getTopCategories())
+    dispatch(getTopCategories());
   }, []);
   console.log(categoriesDetail);
   const data = React.useMemo(
@@ -116,41 +133,64 @@ const AllCategories = () => {
     usePagination
   );
   const printDocument = () => {
-    const input = document.getElementById('divToPrint');
-    html2canvas(input)
-      .then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF();
-        pdf.addImage(imgData, 'JPEG', 0, 0);
-        // Set the document's title
-        pdf.setProperties({
-          title: 'All Categories'
-        });
-        // Save the PDF
-        pdf.save("AllCategories.pdf");
+    const input = document.getElementById("divToPrint");
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, "JPEG", 0, 0);
+      // Set the document's title
+      pdf.setProperties({
+        title: "All Categories",
       });
-  }
+      // Save the PDF
+      pdf.save("AllCategories.pdf");
+    });
+  };
 
   return (
-    <div className="text-black" id="divToPrint">
-            <button onClick={printDocument} className="bg-red-500 p-4">Export to PDF</button>
+    <div
+      className="overflow-auto px-7 py-4  bg-theme-bg text-slate-300 rounded-2xl"
+      id="divToPrint"
+    >
+      <div className="">
+        <h2 className=" flex items-center justify-between text-white font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">
+          Categories
+          <button
+            onClick={printDocument}
+            className="bg-color-danger items-center px-3 py-2 rounded-lg text-base font-medium inline-flex gap-2"
+          >
+            <FaFilePdf size={24} />
+            Export PDF
+          </button>
+        </h2>
+        <div>
+          <div className="grid grid-cols-1 lg:grid-cols-3  items-center gap-2  rounded-lg w-full ">
+            <h3 className="flex flex-col p-10 bg-theme-bg2  rounded-lg">
+              <span className="">Total Categories</span>
+              <span className="font-bold text-4xl text-color-primary">
+                {categoriesDetail?.totalCategories}{" "}
+              </span>
+            </h3>
 
-      <div className="flex flex-col items-center justify-center w-full h-full bg-white rounded-lg shadow-lg overflow-hidden">
-        <h1 className="text-2xl font-bold text-black">All Categories</h1>
-        <div className="flex justify-between">
-          <div>
-            <h3>Total Categories: {categoriesDetail?.totalCategories}</h3>
-
-            <h3 className="border p-5">
-              Most Populated Category:{" "}
-              {categoriesDetail?.mostPopulatedCategory[0]?.name}
-              <h3>
-                Products: {categoriesDetail?.mostPopulatedCategory[0]?.products}
+            <h3 className="p-10 flex flex-col md:flex-row justify-between bg-theme-bg2 rounded-lg">
+              <div className="flex flex-col">
+                Most Populated Category{" "}
+                <span className="font-bold text-4xl text-color-primary">
+                  {categoriesDetail?.mostPopulatedCategory[0]?.name}
+                </span>
+              </div>
+              <h3 className="flex flex-col">
+                Products{" "}
+                <span className="font-bold text-4xl text-color-primary">
+                  {categoriesDetail?.mostPopulatedCategory[0]?.products}
+                </span>
               </h3>
             </h3>
-            <h3 className="border p-5">
-              Recently added Category:{" "}
-              {categoriesDetail?.recentlyAddedCategory?.name}
+            <h3 className="p-10 flex flex-col bg-theme-bg2 rounded-lg">
+              Recently Added Category{" "}
+              <span className="font-bold text-4xl text-color-primary">
+                {categoriesDetail?.recentlyAddedCategory?.name}
+              </span>
             </h3>
             {/* <h3>
               Most Populated Category: {categoriesDetail?.mostPopulatedCategory}
@@ -166,9 +206,10 @@ const AllCategories = () => {
       </div>
 
       <>
-        <div className="flex justify-between">
-          <div>
+        <div className="flex flex-col gap-4  md:flex-row md:justify-between mt-10 md:items-center">
+          <div className="flex gap-4">
             <select
+              className="outline-none bg-theme-bg2 rounded-xl px-3 py-3 cursor-pointer border border-border-info-color focus:border-theme-color  transition-all"
               value={filterField}
               onChange={(e) => setFilterField(e.target.value)}
             >
@@ -177,6 +218,7 @@ const AllCategories = () => {
               <option value="description">Description</option>
             </select>
             <input
+              className="outline-none bg-theme-bg2 rounded-xl px-3 py-3 border border-border-info-color focus:border-theme-color w-full transition-all"
               value={filterInput}
               onChange={handleFilterChange}
               placeholder={"Search name"}
@@ -184,115 +226,124 @@ const AllCategories = () => {
           </div>
           <div>
             <Link
-              className="text-white border p-2 rounded-md bg-blue-400"
+              className="text-white flex items-center gap-1 p-3 rounded-md bg-theme-color hover:bg-color-danger font-medium transition-all"
               to={`/admin/categories/create-category`}
             >
-              Create Category
+              <TbCategoryPlus size={22} /> Create Category
             </Link>
           </div>
         </div>
-        <table {...getTableProps()} className="text-white bg-black">
-          <thead>
-            {headerGroups.map((headerGroup, headerGroupIndex) => (
-              <tr
-                {...headerGroup.getHeaderGroupProps()}
-                key={headerGroupIndex}
-                className="bg-gray-400 "
-              >
-                {headerGroup.headers.map((column, columnIndex) => (
-                  <th
-                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                    key={columnIndex}
-                    className="px-4"
-                  >
-                    {column.render("Header")}
-                    <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? " 🔽"
-                          : " 🔼"
-                        : ""}
-                    </span>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-
-          <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
-              prepareRow(row);
-              const rowProps = row.getRowProps();
-
-              return (
+        <div className="overflow-auto px-4 rounded-2xl border border-border-info-color mt-4 ">
+          <table
+            {...getTableProps()}
+            className="relative text-left min-w-[900px]  w-full border-separate border-spacing-x-0 border-spacing-y-4 "
+          >
+            <thead className="sticky top-0 table-header-group">
+              {headerGroups.map((headerGroup, headerGroupIndex) => (
                 <tr
-                  {...rowProps}
-                  {...row.getRowProps()}
-                  key={row.id}
-                  className="hover:bg-gray-600"
+                  className="table-row"
+                  {...headerGroup.getHeaderGroupProps()}
+                  key={headerGroupIndex}
                 >
-                  {row.cells.map((cell, cellIndex) => {
-                    return (
-                      <td
-                        {...cell.getCellProps()}
-                        key={cellIndex}
-                        className="px-4"
-                      >
-                        {cell.render("Cell")}
-                      </td>
-                    );
-                  })}
+                  {headerGroup.headers.map((column, columnIndex) => (
+                    <th
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                      key={columnIndex}
+                      className="p-2 pr-5 select-none first:rounded-l-lg last:rounded-r-lg border-b border-border-info-color  hover:bg-theme-bg2   transition-all"
+                    >
+                      {column.render("Header")}
+                      <span className="float-right">
+                        {column.isSorted ? (
+                          column.isSortedDesc ? (
+                            <FaCaretDown size={24} className="mt-[-2px]" />
+                          ) : (
+                            <FaCaretUp size={24} />
+                          )
+                        ) : null}
+                      </span>
+                    </th>
+                  ))}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        <div className="flex justify-center my-4 items-center">
-          <button
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-            className={`bg-blue-500 px-4 py-2 text-white mr-2 rounded-lg ${
-              !canPreviousPage ? "bg-blue-200" : ""
-            }`}
-          >
-            Prev
-          </button>
-          <span className="text-black">
-            Page{" "}
-            <strong>
-              {pageIndex + 1} of {pageCount}{" "}
-            </strong>
-            {"  "}
-          </span>
-          <button
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-            className={`bg-blue-500 px-4 py-2 text-white rounded-lg ${
-              !canNextPage ? "bg-blue-200" : ""
-            }`}
-          >
-            Next
-          </button>
-
-          <button
-            className={`bg-blue-500 p-2 rounded-lg mx-2 text-white ${
-              pageIndex === 0 ? "bg-blue-200" : ""
-            }`}
-            onClick={() => gotoPage(0)}
-            disabled={pageIndex === 0 ? true : false}
-          >
-            First{" "}
-          </button>
-          <button
-            className={`bg-blue-500 p-2 rounded-lg text-white ${
-              pageIndex === pageCount - 1 ? "bg-blue-200" : ""
-            }`}
-            onClick={() => gotoPage(pageCount - 1)}
-          >
-            Last{" "}
-          </button>
+              ))}
+            </thead>
+            <tbody className="table-row-group" {...getTableBodyProps()}>
+              {page.map((row) => {
+                prepareRow(row);
+                const rowProps = row.getRowProps();
+                return (
+                  <tr
+                    {...rowProps}
+                    {...row.getRowProps()}
+                    key={row.id}
+                    className="table-row bg-theme-bg-light rounded-3xl"
+                  >
+                    {row.cells.map((cell, cellIndex) => {
+                      return (
+                        <td
+                          {...cell.getCellProps()}
+                          key={cellIndex}
+                          className="pl-2 pr-5"
+                        >
+                          {cell.render("Cell")}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex flex-col md:flex-row justify-center gap-4 my-4 items-center md:button:px-4 md:button:py-2 button:px-2 button:py-1 button:rounded-lg  ">
+          <div className="flex justify-center items-center gap-4">
+            <button
+              className={`bg-[#00A3FF] hover:bg-color-danger text-white transition-all ${
+                pageIndex === 0 ? "bg-gray-500 hover:bg-gray-500" : ""
+              }`}
+              onClick={() => gotoPage(0)}
+              disabled={pageIndex === 0 ? true : false}
+            >
+              <MdSkipPrevious size={18} />{" "}
+            </button>
+            <button
+              onClick={() => previousPage()}
+              disabled={!canPreviousPage}
+              className={`bg-[#00A3FF] hover:bg-color-danger text-white transition-all ${
+                !canPreviousPage ? "bg-gray-500 hover:bg-gray-500" : ""
+              }`}
+            >
+              <FaCaretLeft size={18} />
+            </button>
+            <span className="text-slate-300">
+              Page{" "}
+              <strong>
+                {pageIndex + 1} of {pageCount}{" "}
+              </strong>
+              {"  "}
+            </span>
+            <button
+              onClick={() => nextPage()}
+              disabled={!canNextPage}
+              className={`bg-[#00A3FF] hover:bg-color-danger text-white transition-all ${
+                !canNextPage ? "bg-gray-500 hover:bg-gray-500" : ""
+              }`}
+            >
+              <FaCaretRight size={18} />
+            </button>
+            <button
+              className={`bg-[#00A3FF] hover:bg-color-danger text-white transition-all ${
+                pageIndex === pageCount - 1
+                  ? "bg-gray-500 hover:bg-gray-500"
+                  : ""
+              }`}
+              onClick={() => gotoPage(pageCount - 1)}
+            >
+              <MdSkipNext size={18} />{" "}
+            </button>
+          </div>
 
           <select
+            className="outline-none hidden md:block bg-theme-bg2 rounded-xl px-4 py-3 cursor-pointer border border-border-info-color focus:border-theme-color  transition-all "
             value={pageSize}
             onChange={(e) => {
               setPageSize(Number(e.target.value));
@@ -307,9 +358,9 @@ const AllCategories = () => {
         </div>
       </>
       {
-        <div className="bg-green-400">
-          <h1>Top Categories</h1>
-          <table>
+        <div className=" mt-10 border rounded-lg p-4 border-border-info-color">
+          <h3 className="text-lg font-bold">Top Categories</h3>
+          <table className="relative text-left whitespace-nowrap w-full border-separate border-spacing-x-0 border-spacing-y-4 ">
             <thead>
               <tr>
                 <th>Name</th>
@@ -319,8 +370,12 @@ const AllCategories = () => {
             <tbody>
               {topCategories?.map((category, index) => (
                 <tr key={index}>
-                  <td>{category.name}</td>
-                  <td>{category.products}</td>
+                  <td className="border-b border-border-info-color">
+                    {category.name}
+                  </td>
+                  <td className="border-b border-border-info-color">
+                    {category.products}
+                  </td>
                 </tr>
               ))}
             </tbody>
