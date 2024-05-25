@@ -12,11 +12,31 @@ const getAllUsers=async () => {
         return response.data;
 }
 
+//get single user by id
+const getUserById=async (data) => {
+    const response = await axios.get(`${API_URL}/users/${data}`,{
+        withCredentials:true
+    });
+    console.log('response get single user', response.data);
+    return response.data.data.user;
+}
+
+//update user by id update-user/665199e75a0743671dff61c1
+const updateUserById=async (data) => {
+    const response = await axios.put(`${API_URL}/users/update-user/${data.id}`,data.data,{
+        withCredentials:true
+    });
+    console.log('response update user', response.data);
+    return response.data.data.user;
+}
+
 
 
 
 const userService={
     getAllUsers,
+    getUserById,
+    updateUserById,
 
 }
 
