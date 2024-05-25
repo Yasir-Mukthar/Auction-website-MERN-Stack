@@ -109,6 +109,7 @@ export default {
       addVariant("child", "& > *");
       addVariant("child-hover", "& > *:hover");
       addVariant("inputs", "& input");
+      addVariant("button", "& button");
       addVariant("select", "& select");
       addVariant("link", "& a");
     },
