@@ -22,11 +22,11 @@ import CreateCategory from "../components/CreateCategory";
 const Dashboard = () => {
   return (
     <div className=" ">
-      <div className="flex gap-4  flex-wrap lg:flex-nowrap">
+      <div className="flex gap-4 px-5 py-10 flex-wrap lg:flex-nowrap">
         <div className="hidden sm:block ">
           <Sidebar />
         </div>
-       <div className="py-10  px-5 ">
+       <div className=" w-full ">
        <Routes>
           <Route
             path="/dashboard"
