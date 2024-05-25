@@ -35,7 +35,7 @@ const Sidebar = ({closeNavbar}) => {
 
   return (
     <div className="w-full h-full lg:w-[25%] sm:min-w-[250px] lg:max-w-[250px]    ">
-      <div className="text-white bg-theme-bg p-5  ">
+      <div className="text-white bg-theme-bg p-5 rounded-2xl  ">
         <ul className="flex flex-col gap-1 font-medium">
           <li>
             <Link
