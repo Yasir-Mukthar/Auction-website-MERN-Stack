@@ -1,8 +1,11 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllUsers } from "../../store/user/userSlice";
+import { getAllUsers,deleteUserById } from "../../store/user/userSlice";
 import { useTable, useSortBy, usePagination, useFilters } from "react-table";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
+import {Chart as ChartJS, defaults} from "chart.js/auto"
+import { Bar, Line  , Doughnut } from 'react-chartjs-2'
+
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
@@ -16,165 +19,13 @@ const AllUsers = () => {
     setFilter(filterField, value); // Use the selected field
     setFilterInput(value);
   };
-  //   const data = React.useMemo(
-  //     () => [
-  //       {
-  //         id: 1,
-  //         name: "yasir",
-  //         rollno: 20,
-  //         email: "yasir@gmail.com",
-  //         phone: "1234567890",
-  //       },
-  //       {
-  //         id: 2,
-  //         name: "faisal",
-  //         rollno: 43,
-  //         email: "yasir@gmail.com",
-  //         phone: "1234567890",
-  //       },
 
-  //       {
-  //         id: 3,
-  //         name: "hassan",
-  //         rollno: 50,
-  //         email: "yasir@gmail.com",
-  //         phone: "1234567890",
-  //       },
 
-  //       {
-  //         id: 4,
-  //         name: "nasir",
-  //         rollno: 40,
-  //         email: "nasir@gmail.com",
-  //         phone: "1234567890",
-  //       },
-
-  //       {
-  //         id: 5,
-  //         name: "ali",
-  //         rollno: 56,
-  //         email: "ali@gmail.com",
-  //         phone: "1234567890",
-  //       },
-
-  //       {
-  //         id: 6,
-  //         name: "mukhtar",
-  //         rollno: 22,
-  //         email: "mukhtar@gmail.com",
-  //         phone: "1234567890",
-  //       },
-  //       {
-  //         id: 7,
-  //         name: "tariq",
-  //         rollno: 54,
-  //         email: "tariq@gmail.com",
-  //         phone: "1234567890",
-  //       },
-
-  //       {
-  //         id: 8,
-  //         name: "hanzala",
-  //         rollno: 11,
-  //         email: "hanzala@gmail.com",
-  //         phone: "1234567890",
-  //       },
-
-  //       {
-  //         id: 9,
-  //         name: "kashif",
-  //         rollno: 44,
-  //         email: "kashif@gmail.com",
-  //         phone: "1234567890",
-  //       },
-  //       {
-  //         id: 10,
-  //         name: "danyal",
-  //         rollno: 33,
-  //         email: "danyal@gmail.com",
-  //         phone: "1234567890",
-  //       },
-  //       {
-  //         id: 11,
-  //         name: "raiz",
-  //         rollno: 20,
-  //         email: "raiz@gmail.com",
-  //         phone: "1234567890",
-  //       },
-  //       {
-  //         id: 12,
-  //         name: "salman",
-  //         rollno: 36,
-  //         email: "salman@gmail.com",
-  //         phone: "1234567890",
-  //       },
-  //       {
-  //         id: 13,
-  //         name: "yasir",
-  //         rollno: 66,
-  //         email: "yasir@gmail.com",
-  //         phone: "1234567890",
-  //       },
-  //       {
-  //         id: 14,
-  //         name: "imran",
-  //         rollno: 32,
-  //         email: "imran@gmail.com",
-  //         phone: "1234567890",
-  //       },
-  //       {
-  //         id: 15,
-  //         name: "waqas",
-  //         rollno: 10,
-  //         email: "waqas@gmail.com",
-  //         phone: "1234567890",
-  //       },
-  //       {
-  //         id: 16,
-  //         name: "azhar",
-  //         rollno: 30,
-  //         email: "azhar@gmail.com",
-  //         phone: "1234567890",
-  //       },
-  //       {
-  //         id: 17,
-  //         name: "yasir",
-  //         rollno: 29,
-  //         email: "yasir@gmail.com",
-  //         phone: "1234567890",
-  //       },
-  //       {
-  //         id: 18,
-  //         name: "yasir",
-  //         rollno: 23,
-  //         email: "yasir@gmail.com",
-  //         phone: "1234567890",
-  //       },
-  //     ],
-  //     []
-  //   );
-
-  // const columns =  [
-  //       {
-  //         Header: "Picture",
-  //         accessor: "profilePicture",
-  //       },
-  //       {
-  //         Header: "Name",
-  //         accessor: "fullName",
-  //       },
-  //       {
-  //         Header: "Type",
-  //         accessor: "userType",
-  //       },
-  //       {
-  //         Header: "Verified",
-  //         accessor: "paymentVerified",
-  //       }
-  //     ]
-  // const data = React.useMemo(() => allUser, [allUser]);
-  const handleDeleteUser = () => {
-    alert("dele");
+  
+  const handleDeleteUser = (id) => {
+    dispatch(deleteUserById(id)).then(() => {
+      dispatch(getAllUsers());
+    });
   };
   const columns = React.useMemo(
     () => [
@@ -266,6 +117,54 @@ const AllUsers = () => {
     usePagination
   );
 
+ const totalBuyers =allUser?.data?.filter((user) => user.userType === "user").length;
+ const totalVerifiedUsers=allUser?.data?.filter((user) => user.paymentVerified === true).length;
+  const totalSellers=allUser?.data?.filter((user) => user.userType === "seller").length;
+  // const totalAdmins=allUser?.data?.filter((user) => user.userType === "admin").length;
+
+  const userCreatedAt=new Array(6).fill(0);
+  allUser?.data?.forEach((user)=> {
+    const month=new Date(user.createdAt).getMonth();
+    userCreatedAt[month]=userCreatedAt[month]+1;
+  })
+   
+  console.log("userCreatedAt",userCreatedAt)
+
+
+
+  const cities = [
+    { city: 'New York' },
+    { city: 'Los Angeles' },
+    { city: 'Chicago' },
+    { city: 'Houston' },
+    { city: 'Phoenix' },
+    { city: 'Philadelphia' },
+    // More users here
+    { city: 'Chicago' },
+    { city: 'Houston' },
+    { city: 'Chicago' },
+    { city: 'Houston' },
+    { city: 'Phoenix' },
+    { city: 'Los Angeles' },
+    { city: 'Chicago' },
+    { city: 'Houston' },
+    { city: 'Phoenix' },
+    { city: 'Philadelphia' },
+    // More users here
+  ];
+
+  // Count the number of users from each city
+const cityCounts = cities.reduce((counts, user) => {
+  counts[user.city] = (counts[user.city] || 0) + 1;
+  return counts;
+}, {});
+
+// Get the top cities
+const topCities = Object.entries(cityCounts)
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 5)
+  .map(([city, count]) => ({ city, count }));
+
   return (
     <div className="text-black">
       <div className="text-white flex gap-4 m-5">
@@ -279,7 +178,7 @@ const AllUsers = () => {
           <div>
             Sellers
             </div>
-            {allUser?.data?.filter((user) => user.userType === "seller").length}
+            {totalSellers}
         </div>
         <div className="border border-white p-4">
           <div>
@@ -299,15 +198,109 @@ const AllUsers = () => {
           <div>
             Buyers
             </div>
-            {allUser?.data?.filter((user) => user.userType === "user").length}
+            {totalBuyers}
         </div>
         <div className="border border-white p-4">
           <div>
             Verified Users
             </div>
-            {allUser?.data?.filter((user) => user.paymentVerified === true).length}
+            {totalVerifiedUsers}
         </div>
       </div>
+       <div className='h-[400px] bg-slate-700  border border-white m-2 p-3 flex'>
+        <Doughnut
+                data={ {
+                    labels: ["Sellers", 'Buyers'],
+                    datasets: [
+                      {
+                        data: [totalSellers, totalBuyers], 
+                        backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 206, 86)'],
+                      },
+                    ],
+                  }}
+                height={50}
+                width={100}
+                options={{
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        position: 'top',
+                      },
+                      title: {
+                        display: true,
+                        text: 'User Base',
+                      },
+                    },
+                  }
+                }
+            />
+             <Line
+                data={{
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+                    datasets: [
+                      {
+                        label: 'Total Users',
+                        data: userCreatedAt, // replace this with your data
+                        fill: false,
+                        backgroundColor: 'rgb(75, 192, 192)',
+                        borderColor: 'rgba(75, 192, 192, 0.2)',
+                      },
+                    ],
+                }}
+                height={100}
+                width={200}
+                options={{
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      ticks: {
+                        stepSize: 1,
+                      },
+                    },
+                  },
+                  }
+                   
+                }
+
+            />
+        </div>
+        <div className='h-[400px] bg-slate-700  border border-white m-2 p-3 flex'>
+          <Bar 
+          data={{
+            labels: topCities.map(city => city.city),
+            datasets: [
+              {
+                label: 'No of Users',
+                data: topCities.map(city => city.count),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+              },
+            ],
+          }}
+          height={20}
+          width={50}
+          options={{
+            indexAxis: 'y',
+            ticks: {
+              stepSize: 1,
+            },
+            
+    
+            responsive: true,
+            plugins: {
+             
+              title: {
+                display: true,
+                text: 'Top Cities',
+              },
+            },
+          }}
+
+
+
+          />
+        </div>
       <>
         <select
           value={filterField}

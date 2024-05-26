@@ -460,6 +460,38 @@ const updateUserById = asyncHandler(async (req, res) => {
   }
 });
 
+
+// @desc delete a user by id
+// @route DELETE /api/v1/users/:id
+// @access Admin
+
+const deleteUserById = asyncHandler(async (req, res) => {
+  try {
+    const userId = req.params.id;
+    console.log(userId, "dlete a user");
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json(new ApiResponse(400, "Invalid user id"));
+    }
+    
+    const user = await User.findByIdAndDelete(userId);
+    if (!user) {
+      return res.status(404).json(new ApiResponse(404, "User not found"));
+    }
+    return res.json(new ApiResponse(200, "User deleted successfully"));
+
+  } catch (error) {
+    return res
+      .status(error.statusCode || 500)
+      .json(
+        new ApiResponse(
+          error.statusCode || 500,
+          error.message || "Internal Server Error"
+        )
+      );
+  }
+})
+
+
 export {
   registerUser,
   loginUser,
@@ -472,4 +504,5 @@ export {
   getAllUsers,
   getUserById,
   updateUserById,
+  deleteUserById,
 };

@@ -31,12 +31,22 @@ const updateUserById=async (data) => {
 }
 
 
+//delete a user by id
+const deleteUserById=async (data) => {
+    const response = await axios.delete(`${API_URL}/users/${data}`,{
+        withCredentials:true
+    });
+    console.log('response delete user', response.data);
+    return response.data;
+}
+
 
 
 const userService={
     getAllUsers,
     getUserById,
     updateUserById,
+    deleteUserById
 
 }
 
