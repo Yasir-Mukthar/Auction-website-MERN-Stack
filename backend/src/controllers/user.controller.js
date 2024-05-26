@@ -492,6 +492,142 @@ const deleteUserById = asyncHandler(async (req, res) => {
 })
 
 
+// @desc TOP 5 SELLERS WHO UPLOADED MORE ITEMS AND SOLD(STATUS IS PAID)
+// @route GET /api/v1/users/top-sellers
+// @access Admin
+
+const getTopSellers = asyncHandler(async (req, res) => {
+  try {
+    
+// _id
+// 664510350b8772d6201e6fe4
+// name
+// "mj"
+// description
+// "kk"
+// category
+// 65fd2ac2d7725960056b9c43
+// seller
+// 6604c68e32c3419e76d43d0a
+// startTime
+// 2024-05-15T19:43:00.000+00:00
+// endTime
+// 2024-05-15T19:46:00.000+00:00
+
+// bids
+// Array (1)
+// status
+// "over"
+// location
+// 65fc5644b3d8f7e5b44fc66a
+// image
+// "http://res.cloudinary.com/dnsxaor2k/image/upload/v1715802163/f6xugncub…"
+// startingPrice
+// 88
+
+// reviews
+// Array (empty)
+// paid
+// true
+// createdAt
+// 2024-05-15T19:42:45.235+00:00
+// updatedAt
+// 2024-05-24T11:45:11.431+00:00
+// __v
+// 1
+// winner
+// 664510520b8772d6201e7017
+
+// import mongoose from "mongoose";
+
+// const auctionSchema = new mongoose.Schema({
+//   name: { type: String, required: true },
+//   description: { type: String , required: true},
+//   category: { type: mongoose.Schema.Types.ObjectId, ref: "ProductCategory", required: true},
+//   seller: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+//   startTime: { type: Date, required: true },
+//   endTime: { type: Date, required: true },
+//   bids: [{ type: mongoose.Schema.Types.ObjectId, ref: "Bid" }],
+//   winner: { type: mongoose.Schema.Types.ObjectId, ref: "Bid" },
+//   status: {
+//     type: String,
+//     enum: ["upcoming", "active", "over"],
+//     default: "upcoming",
+//   },
+//   location: {type:mongoose.Schema.Types.ObjectId, ref:"City" },
+//   image:{type:String,required:true},
+//   startingPrice: { type: Number, required: true },
+//   reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
+//   paid:{
+//     type:Boolean,
+//     default:false
+//   },
+// }, 
+// {
+//   timestamps: true,
+// });
+
+// const Auction = mongoose.model("Auction", auctionSchema);
+
+
+// export default Auction;
+    
+    const topSellers = await User.aggregate([
+      {
+        $lookup: {
+          from: "auctions",
+          localField: "_id",
+          foreignField: "seller",
+          as: "auctions",
+        },
+      },
+      {
+        $match: {
+          "auctions.paid": true,
+        },
+      },
+      {
+        $project: {
+          fullName: 1,
+          email: 1,
+          profilePicture: 1,
+          totalAuctions: { $size: "$auctions" },
+          paidAuctions: {
+            $size: {
+              $filter: {
+                input: "$auctions",
+                as: "auction",
+                cond: { $eq: ["$$auction.paid", true] },
+              },
+            },
+          },
+
+        },
+      },
+        
+      {
+        $sort: { totalAuctions: -1 },
+      },
+      {
+        $limit: 5,
+      },
+    ]);
+         
+    
+    res.json(new ApiResponse(200, "Top sellers fetched successfully", topSellers));
+  } catch (error) {
+    return res
+      .status(error.statusCode || 500)
+      .json(
+        new ApiResponse(
+          error.statusCode || 500,
+          error.message || "Internal Server Error"
+        )
+      );
+  }
+})
+
+
 export {
   registerUser,
   loginUser,
@@ -505,4 +641,5 @@ export {
   getUserById,
   updateUserById,
   deleteUserById,
+  getTopSellers,
 };

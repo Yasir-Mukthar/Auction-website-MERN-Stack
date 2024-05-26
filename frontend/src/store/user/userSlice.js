@@ -45,9 +45,20 @@ export const deleteUserById=createAsyncThunk("user/deleteUserById", async(data, 
 
 })
 
+//get top selllers
+export const getTopSellers=createAsyncThunk("user/getTopSellers",async(_,thunkAPI)=>{
+    try {
+        return await userService.getTopSellers();
+    } catch (error) {
+        const message =(error.response && error.response.data.message) || error.message;
+        return thunkAPI.rejectWithValue({message,isError:true});
+    }
+})
+
 const initialState={
     allUser:[],
     singleUser:null,
+    topSellers:[],
     isLoading:false,
     isError:false,
     isSuccess:false,
@@ -122,6 +133,20 @@ const userSlice = createSlice({
             state.isError=true;
             state.message=action.payload.message;
         })
+        .addCase(getTopSellers.pending,(state)=>{
+            state.isLoading=true;
+        })
+        .addCase(getTopSellers.fulfilled,(state,action)=>{
+            state.isLoading=false;
+            state.isSuccess=true;
+            state.topSellers=action.payload;
+        })
+        .addCase(getTopSellers.rejected,(state,action)=>{
+            state.isLoading=false;
+            state.isError=true;
+            state.message=action.payload.message;
+        })
+
 
         
     }
