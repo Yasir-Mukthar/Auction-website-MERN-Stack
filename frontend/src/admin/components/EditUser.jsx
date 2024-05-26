@@ -1,32 +1,51 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getCurrentUser, reset, updateProfile } from "../../store/auth/authSlice";
+import { getUserById,updateUserById, reset } from "../../store/user/userSlice";
+import { useParams } from "react-router-dom";
 
 const EditUser = () => {
-  const { user } = useSelector((state) => state.auth);
-  console.log(user, "user.......");
+  //id
+  const { id } = useParams();
+  const { singleUser } = useSelector((state) => state.user);
+  console.log(singleUser, "user.......");
   const [formData, setFormData] = useState({
-    fullName: user?.fullName || "",
-    email: user?.email,
-    gender: user?.gender || "",
-    address: user?.address || "",
-    city: user?.city || "",
-    userType: user?.userType || "",
-    description: user?.description || "",
-    phone: user?.phone || "",
+    fullName: singleUser?.fullName || "",
+    email: singleUser?.email,
+    gender: singleUser?.gender || "",
+    address: singleUser?.address || "",
+    city: singleUser?.city || "",
+    userType: singleUser?.userType || "",
+    description: singleUser?.description || "",
+    phone: singleUser?.phone || "",
   });
   const dispatch = useDispatch();
   useEffect(() => {
     console.log("useEffect........");
-    dispatch(getCurrentUser());
+    dispatch(getUserById(id));
   }, []);
-  useEffect(() => {}, [user]);
+  useEffect(()=>{},[id])
 
+  useEffect(() => {
+    if (singleUser) {
+      setFormData({
+        fullName: singleUser?.fullName || "",
+        email: singleUser?.email,
+        gender: singleUser?.gender || "",
 
-  const [imgUrl, setImgUrl] = useState(user?.profilePicture);
+        address: singleUser.address || "",
+        city: singleUser.city || "",
+        userType: singleUser.userType || "",
+        description: singleUser.description || "",
+        phone: singleUser.phone || "",
+      });
+      setImgUrl(singleUser.profilePicture);
+    }
+  }, [singleUser,dispatch]);
+
+  const [imgUrl, setImgUrl] = useState(singleUser?.profilePicture);
   const imgRef = useRef(null);
   console.log(imgUrl, "imgUrl......");
-  console.log(user?.profilePicture, "user?.profilePicture........");
+  console.log(singleUser?.profilePicture, "singleUser?.profilePicture........");
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -49,9 +68,9 @@ const EditUser = () => {
       data.append("profilePicture", imgUrl);
     }
     console.log(imgUrl);
-    dispatch(updateProfile(data));
+    dispatch(updateUserById({data,id}));
     setImgUrl(null);
-    dispatch(getCurrentUser());
+    dispatch(getUserById(id));
 
     dispatch(reset());
   };
@@ -64,7 +83,7 @@ const EditUser = () => {
 
       <form onSubmit={handleFormSubmit}>
         <img
-          src={imgUrl ? imgUrl : user?.profilePicture}
+          src={imgUrl ? imgUrl : singleUser?.profilePicture}
           alt="upload img"
           onClick={() => imgRef.current.click()}
           className="w-full md:w-[200px] mb-4 rounded-lg border-2 object-contain cursor-pointer"
@@ -150,6 +169,7 @@ const EditUser = () => {
           >
             <option value="user">User</option>
             <option value="seller">Seller</option>
+            <option value="admin">Admin</option>
           </select>
           <textarea
             className="outline-none bg-theme-bg2 rounded-xl px-3 py-4 border border-border-info-color focus:border-theme-color placeholder-body-text-color"

@@ -7,6 +7,7 @@ import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 import PaymentMethod from "../models/userPaymentMethod.model.js";
 import Stripe from 'stripe';
+import mongoose from "mongoose";
 // const stripe= new Stripe(process.env.STRIPE_KEY);
 const stripe = new Stripe("sk_test_51P5t81Lvvxf0OOpIgdu78eLqln3YJO5Q7NfKMfNEl93qXkiLjy6FBzvY37O8p1QlhWOWwQUg6m9zU5WtDaYfKMLS00rhq7lcCT")
 
@@ -368,6 +369,129 @@ const getAllUsers = asyncHandler(async (req, res) => {
   }
 });
 
+
+// @desc get current user
+// @route GET /api/v1/users/:userid
+// @access Admin
+const getUserById = asyncHandler(async (req, res) => {
+  try {
+    console.log("getting user by id.....");
+    const user = await User.findById(req.params.userid).select("-password");
+    return res.status(200).json(new ApiResponse(200, "User fetched", { user:user}));
+  } catch (error) {
+    res
+      .status(error.statusCode || 500)
+      .json(
+        new ApiResponse(
+          error.statusCode || 500,
+          error.message || "Internal Server Error"
+        )
+      );
+  }
+});
+
+
+// @desc update user profile by id
+// @route POST /api/v1/users/update-user/:id
+// @access Admin
+
+const updateUserById = asyncHandler(async (req, res) => {
+  try {
+    console.log("updated profle in admin filed");
+    const { fullName, email, location, userType, phone, address, city ,gender, description} =
+      req.body;
+      console.log(fullName, " fullname, ");
+      console.log(email, " email, ");
+      console.log(location, " location, ");
+      console.log(userType, " userType, ");
+    const profilePath = req.file?.path;
+    
+    const userId = req?.params?.id;
+    console.log(userId," KDJFKJ");
+    //check user id is correct format which is for models not any other like string 
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json(new ApiResponse(400, "Invalid user id"));
+    }
+    
+
+   
+    console.log(req.body, "req.body");
+    console.log(profilePath, "req.file")
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(400).json(new ApiResponse(400, "User not found"));
+    }
+    if(profilePath){
+    var imgUrlCloudinary = await uploadOnCloudinary(profilePath);
+    //console.log(imgUrlCloudinary);
+    if (!imgUrlCloudinary?.url) {
+      return res.status(400).json(new ApiResponse(400, "Invalid image"));
+    }
+  }
+
+    user.fullName = fullName ? fullName : user.fullName;
+    user.email = email ? email : user.email;
+    user.location = location ? location : user.location;
+    user.userType = userType ? userType : user.userType;
+    user.profilePicture = imgUrlCloudinary?.url
+      ? imgUrlCloudinary.url
+      : user.profilePicture || "https://res.cloudinary.com/dnsxaor2k/image/upload/v1709735601/vsauyvodor9ykjca5zvj.jpg";
+    user.phone = phone ? phone : user.phone;
+    user.address = address ? address : user.address;
+    user.city = city ? city : user.city;
+    user.gender=  gender ? gender: user.gender ;
+    user.description= description? description: user.description;
+
+
+    await user.save();
+
+    res.json(new ApiResponse(200, "User profile updated successfully",{user:user}));
+  } catch (error) {
+    console.error(error);
+    res
+      .status(error.statusCode || 500)
+      .json(
+        new ApiResponse(
+          error.statusCode || 500,
+          error.message || "Internal Server Error"
+        )
+      );
+  }
+});
+
+
+// @desc delete a user by id
+// @route DELETE /api/v1/users/:id
+// @access Admin
+
+const deleteUserById = asyncHandler(async (req, res) => {
+  try {
+    const userId = req.params.id;
+    console.log(userId, "dlete a user");
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json(new ApiResponse(400, "Invalid user id"));
+    }
+    
+    const user = await User.findByIdAndDelete(userId);
+    if (!user) {
+      return res.status(404).json(new ApiResponse(404, "User not found"));
+    }
+    return res.json(new ApiResponse(200, "User deleted successfully"));
+
+  } catch (error) {
+    return res
+      .status(error.statusCode || 500)
+      .json(
+        new ApiResponse(
+          error.statusCode || 500,
+          error.message || "Internal Server Error"
+        )
+      );
+  }
+})
+
+
 export {
   registerUser,
   loginUser,
@@ -378,4 +502,7 @@ export {
   changeCurrentPassword,
   getCurrentUser,
   getAllUsers,
+  getUserById,
+  updateUserById,
+  deleteUserById,
 };

@@ -11,8 +11,43 @@ export const getAllUsers=createAsyncThunk("user/getAllUsers",async(_,thunkAPI)=>
 })
 
 
+//get a single user by id
+export const getUserById=createAsyncThunk("user/getUserById",async(data,thunkAPI)=>{
+    try {
+        return await userService.getUserById(data)
+    } catch (error) {
+        const message =(error.response && error.response.data.message) || error.message;
+        return thunkAPI.rejectWithValue({message,isError:true});
+        
+    }
+})
+
+//update user by id
+export const updateUserById=createAsyncThunk("user/updateUserById",async(data,thunkAPI)=>{
+    try {
+        return await userService.updateUserById(data)
+    } catch (error) {
+        const message =(error.response && error.response.data.message) || error.message;
+        return thunkAPI.rejectWithValue({message,isError:true});
+        
+    }
+})
+
+//delete a user by id
+export const deleteUserById=createAsyncThunk("user/deleteUserById", async(data, thunkAPI)=>{
+    try {
+        return await userService.deleteUserById(data);
+    } catch (error) {
+        const message =(error.response && error.response.data.message) || error.message;
+        return thunkAPI.rejectWithValue({message,isError:true});
+        
+    }
+
+})
+
 const initialState={
     allUser:[],
+    singleUser:null,
     isLoading:false,
     isError:false,
     isSuccess:false,
@@ -45,6 +80,49 @@ const userSlice = createSlice({
             state.isError=true;
             state.message=action.payload.message;
         })
+        .addCase(getUserById.pending,(state)=>{
+            state.isLoading=true;
+        })
+        .addCase(getUserById.fulfilled,(state,action)=>{
+            state.isLoading=false;
+            state.isSuccess=true;
+            state.singleUser=action.payload;
+        })
+        .addCase(getUserById.rejected,(state,action)=>{
+            state.isLoading=false;
+            state.isError=true;
+            state.message=action.payload.message;
+        })
+        .addCase(updateUserById.pending,(state)=>{
+            state.isLoading=true;
+        })
+        .addCase(updateUserById.fulfilled,(state,action)=>{
+            state.isLoading=false;
+            state.isSuccess=true;
+            state.message=action.payload.message;
+            state.singleUser=action.payload
+
+
+        })
+        .addCase(updateUserById.rejected,(state,action)=>{
+            state.isLoading=false;
+            state.isError=true;
+            state.message=action.payload.message;
+        })
+        .addCase(deleteUserById.pending,(state)=>{
+            state.isLoading=true;
+        })
+        .addCase(deleteUserById.fulfilled,(state,action)=>{
+            state.isLoading=false;
+            state.isSuccess=true;
+            state.message=action.payload.message;
+        })
+        .addCase(deleteUserById.rejected,(state,action)=>{
+            state.isLoading=false;
+            state.isError=true;
+            state.message=action.payload.message;
+        })
+
         
     }
 })

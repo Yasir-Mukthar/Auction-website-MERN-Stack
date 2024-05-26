@@ -9,6 +9,9 @@ import {
   updateUserProfile,
   getCurrentUser,
   getAllUsers,
+  getUserById,
+  updateUserById,
+  deleteUserById,
 } from "../controllers/user.controller.js";
 import { verifyAdmin, verifyUser } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -34,7 +37,10 @@ router
 
 
 
-
+router.route("/:id").delete(verifyUser,verifyAdmin, deleteUserById);
+router.route("/update-user/:id")
+  .put(verifyUser, verifyAdmin, upload.single("profilePicture"), updateUserById);
+router.route("/:userid").get(verifyUser,verifyAdmin,getUserById)
 router.route("/").get(verifyUser,verifyAdmin, getAllUsers);
 
 export default router;
