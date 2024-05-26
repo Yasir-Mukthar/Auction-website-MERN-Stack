@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllUsers,deleteUserById } from "../../store/user/userSlice";
+import { getAllUsers,deleteUserById,getTopSellers } from "../../store/user/userSlice";
 import { useTable, useSortBy, usePagination, useFilters } from "react-table";
 import { Link } from "react-router-dom"
 import {Chart as ChartJS, defaults} from "chart.js/auto"
@@ -10,7 +10,7 @@ import { Bar, Line  , Doughnut } from 'react-chartjs-2'
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
   const dispatch = useDispatch();
-  const { allUser, reset, success } = useSelector((state) => state.user);
+  const { allUser,topSellers ,reset } = useSelector((state) => state.user);
   const [filterInput, setFilterInput] = useState("");
   const [filterField, setFilterField] = useState("name");
 
@@ -27,6 +27,7 @@ const AllUsers = () => {
       dispatch(getAllUsers());
     });
   };
+  console.log(topSellers, "top sellers ,,,");
   const columns = React.useMemo(
     () => [
       {
@@ -73,6 +74,7 @@ const AllUsers = () => {
 
   useEffect(() => {
     dispatch(getAllUsers());
+    dispatch(getTopSellers());
   }, []);
 
   const data = React.useMemo(
@@ -139,7 +141,6 @@ const AllUsers = () => {
     { city: 'Houston' },
     { city: 'Phoenix' },
     { city: 'Philadelphia' },
-    // More users here
     { city: 'Chicago' },
     { city: 'Houston' },
     { city: 'Chicago' },
@@ -264,43 +265,7 @@ const topCities = Object.entries(cityCounts)
 
             />
         </div>
-        <div className='h-[400px] bg-slate-700  border border-white m-2 p-3 flex'>
-          <Bar 
-          data={{
-            labels: topCities.map(city => city.city),
-            datasets: [
-              {
-                label: 'No of Users',
-                data: topCities.map(city => city.count),
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1,
-              },
-            ],
-          }}
-          height={20}
-          width={50}
-          options={{
-            indexAxis: 'y',
-            ticks: {
-              stepSize: 1,
-            },
-            
-    
-            responsive: true,
-            plugins: {
-             
-              title: {
-                display: true,
-                text: 'Top Cities',
-              },
-            },
-          }}
-
-
-
-          />
-        </div>
+       
       <>
         <select
           value={filterField}
@@ -363,36 +328,7 @@ const topCities = Object.entries(cityCounts)
               );
             })}
           </tbody>
-          {/* <tbody {...getTableBodyProps()}>
-          {page.map((row) => {
-            prepareRow(row);
-            const rowProps = row.getRowProps();
-
-            return (
-              <tr
-              {...rowProps}
-                {...row.getRowProps()}
-                key={row.id}
-                className="hover:bg-gray-600"
-              >
-                {row.cells.map((cell, cellIndex) => {
-                        const cellProps = cell.getCellProps();
-
-                  return (
-                    <td
-                    {...cellProps}
-                      {...cell.getCellProps()}
-                      key={cellIndex}
-                      className="px-4"
-                    >
-                      {cell.render("Cell")}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody> */}
+         
         </table>
         <div className="flex justify-center my-4 items-center">
           <button
@@ -453,6 +389,57 @@ const topCities = Object.entries(cityCounts)
           </select>
         </div>
       </>
+      <div className='h-[400px] bg-slate-700  border border-white m-2 p-3 flex'>
+          <Bar 
+          data={{
+            labels: topCities.map(city => city.city),
+            datasets: [
+              {
+                label: 'No of Users',
+                data: topCities.map(city => city.count),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+              },
+            ],
+          }}
+          height={20}
+          width={50}
+          options={{
+            indexAxis: 'y',
+            ticks: {
+              stepSize: 1,
+            },
+            
+    
+            responsive: true,
+            plugins: {
+             
+              title: {
+                display: true,
+                text: 'Top Cities',
+              },
+            },
+          }}
+
+
+
+          />
+        </div>
+        <div className="text-white">
+          <h1 className="text-2xl font-bold">Top Sellers</h1>
+          {
+            topSellers?.map((seller)=>(
+              <div key={seller._id}>
+                <img className="w-4 h-4" src={seller.profilePicture} alt={seller.fullName} />
+                <h2>Name: {seller.fullName}</h2>
+                <p>Total Auctions: {seller.totalAuctions}</p>
+                <p>Successful: {seller.paidAuctions}</p>
+              </div>
+            ))
+
+          }
+        </div>
     </div>
   );
 };

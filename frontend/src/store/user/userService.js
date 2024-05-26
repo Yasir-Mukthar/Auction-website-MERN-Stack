@@ -40,13 +40,23 @@ const deleteUserById=async (data) => {
     return response.data;
 }
 
+//get top sellers
+const getTopSellers=async () => {
+    const response = await axios.get(`${API_URL}/users/top-sellers`,{
+        withCredentials:true
+    });
+    console.log('response get top sellers', response.data);
+    return response.data.data;
+}
+
 
 
 const userService={
     getAllUsers,
     getUserById,
     updateUserById,
-    deleteUserById
+    deleteUserById,
+    getTopSellers,
 
 }
 
