@@ -23,7 +23,7 @@ const Dashboard = () => {
   return (
     <div className=" ">
       <div className="flex gap-4 px-5 py-10 flex-wrap lg:flex-nowrap">
-        <div className="hidden sm:block ">
+        <div className="hidden sm:block lg:sticky top-5 lg:h-screen">
           <Sidebar />
         </div>
        <div className=" w-full ">
