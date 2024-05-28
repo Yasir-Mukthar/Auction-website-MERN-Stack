@@ -1,6 +1,6 @@
 import { Link, Route, Routes } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import ProfileComponent from "../../components/ProfileComponent";
+import ProfileComponent from "../components/ProfileComponent";
 import AllUsers from "../components/AllUsers";
 import EditUser from "../components/EditUser";
 import AllAuctions from "../components/AllAuctions";
