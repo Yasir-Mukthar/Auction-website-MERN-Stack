@@ -149,7 +149,7 @@ const AllCategories = () => {
 
   return (
     <div
-      className="overflow-auto px-7 py-4  bg-theme-bg text-slate-300 rounded-2xl"
+      className="px-7 py-4  bg-theme-bg text-slate-300 rounded-2xl"
       id="divToPrint"
     >
       <div className="">

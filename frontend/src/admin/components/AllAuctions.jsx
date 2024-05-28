@@ -177,7 +177,7 @@ const AllAuctions = () => {
 
   return (
     <>
-      <div className="overflow-auto px-7 py-4 w-full bg-theme-bg text-slate-300 rounded-2xl ">
+      <div className="px-7 py-4 w-full bg-theme-bg text-slate-300 rounded-2xl ">
         <h2 className=" text-white font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">
           All Auctions
         </h2>

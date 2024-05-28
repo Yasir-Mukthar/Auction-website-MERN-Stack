@@ -11,8 +11,9 @@ import { IoIosNotifications, IoMdSettings, IoIosListBox } from "react-icons/io";
 import { FaEdit, FaListAlt } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { IoLogOutSharp, IoWalletOutline } from "react-icons/io5";
-
-const Sidebar = ({closeNavbar}) => {
+import { BiSolidCategory } from "react-icons/bi";
+import { RiAuctionFill } from "react-icons/ri";
+const Sidebar = ({ closeNavbar }) => {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState(location.pathname);
 
@@ -34,7 +35,7 @@ const Sidebar = ({closeNavbar}) => {
   };
 
   return (
-    <div className="w-full h-full lg:w-[25%] sm:min-w-[250px] lg:max-w-[250px]    ">
+    <div className="w-full h-full lg:w-[25%] sm:min-w-[250px] lg:max-w-[250px]  ">
       <div className="text-white bg-theme-bg p-5 rounded-2xl  ">
         <ul className="flex flex-col gap-1 font-medium">
           <li>
@@ -47,7 +48,7 @@ const Sidebar = ({closeNavbar}) => {
               to="/admin/dashboard"
               onClick={() => handleLinkClick("/admin/dashboard")}
             >
-              <FaUser
+              <IoIosListBox
                 size={16}
                 className={`text-theme-color transition-all duration-500 ${
                   activeLink === "/user-profile/profile" ? " text-white" : ""
@@ -67,7 +68,7 @@ const Sidebar = ({closeNavbar}) => {
               to="/admin/users"
               onClick={() => handleLinkClick("/admin/users")}
             >
-              <FaEdit
+              <FaUser
                 size={16}
                 className={`text-theme-color transition-all duration-500 ${
                   activeLink === "/user-profile/manage-items"
@@ -86,7 +87,7 @@ const Sidebar = ({closeNavbar}) => {
               to="/admin/auctions"
               onClick={() => handleLinkClick("/admin/auction")}
             >
-              <FaCirclePlus size={16} className="text-theme-color" />
+              <RiAuctionFill size={16} className="text-theme-color" />
               Auctions
             </Link>
           </li>
@@ -101,7 +102,7 @@ const Sidebar = ({closeNavbar}) => {
               to="/admin/categories"
               onClick={() => handleLinkClick("/admin/category")}
             >
-              <IoIosListBox
+              <BiSolidCategory
                 size={18}
                 className={`text-theme-color transition-all duration-500 ${
                   activeLink === "/admin/categories" ? " text-white" : ""
