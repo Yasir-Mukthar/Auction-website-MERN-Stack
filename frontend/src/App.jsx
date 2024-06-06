@@ -24,6 +24,7 @@ import AdminFooter from "./admin/components/Footer"
 import AdminHeader from "./admin/components/Header"
 import AdminLogin from "./admin/pages/Login"
 import AdminDashboard from "./admin/Admin"
+import ManageItems from "./components/ManageItems";
 
 
 const App = () => {
@@ -34,7 +35,7 @@ console.log(user,"...")
   return (
     <>
       <BrowserRouter>
-      {user && user.userType !== "admin" ? <Header /> : <AdminHeader />}
+      {user && user.userType === "admin" ? <AdminHeader /> : <Header />}
  
         <Routes>
           {/* <Route path="/admin/login" element={<AdminLogin />} /> */}
@@ -66,7 +67,7 @@ console.log(user,"...")
             <Route path="/success/:id" element={<PaymentSuccess />} />
             <Route element={<SellerRoutes />}>
               <Route path="/create-auction" element={<UploadItem />} />
-              <Route path="/user-profile/manage-items" element={<UserProfile />} />
+              {/* <Route path="/user-profile/manage-items" element={<ManageItems />} /> */}
 
 
             </Route>
@@ -78,7 +79,7 @@ console.log(user,"...")
             {/* </Route> */}
         </Routes>
 
-{user && user.userType !== "admin" ? <Footer />: <AdminFooter /> }
+{user && user.userType === "admin" ? <AdminFooter />: <Footer /> }
 
       </BrowserRouter>
       <ToastContainer />

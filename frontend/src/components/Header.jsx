@@ -94,9 +94,9 @@ const Header = () => {
               className="w-10 h-10 rounded-full order-2 cursor-pointer"
               onClick={() => setSidebarOpen(!sidebarOpen)}
             />
-            <Link to="/user-profile/notifications" className="mr-2">
+            <Link to="/user-profile/notifications" className="mr-2 relative">
               {unReadNotifications.length > 0 ? (
-                <span className="absolute right-0 top-0 w-[18px] h-[18px] flex items-center justify-center bg-theme-color rounded-full  text-white text-xs font-bold">
+                <span className="absolute right-0 top-0 w-[18px] h-[18px] flex items-center justify-center bg-theme-color rounded-full  text-white text-xs font-bold ">
                   {unReadNotifications.length}
                 </span>
               ) : null}

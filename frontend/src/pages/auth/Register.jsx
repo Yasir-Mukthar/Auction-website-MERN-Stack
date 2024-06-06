@@ -7,59 +7,68 @@ import { register, reset } from "../../store/auth/authSlice";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const Register = () => {
-  const [formData, setFormData] = useState({
+    const [showPassword, setShowPassword] = useState(false);
+    const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     password: "",
   });
-  // Redux dispatch and state
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const {  isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) {
-      navigate("/");
-    }
-
+    
     if (isSuccess) {
-      toast.success(message);
-      navigate("/login");
-    }
-    if (isError) {
-      toast.error(message);
-      dispatch(reset());
-    }
+      toast.success("Registration successful", {
+        autoClose: 1000
+      });
+      dispatch(reset())
 
-    return () => {
-      dispatch(reset());
-    };
-  }, [isError, isSuccess, user]);
+      navigate("/login");
+    } else if (isError) {
+      toast.error(message, {
+        autoClose: 1000
+      })
+      dispatch(reset())
+    }
+   
+  }, [isSuccess, isError, isLoading]);
 
   // Submit the form data to the server
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-    if (!emailRegex.test(formData.email)) {
-      toast.error("Email is invalid");
-      return false;
-    } else if (!passwordRegex.test(formData.password)) {
-      toast.error(
-        "Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character"
-      );
-      return false;
-    } else {
-      console.log(formData);
-      dispatch(register(formData));
+  if (!emailRegex.test(formData.email)) {
+    toast.error("Email format is invalid",{
+      autoClose: 1000
+    });
+    return false;
+  } else if (!passwordRegex.test(formData.password)) {
+    toast.error(
+      "Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character",{
+      autoClose: 1000
+      }
+    );
+    return false;
+  } else{
+    dispatch(reset())
+
+    dispatch(register(formData))
+    
+     
+      
     }
+
+  
+  
   };
-  const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

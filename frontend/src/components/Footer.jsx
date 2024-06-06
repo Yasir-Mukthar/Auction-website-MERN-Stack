@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
@@ -39,14 +39,15 @@ const Footer = () => {
                 Privacy Policy
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 to=""
                 className=" me-4 md:me-6 text-white no-underline hover:text-theme-color"
               >
                 Licensing
               </Link>
-            </li>
+            </li> */}
+            
             <li>
               <Link
                 to="/contact-us"

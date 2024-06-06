@@ -25,7 +25,7 @@ const ProfileComponent = () => {
           <h2 className=" font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">
             Profile Summary
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="flex items-center justify-between p-4 rounded-lg border border-border-info-color hover:border-theme-color transition-all">
               <div>
                 <p className="text-theme-color font-bold text-lg">45.36k</p>
@@ -55,7 +55,7 @@ const ProfileComponent = () => {
               </div>
               <BsCurrencyExchange size={25} />
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="flex flex-wrap gap-4 lg:flex-nowrap">
           <div className="px-7 py-4 w-full bg-theme-bg text-white rounded-2xl">

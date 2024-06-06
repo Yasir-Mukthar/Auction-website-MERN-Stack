@@ -60,7 +60,7 @@ const ManageItems = () => {
                   </div>
                 </td>
                 <td>
-                  <span>{auction?.category?.name}</span>
+                  <span>{auction?.category?.name || "---"}</span>
                 </td>
                 <td>
                   <span>{auction?.bids?.length}</span>
