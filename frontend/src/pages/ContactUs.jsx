@@ -6,6 +6,10 @@ import {
 } from "react-icons/io5";
 import { useRef } from "react";
 import emailjs from "@emailjs/browser";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 
 const ContactUs = () => {
   const form = useRef();
@@ -19,10 +23,13 @@ const ContactUs = () => {
       })
       .then(
         () => {
-          console.log("SUCCESS!");
-        },
-        (error) => {
-          console.log("FAILED...", error.text);
+toast.success("Email Send Successfully.",{
+  autoClose: 1000
+
+})      
+  },
+        () => {
+          toast.error("Error Sending Email.")
         }
       );
   };

@@ -37,7 +37,7 @@ const UploadItem = () => {
     description: "",
   });
 
-  const handleProductUpload = (e) => {
+  const handleProductUpload =async (e) => {
     e.preventDefault();
     //image data so use new formdata
     const data = new FormData();
@@ -57,12 +57,17 @@ const UploadItem = () => {
     } else {
       data.append("image", imgRef.current.files[0]);
     }
+    console.log("before data sentidn",isSuccess);
+    dispatch(createAuction(data)).then(() => {
+      if (isSuccess) {
+        toast.success(message, {
+          autoClose: 500,
+        });
+      }
+    });
 
-    dispatch(createAuction(data));
-    toast.success("Auction created successfully");
-    dispatch(getAllAuctions());
-
-    dispatch(reset());
+    //dispatch(getAllAuctions());
+    // dispatch(reset())
   };
 
   return (
@@ -95,7 +100,9 @@ const UploadItem = () => {
               <div className="text-center flex flex-col items-center gap-2">
                 <IoCloudUploadOutline size={68} className="text-theme-color" />
                 <p>Click to Upload</p>
-                <span className="text-body-text-color">PNG,JPG,JPEG | Max Size 1MB</span>
+                <span className="text-body-text-color">
+                  PNG,JPG,JPEG | Max Size 1MB
+                </span>
               </div>
             </div>
           )}
@@ -106,7 +113,6 @@ const UploadItem = () => {
             onChange={(e) => setImgUrl(URL.createObjectURL(e.target.files[0]))}
             ref={imgRef}
             accept=".png, .jpg, .jpeg"
-
           />
         </div>
         {/* INPUTS */}

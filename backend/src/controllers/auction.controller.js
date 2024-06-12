@@ -6,24 +6,7 @@ import Auction from "../models/auction.model.js";
 import Bid from "../models/bid.model.js";
 import { populate } from "dotenv";
 
-// name: { type: String, required: true },
-//   description: { type: String },
-//   category: { type: mongoose.Schema.Types.ObjectId, ref: "ProductCategory", required: true},
-//   seller: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-//   startTime: { type: Date, required: true },
-//   endTime: { type: Date, required: true },
-//   bids: [{ type: mongoose.Schema.Types.ObjectId, ref: "Bid" }],
-//   winner: { type: mongoose.Schema.Types.ObjectId, ref: "Bid" },
-//   status: {
-//     type: String,
-//     enum: ["upcoming", "active", "over"],
-//     default: "upcoming",
-//   },
-//   location: {type:String },
-//   image:{type:String,required:true},
-//   startingPrice: { type: Number, required: true },
-//   reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
-//   additionalDetails: { type: String },
+
 
 // @desc Create auction product
 // @route POST /api/v1/auctions
@@ -64,7 +47,7 @@ const createAuction = asyncHandler(async (req, res) => {
     }
 
     // Check if startTime is before endTime
-    if (startTime >= endTime) {
+    if (new Date(startTime).getTime() >= new Date(endTime).getTime()) {
       return res
         .status(400)
         .json(new ApiResponse(400, "Start time must be before end time"));
@@ -84,6 +67,15 @@ const createAuction = asyncHandler(async (req, res) => {
         .status(500)
         .json(new ApiResponse(500, "Error uploading image"));
     }
+    let currentDate=new Date();
+    let status = "upcoming";
+    console.log(new Date(startTime).getTime() + " and time is .." + currentDate.getTime());
+    if(new Date(startTime).getTime()< currentDate.getTime()){
+      status = "active";
+    }
+    if(endTime < currentDate.getTime()){
+      status = "over";
+    }
 
     const auction = await Auction.create({
       name,
@@ -95,6 +87,7 @@ const createAuction = asyncHandler(async (req, res) => {
       location,
       image: imgUrlCloudinary.url,
       startingPrice,
+      status,
     });
 
     if (!auction) {
@@ -122,7 +115,9 @@ const getAllAuctions = asyncHandler(async (req, res) => {
   try {
     const { location, category, itemName } = req.body;
     console.log(req.body, "req.body");
-    let filter = {};
+    let filter = {
+      status: { $ne: "over" },
+    };
     if (location) filter.location = location;
     if (category) filter.category = category;
     if (itemName) {

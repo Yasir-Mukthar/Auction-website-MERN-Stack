@@ -10,9 +10,8 @@ const auctionSchema = new mongoose.Schema({
   bids: [{ type: mongoose.Schema.Types.ObjectId, ref: "Bid" }],
   winner: { type: mongoose.Schema.Types.ObjectId, ref: "Bid" },
   status: {
-    type: String,
-    enum: ["upcoming", "active", "over"],
-    default: "upcoming",
+    type: String
+   
   },
   location: {type:mongoose.Schema.Types.ObjectId, ref:"City" },
   image:{type:String,required:true},
