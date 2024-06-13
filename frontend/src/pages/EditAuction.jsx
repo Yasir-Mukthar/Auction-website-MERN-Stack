@@ -15,7 +15,7 @@ const EditAuction = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { singleAuction, isLoading } = useSelector((state) => state.auction);
+  const { singleAuction, isLoading,message, isError, isSuccess } = useSelector((state) => state.auction);
   const [singleAuctionData, setSingleAuctionData] = useState(singleAuction);
   const [imgUrl, setImgUrl] = useState(singleAuction?.image || "");
   const imgRef = useRef(null);
@@ -37,6 +37,37 @@ const EditAuction = () => {
     dispatch(getAllCategories());
     dispatch(getAllCities());
   }, []);
+
+  useEffect(() => {
+    console.log(isSuccess , " and " , isError);
+    if (isSuccess && isError) {
+      toast.error(message, {
+        autoClose: 500,
+      });
+      dispatch(reset());
+    } else if (isSuccess && isError===undefined ) {
+      toast.success(message, {
+        autoClose: 500,
+      });
+      dispatch(reset());    console.log(isSuccess , " and " , isError);
+
+      //clear form data
+      setFormData({
+        name: "",
+        category: "",
+        startTime: "",
+        endTime: "",
+        location: "",
+        startingPrice: "",
+        description: "",
+      });
+      setImgUrl("");
+    }
+    dispatch(reset());
+  }, [isSuccess, isError, isLoading]);
+
+
+
 
   const [formData, setFormData] = useState({
     name: "",
@@ -105,6 +136,7 @@ const EditAuction = () => {
     for (var pair of data.entries()) {
       console.log(`${pair[0]}, ${pair[1]}`);
     }
+    console.log(isSuccess , " and " , isError);
 
     dispatch(updateSingleAuction({ data: data, id: id }));
     // toast.success("Auction updated successfully");

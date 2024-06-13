@@ -170,15 +170,17 @@ const initialState = {
 const auctionSlice = createSlice({
   name: "auction",
   initialState,
-  reducers: {
-    reset: (state) => {
-      state.isError = false;
-      state.isSuccess = false;
-      state.isLoading = false;
-      state.message = "";
-    },
-   
-  },
+  reducers:{
+    reset:(state)=>{
+        state.isError=false;
+        state.isSuccess=false;
+        state.isLoading=false;
+        state.message="";
+    }
+    
+
+
+},
   extraReducers: (builder) => {
     builder.addCase(createAuction.pending, (state) => {
       state.isLoading = true;
@@ -188,8 +190,8 @@ const auctionSlice = createSlice({
     });
     builder.addCase(createAuction.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.isError = false;
-      state.isSuccess = true;
+      state.isError = action.payload.isError;
+      state.isSuccess = action.payload.success;
       state.message = action.payload.message;
     });
     builder.addCase(createAuction.rejected, (state, action) => {
@@ -319,8 +321,8 @@ const auctionSlice = createSlice({
     });
     builder.addCase(updateSingleAuction.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.isError = false;
-      state.isSuccess = true;
+      state.isError = action.payload.isError;
+      state.isSuccess = action.payload.isSuccess || true;
       state.message = action.payload.message;
     });
     builder.addCase(updateSingleAuction.rejected, (state, action) => {

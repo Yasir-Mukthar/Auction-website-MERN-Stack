@@ -88,31 +88,36 @@ const ProfileComponent = () => {
               <li>
                 Phone:{" "}
                 <span className="float-right font-normal">
-                  {user?.phone ? user.phone : "-"}
+                  {user?.phone ? user.phone : "---"}
                 </span>
               </li>
               <li>
                 Gender:{" "}
                 <span className="float-right font-normal">
-                  {user?.gender ? user.gender : "-"}
+                  {user?.gender ? user.gender : "---"}
                 </span>
               </li>
             
               <li>
                 Location:{" "}
                 <span className="float-right font-normal">
-                  {user?.location ? user.location : "-"}
+                  {user?.location ? user.location : "---"}
                 </span>
               </li>
               <li>
                 User Type:{" "}
                 <span className="float-right font-normal">
-                  {user?.userType ? user?.userType : "-"}
+                  {user?.userType ? user?.userType : "---"}
                 </span>
               </li>
               <li>
                 Join Date:{" "}
-                <span className="float-right font-normal">August 15, 2020</span>
+                <span className="float-right font-normal">{
+                  user?.createdAt
+                    ? new Date(user.createdAt).toLocaleDateString()
+                    : "---"
+                
+}</span>
               </li>
             </ul>
           </div>

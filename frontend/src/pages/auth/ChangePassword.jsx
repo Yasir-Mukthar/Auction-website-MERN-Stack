@@ -9,7 +9,7 @@ const ChangePassword = () => {
     oldPassword: "",
     newPassword: "",
   });
-
+const {isLoading,isSuccess , isError,message}=useSelector((state)=>state.auth)
   const dispatch = useDispatch();
 
   const handleChangeCurrentPassword = (e) => {
@@ -29,7 +29,20 @@ const ChangePassword = () => {
       return false;
     }
 
-    dispatch(changeCurrentPassword(formData));
+    dispatch(changeCurrentPassword(formData)).then(()=>{
+      if(isSuccess){
+        toast.success(message,{
+          autoClose:500
+        })
+      }
+      if(isError){
+
+        toast.error(message,{
+          autoClose:500
+        })
+      }
+    
+    })
   };
 
   return (
