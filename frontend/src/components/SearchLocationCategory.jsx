@@ -39,25 +39,31 @@ const SearchLocationCategory = () => {
 
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(async (position) => {
-         const { latitude, longitude } = position.coords;
-        // const latitude = 32.5331284;
-        // const longitude = 73.4907538;
-  
-        try {
-          const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=318f69a969db4f7599b7fbb5043e444e`);
-  
-          console.log(response, " response from location,  ,,,,,,,,,,")
-          if (response.data && response.data.results && response.data.results[0]) {
-            let district = response.data.results[0].components.district;
-            //remove last 8 letters from last and empty spaces
-             district = district?.slice(0, -8)?.trim();
-            setCity(district);
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+      
+          try {
+            const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=318f69a969db4f7599b7fbb5043e444e`);
+      
+            console.log(response, " response from location,  ,,,,,,,,,,");
+      
+            if (response.data && response.data.results && response.data.results[0]) {
+              let district = response.data.results[0].components.district;
+              district = district?.slice(0, -8)?.trim();
+              setCity(district);
+            }
+          } catch (error) {
+            console.error('Error getting city name:', error);
           }
-        } catch (error) {
-          console.error('Error getting city name:', error);
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+        },
+        {
+          enableHighAccuracy: true
         }
-      });
+      );
     }
   }, []);
   
