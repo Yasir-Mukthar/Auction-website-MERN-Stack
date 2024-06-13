@@ -1,8 +1,8 @@
 import { VscLoading } from "react-icons/vsc";
-function Loading() {
+function Loading(props) {
   return (
     <>
-      <div className="relative text-white text-center flex flex-col mt-[-60px] gap-5 items-center justify-center h-screen ">
+      <div className={`relative text-white text-center flex flex-col mt-[-60px] gap-5 items-center justify-center ${props?.width==="sidebar" ? "h-[400px]" : "h-screen"}`} >
         <VscLoading
           size={110}
           className="absolute text-color-primary animate-[clockspin_1s_infinite]"

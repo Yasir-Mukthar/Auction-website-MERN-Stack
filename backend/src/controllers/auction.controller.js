@@ -363,6 +363,13 @@ const auction = await Auction.findById(req.params.id);
 if (!auction) {
   return res.status(404).json(new ApiResponse(404, "Auction not found"));
 }
+ // Check if startingPrice is a positive number
+ if (startingPrice <= 0) {
+  return res
+    .status(400)
+    .json(new ApiResponse(400, "Starting price must be a positive number"));
+}
+
 //check start and now time and update status accordingly
 let currentDate=new Date();
 

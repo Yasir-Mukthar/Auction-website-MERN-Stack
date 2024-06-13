@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createAuction, reset } from "../store/auction/auctionSlice.js";
-import { getAllCategories } from "../store/category/categorySlice.js";
-import { getAllCities } from "../store/city/citySlice.js";
+import { createAuction, reset } from "../store/auction/auctionSlice";
+import { getAllCategories } from "../store/category/categorySlice";
+import { getAllCities } from "../store/city/citySlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -37,7 +37,35 @@ const UploadItem = () => {
     description: "",
   });
 
-  const handleProductUpload =async (e) => {
+  useEffect(() => {
+    dispatch(reset());
+
+    if (isSuccess && isError) {
+      toast.error(message, {
+        autoClose: 500,
+      });
+      dispatch(reset());
+    } else if (isSuccess ) {
+      toast.success(message, {
+        autoClose: 500,
+      });
+      dispatch(reset());
+      //clear form data
+      setFormData({
+        name: "",
+        category: "",
+        startTime: "",
+        endTime: "",
+        location: "",
+        startingPrice: "",
+        description: "",
+      });
+      setImgUrl("");
+    }
+    dispatch(reset());
+  }, [isSuccess, isError, isLoading]);
+
+  const handleProductUpload = async (e) => {
     e.preventDefault();
     //image data so use new formdata
     const data = new FormData();
@@ -57,17 +85,11 @@ const UploadItem = () => {
     } else {
       data.append("image", imgRef.current.files[0]);
     }
-    console.log("before data sentidn",isSuccess);
-    dispatch(createAuction(data)).then(() => {
-      if (isSuccess) {
-        toast.success(message, {
-          autoClose: 500,
-        });
-      }
-    });
+    console.log("before data sentidn", isSuccess);
+    dispatch(createAuction(data));
 
     //dispatch(getAllAuctions());
-    // dispatch(reset())
+    dispatch(reset());
   };
 
   return (

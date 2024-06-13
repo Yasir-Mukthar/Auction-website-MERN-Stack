@@ -9,9 +9,10 @@ import { FaEye } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import { toast } from "react-toastify";
+import Loading from "./Loading"
 const ManageItems = () => {
   const dispatch = useDispatch();
-  const { sellerAuction } = useSelector((state) => state.auction);
+  const { sellerAuction, isLoading } = useSelector((state) => state.auction);
 
   // componentDidMount and component
   useEffect(() => {
@@ -48,13 +49,14 @@ const ManageItems = () => {
               <th className="rounded-r-lg">Action</th>
             </tr>
           </thead>
+          
           <tbody className="table-row-group">
             {sellerAuction?.auctions?.length === 0 ? (
-              <tr>
-                <h1 className="text-center ">No Item</h1>
+              <tr className="table-row bg-theme-bg ">
+                <h1 className="text-center m-2 w-full">No Item</h1>
               </tr>
             ) : (
-              sellerAuction?.auctions?.map((auction) => (
+              isLoading ? <Loading width="sidebar"/> : sellerAuction?.auctions?.map((auction) => (
                 <tr
                   key={auction?._id}
                   className="table-row bg-theme-bg [&_td]:table-cell [&_td]:pl-5 [&_td]:pr-3 [&_td]:py-3"
