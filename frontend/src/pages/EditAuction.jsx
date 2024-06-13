@@ -23,20 +23,17 @@ const EditAuction = () => {
   const { cities } = useSelector((state) => state.city);
   console.log("singleAuction........", singleAuction);
 
-
   useEffect(() => {
     dispatch(getSingleAuctionById(id));
   }, [id]);
-  
+
   useEffect(() => {
     if (singleAuction) {
       setSingleAuctionData(singleAuction);
     }
-    
   }, [singleAuction]);
 
   useEffect(() => {
-
     dispatch(getAllCategories());
     dispatch(getAllCities());
   }, []);
@@ -82,26 +79,22 @@ const EditAuction = () => {
     startingPrice: 0,
     imgUrl: "",
   });
-  
-  
+
   useEffect(() => {
-  
-      setFormData({
-        name: singleAuctionData?.name,
-        description: singleAuctionData?.description || "",
-        startTime: singleAuctionData?.startTime
-          ? new Date(singleAuctionData?.startTime).toISOString().slice(0, 16)
-          : "",
-        endTime: singleAuctionData?.endTime
-          ? new Date(singleAuctionData?.endTime).toISOString().slice(0, 16)
-          : "",
-        category: singleAuctionData?.category?._id || "",
-        location: singleAuctionData?.location?._id || "",
-        startingPrice: parseFloat(singleAuctionData?.startingPrice) || 0,
-        
-      });
-      setImgUrl(singleAuctionData?.image || "")
-    
+    setFormData({
+      name: singleAuctionData?.name,
+      description: singleAuctionData?.description || "",
+      startTime: singleAuctionData?.startTime
+        ? new Date(singleAuctionData?.startTime).toISOString().slice(0, 16)
+        : "",
+      endTime: singleAuctionData?.endTime
+        ? new Date(singleAuctionData?.endTime).toISOString().slice(0, 16)
+        : "",
+      category: singleAuctionData?.category?._id || "",
+      location: singleAuctionData?.location?._id || "",
+      startingPrice: parseFloat(singleAuctionData?.startingPrice) || 0,
+    });
+    setImgUrl(singleAuctionData?.image || "");
   }, [singleAuctionData]);
 
   console.log("categoreik   ", categories);
@@ -166,7 +159,7 @@ const EditAuction = () => {
               alt="upload img"
               onClick={() => imgRef.current.click()}
               className="w-full h-80 
-                    rounded-lg border-2 border-solid p-2 object-contain cursor-pointer"
+                    rounded-lg border-2 border-border-info-color p-2 object-contain cursor-pointer"
             />
           ) : (
             <div

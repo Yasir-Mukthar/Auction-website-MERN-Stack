@@ -199,10 +199,10 @@ const AllUsers = () => {
       <h2 className=" text-white font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">
         Users
       </h2>
-      <div className="text-white grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 [&>div]:border [&>div]:rounded-lg [&>div]:bg-theme-bg2 [&>div]:border-border-info-color hover:[&>div]:border-theme-color [&>div]:p-5 [&>div]:transition-all">
+      <div className="text-white grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 [&>div]:border [&>div]:rounded-lg [&>div]:bg-theme-bg2 [&>div]:border-border-info-color hover:[&>div]:border-theme-color [&>div]:p-5 [&>div]:transition-all [&>*:nth-child(1)]:bg-blue-500 ">
         <div>
           <h1 className="text-xl font-semibold ">All Users</h1>
-          <div className="text-4xl text-theme-color font-bold">
+          <div className="text-4xl  font-bold">
             {allUser?.data?.length}
           </div>
         </div>
@@ -543,8 +543,18 @@ const AllUsers = () => {
               />
               <h2 className="text-lg font-semibold my-2 ">{seller.fullName}</h2>
               <div className="[&>*]:border-b [&>*]:border-border-info-color ">
-                <p>Total Auctions: <span className="text-theme-color">{seller.totalAuctions}</span></p>
-                <p>Successful: <span className="text-theme-color">{seller.paidAuctions}</span></p>
+                <p>
+                  Total Auctions:{" "}
+                  <span className="text-theme-color">
+                    {seller.totalAuctions}
+                  </span>
+                </p>
+                <p>
+                  Successful:{" "}
+                  <span className="text-theme-color">
+                    {seller.paidAuctions}
+                  </span>
+                </p>
               </div>
             </div>
           ))}

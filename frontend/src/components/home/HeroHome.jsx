@@ -6,7 +6,7 @@ const HeroHome = () => {
   const logInUser = JSON.parse(localStorage.getItem("user"));
   return (
     <>
-      <div className="lg:h-[800px] py-20 p-5 lg:px-12 flex items-center justify-center flex-wrap lg:flex-nowrap gap-5 text-white">
+      <div className="lg:h-[85vh] py-20 p-5 lg:px-12 flex items-center justify-center flex-wrap lg:flex-nowrap gap-5 text-white">
         <div className="block overflow-hidden">
           <div className="w-[300px] h-[300px] bg-[#5161F9] rounded-full blur-[150px] absolute left-[-50px] top-[-80px]"></div>
           <div className="w-[200px] h-[200px] bg-[#09a4f1] rounded-full blur-[150px] absolute left-[45%] top-[100px]"></div>

@@ -3,14 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getSingleCategory,
   reset,
-  updateCategory} from "../../store/category/categorySlice.js";
+  updateCategory,
+} from "../../store/category/categorySlice.js";
 // import { getAllCategories } from "../../store/category/categorySlice.js";
 // import { getAllCities } from "../../store/city/citySlice.js";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-
 
 const EditCategory = () => {
   const { id } = useParams();
@@ -23,43 +22,30 @@ const EditCategory = () => {
 
   console.log("singlcategyr........", singleCategory);
 
-
   useEffect(() => {
     dispatch(getSingleCategory(id));
   }, [id]);
-  
+
   useEffect(() => {
     if (singleCategory) {
       setSingleCategoryData(singleCategory);
     }
-    
   }, [singleCategory]);
-
-  
-
-
-
 
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     imgUrl: "",
   });
-  
-  
+
   useEffect(() => {
-  
-      setFormData({
-        name: singleCategoryData?.name,
-        description: singleCategoryData?.description || "",
-       
-      });
-      setImgUrl(singleCategoryData?.imageUrl || "")
-    
+    setFormData({
+      name: singleCategoryData?.name,
+      description: singleCategoryData?.description || "",
+    });
+    setImgUrl(singleCategoryData?.imageUrl || "");
   }, [singleCategoryData]);
 
-
- 
   console.log(formData, "formData....");
   const handleProductUpload = (e) => {
     e.preventDefault();
@@ -67,7 +53,7 @@ const EditCategory = () => {
     const data = new FormData();
     console.log(formData);
     data.append("name", formData.name);
-    
+
     data.append("description", formData.description);
 
     if (imgRef.current.files[0]) {
@@ -102,7 +88,7 @@ const EditCategory = () => {
               alt="upload img"
               onClick={() => imgRef.current.click()}
               className="w-full h-80 
-                    rounded-lg border-2 border-solid p-2 object-contain cursor-pointer"
+                    rounded-lg border-2 border-border-info-color p-2 object-contain cursor-pointer"
             />
           ) : (
             <div
@@ -142,7 +128,6 @@ const EditCategory = () => {
             />{" "}
           </div>
 
-         
           <div className="grid">
             <label htmlFor="description">Description</label>
             <textarea

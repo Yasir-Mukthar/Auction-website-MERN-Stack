@@ -14,7 +14,7 @@ import EditAuction from "../components/EditAuction";
 // import {SellerRoutes} from '../auth/Protected'
 // import PaymentMethod from "../components/PaymentMethod";
 // import Cart from "../components/Cart";
- import ErrorPage from "./ErrorPage";
+import ErrorPage from "./ErrorPage";
 import AllCategories from "../components/AllCategories";
 import EditCategory from "../components/EditCategory";
 import CreateCategory from "../components/CreateCategory";
@@ -23,25 +23,24 @@ const Dashboard = () => {
   return (
     <div className=" ">
       <div className="flex gap-4 px-5 py-10 flex-wrap lg:flex-nowrap">
-        <div className="hidden sm:block lg:sticky top-5 lg:h-screen">
-          <Sidebar />
-        </div>
-       <div className=" w-full ">
-       <Routes>
-          <Route
-            path="/dashboard"
-            element={<ProfileComponent />}
-          ></Route>
-          <Route path="/users/*" element={<AllUsers />} />
-          <Route path="/users/profile/:id" element={<ProfileComponent />} />
-          <Route path="/users/edit/:id" element={<EditUser />} />
-          <Route path="/auctions/*" element={<AllAuctions />} />
-          <Route path="/auctions/edit/:id" element={<EditAuction />} />
-          <Route path="/auctions/view/:id" element={<ProfileComponent />} />
-          <Route path="/categories/*" element={<AllCategories />} />
-          <Route path="/categories/edit/:id" element={<EditCategory />} />
-          <Route path="/categories/create-category" element={<CreateCategory />} />
-          {/* <Route path="/profile" element={<ProfileComponent />} />
+        <Sidebar />
+
+        <div className=" w-full overflow-hidden">
+          <Routes>
+            <Route path="/dashboard" element={<ProfileComponent />}></Route>
+            <Route path="/users/*" element={<AllUsers />} />
+            <Route path="/users/profile/:id" element={<ProfileComponent />} />
+            <Route path="/users/edit/:id" element={<EditUser />} />
+            <Route path="/auctions/*" element={<AllAuctions />} />
+            <Route path="/auctions/edit/:id" element={<EditAuction />} />
+            <Route path="/auctions/view/:id" element={<ProfileComponent />} />
+            <Route path="/categories/*" element={<AllCategories />} />
+            <Route path="/categories/edit/:id" element={<EditCategory />} />
+            <Route
+              path="/categories/create-category"
+              element={<CreateCategory />}
+            />
+            {/* <Route path="/profile" element={<ProfileComponent />} />
 
           <Route element={<SellerRoutes />}>
             <Route path="/manage-items" element={<ManageItems />} />
@@ -56,9 +55,9 @@ const Dashboard = () => {
 
           <Route path="/logout" element={<ChangePassword />} />
           <Route path="*" element={<ErrorPage />} /> */}
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-       </div>
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+        </div>
       </div>
     </div>
   );

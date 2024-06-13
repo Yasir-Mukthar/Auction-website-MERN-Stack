@@ -35,13 +35,13 @@ const Sidebar = ({ closeNavbar }) => {
   };
 
   return (
-    <div className="w-full h-full lg:w-[25%] sm:min-w-[250px] lg:max-w-[250px]  ">
+    <div className="w-full hidden sm:block lg:sticky top-5 lg:h-screen lg:w-[25%] sm:min-w-[250px] lg:max-w-[280px]  ">
       <div className="text-white bg-theme-bg p-5 rounded-2xl  ">
         <ul className="flex flex-col gap-1 font-medium">
           <li>
             <Link
               className={`flex items-center gap-2 py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500 ${
-                activeLink === "/user-profile/profile"
+                activeLink === "/admin/dashboard"
                   ? "bg-theme-color hover:text-white"
                   : ""
               }`}
@@ -51,7 +51,7 @@ const Sidebar = ({ closeNavbar }) => {
               <IoIosListBox
                 size={16}
                 className={`text-theme-color transition-all duration-500 ${
-                  activeLink === "/user-profile/profile" ? " text-white" : ""
+                  activeLink === "/admin/dashboard" ? " text-white" : ""
                 }`}
               />
               Dashboard
@@ -61,7 +61,7 @@ const Sidebar = ({ closeNavbar }) => {
           <li>
             <Link
               className={`flex items-center gap-2 py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500 ${
-                activeLink === "/user-profile/manage-items"
+                activeLink === "/admin/users"
                   ? "bg-theme-color hover:text-white"
                   : ""
               }`}
@@ -71,9 +71,7 @@ const Sidebar = ({ closeNavbar }) => {
               <FaUser
                 size={16}
                 className={`text-theme-color transition-all duration-500 ${
-                  activeLink === "/user-profile/manage-items"
-                    ? " text-white"
-                    : ""
+                  activeLink === "/admin/users" ? " text-white" : ""
                 }`}
               />
               Users
@@ -82,12 +80,19 @@ const Sidebar = ({ closeNavbar }) => {
           <li>
             <Link
               className={`flex items-center gap-2  py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500 ${
-                activeLink === "/admin/auction" ? " text-white" : ""
+                activeLink === "/admin/auctions"
+                  ? "bg-theme-color hover:text-white"
+                  : ""
               }`}
               to="/admin/auctions"
-              onClick={() => handleLinkClick("/admin/auction")}
+              onClick={() => handleLinkClick("/admin/auctions")}
             >
-              <RiAuctionFill size={16} className="text-theme-color" />
+              <RiAuctionFill
+                size={16}
+                className={`text-theme-color transition-all duration-500 ${
+                  activeLink === "/admin/auctions" ? " text-white" : ""
+                }`}
+              />
               Auctions
             </Link>
           </li>
@@ -95,12 +100,12 @@ const Sidebar = ({ closeNavbar }) => {
           <li>
             <Link
               className={`flex items-center gap-2 py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500 ${
-                activeLink === "/user-profile/bids-items"
+                activeLink === "/admin/categories"
                   ? "bg-theme-color hover:text-white"
                   : ""
               }`}
               to="/admin/categories"
-              onClick={() => handleLinkClick("/admin/category")}
+              onClick={() => handleLinkClick("/admin/categories")}
             >
               <BiSolidCategory
                 size={18}
