@@ -8,12 +8,30 @@ import {
   markNotificationAsRead,
 } from "../store/notification/notificationSlice";
 import socket from "../socket";
+import Pagination from "./Pagination";
 
 const Notifications = () => {
   const dispatch = useDispatch();
   const { notifications } = useSelector((state) => state.notification);
   const [notificationData, setNotificationData] = useState();
   const logInUser = JSON.parse(localStorage.getItem("user"));
+
+  //pagination part
+  const [currentPage, setCurrentPage] = useState(1)
+  const [notificationsPerPage, setNotificationsPerPage] = useState(5)
+  const indexOfLastNotification = currentPage * notificationsPerPage;
+  const indexOfFirstNotification = indexOfLastNotification - notificationsPerPage;
+  const currentNotifications = notificationData?.slice(indexOfFirstNotification, indexOfLastNotification);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber)
+  }
+  const prevPage = () => {
+    setCurrentPage(currentPage-1)
+  }
+  const nextPage = () => {
+    setCurrentPage(currentPage+1)
+  }
 
 
   useEffect(() => {
@@ -59,10 +77,10 @@ const Notifications = () => {
         <FaRegCheckCircle className="mt-[-2px]" />{" "}
         <span> Mark all as read</span>
       </button>
-      {
+      {//max-h-[750px]
         notificationData?.length > 0 ?(
-          <div className="overflow-auto no-scrollbar p-5 border border-border-info-color rounded-2xl max-h-[750px] flex flex-col gap-4 mt-10">
-        {notificationData?.map((notification) => (
+          <div className="overflow-auto no-scrollbar p-5 border border-border-info-color rounded-2xl  flex flex-col gap-4 mt-10">
+        {currentNotifications?.map((notification) => (
           <Link
             to={notification?.link}
             key={notification?._id}
@@ -105,6 +123,12 @@ const Notifications = () => {
         <div className="flex items-center justify-center h-[500px]">
           <h1 className="text-white">No Notifications</h1>
         </div> }
+      {  notificationData?.length ===0 ? <></> : <Pagination totalPosts={notificationData?.length} postsPerPage={notificationsPerPage} 
+        paginate={paginate}
+        currentPage={currentPage}
+        nextPage={nextPage}
+        prevPage={prevPage}
+        />}
       
     </div>
   );

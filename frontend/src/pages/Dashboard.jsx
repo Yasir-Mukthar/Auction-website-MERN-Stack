@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import SingleAuction from "../components/SingleAuction";
 import SearchLocationCategory from "../components/SearchLocationCategory";
 import Loading from "../components/Loading";
+import Pagination from "../components/Pagination";
 
 
 const Dashboard = () => {
@@ -31,6 +32,24 @@ const Dashboard = () => {
     }
   }, [auction]);
  
+
+  //pagination part
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setitemsPerPage] = useState(12)
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = auctionData?.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber)
+  }
+  const prevPage = () => {
+    setCurrentPage(currentPage-1)
+  }
+  const nextPage = () => {
+    setCurrentPage(currentPage+1)
+  }
+
  
 
   return (
@@ -43,7 +62,7 @@ const Dashboard = () => {
       isLoading ? <Loading /> :   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 md:grid-cols-3 lg:grid-cols-4 max-w-[1400px] mx-auto">
       {" "}
       {auctionData &&
-        auctionData.map((item, index) => (
+        currentItems.map((item, index) => (
           <div key={index}>
             <SingleAuction
               name={item?.name}
@@ -64,9 +83,15 @@ const Dashboard = () => {
             />
           </div>
         ))}{" "}
+
     </div>
     }
-
+{ auctionData?.length ===0 ? <></> :<Pagination totalPosts={auctionData?.length} postsPerPage={itemsPerPage} 
+        paginate={paginate}
+        currentPage={currentPage}
+        nextPage={nextPage}
+        prevPage={prevPage}
+        />}
     
     </div>
   );

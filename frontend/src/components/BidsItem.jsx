@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { getBidsAuctionsByUser } from "../store/bid/bidSlice";
 import { Link } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import Loading from "./Loading";
+import Pagination from "./Pagination";
 
 const BidsItem = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,24 @@ const BidsItem = () => {
     dispatch(getBidsAuctionsByUser());
     console.log("use effecty bids....", bids);
   }, []);
+
+
+  //pagination part
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setitemsPerPage] = useState(6)
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = bids?.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber)
+  }
+  const prevPage = () => {
+    setCurrentPage(currentPage-1)
+  }
+  const nextPage = () => {
+    setCurrentPage(currentPage+1)
+  }
 
   return (
     <div className="overflow-auto px-7 py-4 w-full bg-theme-bg text-white rounded-2xl ">
@@ -39,7 +58,9 @@ const BidsItem = () => {
                 <td colSpan="7" className="text-center">
                   <Loading width="sidebar"/>
                 </td>
-              </tr> :bids?.map((bid) => (
+              </tr> : bids?.length ===0 ? <tr className="table-row bg-theme-bg ">
+                <td colSpan="7" className="text-center m-2 w-full p-10 h-[400px]">No Bids Made Yet.</td>
+              </tr> :currentItems?.map((bid) => (
               <tr
                 className="table-row bg-theme-bg [&_td]:table-cell [&_td]:pl-5 [&_td]:pr-3 [&_td]:py-3"
                 key={bid?._id}
@@ -81,8 +102,14 @@ const BidsItem = () => {
             ))}
           </tbody>
         </table>
+        { bids?.length ===0 ? <></> :<Pagination totalPosts={bids?.length} postsPerPage={itemsPerPage} 
+        paginate={paginate}
+        currentPage={currentPage}
+        nextPage={nextPage}
+        prevPage={prevPage}
+        />}
       </div>
-      {/* Card */}
+      
     </div>
   );
 };

@@ -24,7 +24,9 @@ const {isLoading,isSuccess , isError,message}=useSelector((state)=>state.auth)
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!passwordRegex.test(formData.newPassword)) {
       toast.error(
-        "Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character"
+        "Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character",{
+          autoClose:700
+        }
       );
       return false;
     }
