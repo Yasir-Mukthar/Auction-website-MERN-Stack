@@ -39,13 +39,15 @@ const UploadItem = () => {
 
   useEffect(() => {
     dispatch(reset());
+    console.log(isSuccess  , " and ", isError);
 
-    if (isSuccess && isError) {
+    if ( isError) {
       toast.error(message, {
         autoClose: 500,
       });
       dispatch(reset());
-    } else if (isSuccess ) {
+    } else if (isSuccess &&  isError===undefined  ) {
+      console.log(isSuccess  , " and ", isError);
       toast.success(message, {
         autoClose: 500,
       });

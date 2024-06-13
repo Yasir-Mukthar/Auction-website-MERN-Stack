@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCurrentUser, reset, updateProfile } from "../store/auth/authSlice";
+import Loading from "./Loading";
+import { toast } from "react-toastify";
 
 const AccountSetting = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user , isLoading,isSuccess , isError,message} = useSelector((state) => state.auth);
   console.log(user, "user.......");
   const [formData, setFormData] = useState({
     fullName: user?.fullName || "",
@@ -29,6 +31,7 @@ const AccountSetting = () => {
   console.log(user?.profilePicture, "user?.profilePicture........");
 
   const handleFormSubmit = (e) => {
+    dispatch(reset())
     e.preventDefault();
     console.log(imgUrl, "imgUrl");
     //image data so use new formdata
@@ -49,7 +52,18 @@ const AccountSetting = () => {
       data.append("profilePicture", imgUrl);
     }
     console.log(imgUrl);
-    dispatch(updateProfile(data));
+    dispatch(updateProfile(data)).then(()=>{
+      if(isSuccess){
+        toast.success(message || "user profile updated successfully.", {
+          autoClose:500
+        })
+      }
+      if(isError){
+        toast.error(message, {
+          autoClose:500
+        })
+      }
+    })
     setImgUrl(null);
     dispatch(getCurrentUser());
 
@@ -165,7 +179,7 @@ const AccountSetting = () => {
           <input
             className="text-white cursor-pointer font-bold tracking-wide"
             type="submit"
-            value="Update"
+            value={`${isLoading ? "Loaign" : "Update" }`}
           />
         </div>
       </form>

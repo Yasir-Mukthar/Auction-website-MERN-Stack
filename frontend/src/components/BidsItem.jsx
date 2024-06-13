@@ -3,9 +3,11 @@ import { useEffect } from "react";
 import { getBidsAuctionsByUser } from "../store/bid/bidSlice";
 import { Link } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
+import Loading from "./Loading";
+
 const BidsItem = () => {
   const dispatch = useDispatch();
-  const { bids } = useSelector((state) => state.bid);
+  const { bids , isLoading} = useSelector((state) => state.bid);
   const {user}=useSelector(state=>state.auth)
   console.log(bids, "bids....");
   useEffect(() => {
@@ -33,7 +35,11 @@ const BidsItem = () => {
             </tr>
           </thead>
           <tbody className="table-row-group">
-            {bids?.map((bid) => (
+            {isLoading ?<tr>
+                <td colSpan="7" className="text-center">
+                  <Loading width="sidebar"/>
+                </td>
+              </tr> :bids?.map((bid) => (
               <tr
                 className="table-row bg-theme-bg [&_td]:table-cell [&_td]:pl-5 [&_td]:pr-3 [&_td]:py-3"
                 key={bid?._id}

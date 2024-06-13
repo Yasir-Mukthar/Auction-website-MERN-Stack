@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import {
   deleteSingleAuctionById,
   getSellerAuction,
+  reset,
 } from "../store/auction/auctionSlice";
 import { FaEye } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
@@ -56,7 +57,11 @@ const ManageItems = () => {
                 <h1 className="text-center m-2 w-full">No Item</h1>
               </tr>
             ) : (
-              isLoading ? <Loading width="sidebar"/> : sellerAuction?.auctions?.map((auction) => (
+              isLoading ? <tr>
+                <td colSpan="7" className="text-center">
+                  <Loading width="sidebar"/>
+                </td>
+              </tr> : sellerAuction?.auctions?.map((auction) => (
                 <tr
                   key={auction?._id}
                   className="table-row bg-theme-bg [&_td]:table-cell [&_td]:pl-5 [&_td]:pr-3 [&_td]:py-3"

@@ -191,7 +191,7 @@ const auctionSlice = createSlice({
     builder.addCase(createAuction.fulfilled, (state, action) => {
       state.isLoading = false;
       state.isError = action.payload.isError;
-      state.isSuccess = action.payload.isSuccess || true;
+      state.isSuccess = action.payload.success;
       state.message = action.payload.message;
     });
     builder.addCase(createAuction.rejected, (state, action) => {
