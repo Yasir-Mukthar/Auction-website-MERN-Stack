@@ -4,7 +4,8 @@ import ApiResponse from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import Auction from "../models/auction.model.js";
 import Bid from "../models/bid.model.js";
-import { populate } from "dotenv";
+import City from "../models/city.model.js";
+import mongoose from 'mongoose';
 
 
 
@@ -115,10 +116,28 @@ const getAllAuctions = asyncHandler(async (req, res) => {
   try {
     const { location, category, itemName } = req.body;
     console.log(req.body, "req.body");
+
     let filter = {
       status: { $ne: "over" },
     };
-    if (location) filter.location = location;
+   
+    if (location && !mongoose.Types.ObjectId.isValid(location)) {
+      var cityid = await City.find({name: location});
+      console.log(cityid[0]._id.toString(), " city id");
+      if(location){
+        filter.location=cityid[0]._id.toString();
+      }
+    } else {
+      if(location){
+        filter.location =  location;
+
+      }
+    }
+
+
+    
+    console.log(req.body, "req.body");
+
     if (category) filter.category = category;
     if (itemName) {
       filter.name = { $regex: itemName, $options: "i" };

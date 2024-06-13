@@ -7,29 +7,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAllCategories } from "../store/category/categorySlice";
 import { getAllCities } from "../store/city/citySlice";
+import axios from "axios";
 
-// const categories = [
-//   //key value, name
-//   {
-//     _id: "65e89abf3c1083d3c16449f0",
-//     name: "Electronics",
-//     value: "electronics",
-//   },
-//   { _id: "65e89abf3c1083d3c16449f0", name: "Fashion", value: "fashion" },
-//   {
-//     _id: "65e89abf3c1083d3c16449f0",
-//     name: "Home & Living",
-//     value: "home-living",
-//   },
-// ];
-
-// const locationData = [
-//   //key value ,name
-//   { _id: "1", name: "Lahore", value: "lahore" },
-//   { _id: "2", name: "Karachi", value: "karachi" },
-//   { _id: "3", name: "Islamabad", value: "islamabad" },
-//   { _id: "4", name: "Multan", value: "multan" },
-// ];
 
 const SearchLocationCategory = () => {
   const [filter, setFilter] = useState({
@@ -56,6 +35,35 @@ const SearchLocationCategory = () => {
     dispatch(getAllAuctions(filter));
   };
 
+  const [city, setCity] = useState('');
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+         const { latitude, longitude } = position.coords;
+        // const latitude = 32.5331284;
+        // const longitude = 73.4907538;
+  
+        try {
+          const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=318f69a969db4f7599b7fbb5043e444e`);
+  
+          console.log(response, " response from location,  ,,,,,,,,,,")
+          if (response.data && response.data.results && response.data.results[0]) {
+            let district = response.data.results[0].components.district;
+            //remove last 8 letters from last and empty spaces
+             district = district?.slice(0, -8)?.trim();
+            setCity(district);
+          }
+        } catch (error) {
+          console.error('Error getting city name:', error);
+        }
+      });
+    }
+  }, []);
+  
+  
+  console.log(city);
+
   return (
     <div className="flex justify-center items-center my-5 min-h-[100px]">
       <div className="flex-col   sm:flex-row sm:items-center   bg-[#061224] text-[#7386a8] rounded-md p-2">
@@ -66,11 +74,20 @@ const SearchLocationCategory = () => {
           onChange={(e) => setFilter({ ...filter, location: e.target.value })}
         >
           <option value="">Select Location</option>
+          {
+                city && <option value={city} >
+                Current Location
+                </option>
+              }
           {cities.data &&
             cities.data.map((category) => (
-              <option key={category._id} value={category._id}>
+              <>
+             
+               <option key={category._id} value={category._id}>
                 {category.name}
               </option>
+              </>
+             
             ))}
         </select>
 

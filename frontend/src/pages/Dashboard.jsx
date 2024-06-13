@@ -8,6 +8,7 @@ import SingleAuction from "../components/SingleAuction";
 import SearchLocationCategory from "../components/SearchLocationCategory";
 import Loading from "../components/Loading";
 import Pagination from "../components/Pagination";
+import axios from 'axios';
 
 
 const Dashboard = () => {
@@ -50,6 +51,13 @@ const Dashboard = () => {
     setCurrentPage(currentPage+1)
   }
 
+  
+  // 318f69a969db4f7599b7fbb5043e444e
+
+ 
+
+
+
  
 
   return (
@@ -86,12 +94,12 @@ const Dashboard = () => {
 
     </div>
     }
-{ auctionData?.length ===0 ? <></> :<Pagination totalPosts={auctionData?.length} postsPerPage={itemsPerPage} 
+{auctionData && auctionData?.length !== 0 ? <Pagination totalPosts={auctionData?.length}        postsPerPage={itemsPerPage} 
         paginate={paginate}
         currentPage={currentPage}
         nextPage={nextPage}
         prevPage={prevPage}
-        />}
+        />: <></>}
     
     </div>
   );
