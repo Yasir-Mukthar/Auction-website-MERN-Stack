@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import CountDownTimer from "../components/CountDownTimer";
 import { useState } from "react";
 import { RiShoppingBagFill } from "react-icons/ri";
+import { BsCurrencyDollar } from "react-icons/bs";
 import socket from "../socket";
 // eslint-disable-next-line react/prop-types
 const SingleAuction = ({
@@ -21,13 +22,12 @@ const SingleAuction = ({
   winnerBidAmount,
   winnerBidTime,
 }) => {
-   const [statusData, setStatusData] = useState(status);
+  const [statusData, setStatusData] = useState(status);
 
-   socket.on("setStatus",async()=>{
-    await setStatusData("over")
+  socket.on("setStatus", async () => {
+    await setStatusData("over");
     console.log("handlewinner func in dashboard.,,,,,,,,,,");
-   })
-  
+  });
 
   const logInUser = JSON.parse(localStorage.getItem("user"));
 
@@ -64,7 +64,7 @@ const SingleAuction = ({
 
       {/* show the winner of auction */}
 
-      { statusData==="over" ? (
+      {statusData === "over" ? (
         <div className="flex justify-between item-center my-2 border-t border-border-info-color ">
           {/* <div className="flex flex-col ">
             <p className="text-[12px]">Current Bid</p>
@@ -89,11 +89,15 @@ const SingleAuction = ({
           ${
             sellerId === logInUser?._id
               ? "bg-theme-bg2 text-body-text-color  border border-border-info-color "
-              : "bg-color-primary border cursor-pointer border-border-info-color hover:bg-color-danger"
+              : "bg-color-primary border cursor-pointer border-border-info-color hover:bg-color-danger transition-all"
           }`}
           >
             {" "}
-            <RiShoppingBagFill size={18} className="mt-[-2px]" />
+            <BsCurrencyDollar
+              size={18}
+              strokeWidth={0.4}
+              className="mt-[-2px]"
+            />
             <span>Place Bid</span>
           </Link>
         </div>

@@ -5,7 +5,9 @@ import Loading from "./Loading";
 import { toast } from "react-toastify";
 
 const AccountSetting = () => {
-  const { user , isLoading,isSuccess , isError,message} = useSelector((state) => state.auth);
+  const { user, isLoading, isSuccess, isError, message } = useSelector(
+    (state) => state.auth
+  );
   console.log(user, "user.......");
   const [formData, setFormData] = useState({
     fullName: user?.fullName || "",
@@ -24,14 +26,13 @@ const AccountSetting = () => {
   }, []);
   useEffect(() => {}, [user]);
 
-
   const [imgUrl, setImgUrl] = useState(user?.profilePicture);
   const imgRef = useRef(null);
   console.log(imgUrl, "imgUrl......");
   console.log(user?.profilePicture, "user?.profilePicture........");
 
   const handleFormSubmit = (e) => {
-    dispatch(reset())
+    dispatch(reset());
     e.preventDefault();
     console.log(imgUrl, "imgUrl");
     //image data so use new formdata
@@ -52,18 +53,18 @@ const AccountSetting = () => {
       data.append("profilePicture", imgUrl);
     }
     console.log(imgUrl);
-    dispatch(updateProfile(data)).then(()=>{
-      if(isSuccess){
+    dispatch(updateProfile(data)).then(() => {
+      if (isSuccess) {
         toast.success(message || "user profile updated successfully.", {
-          autoClose:500
-        })
+          autoClose: 500,
+        });
       }
-      if(isError){
+      if (isError) {
         toast.error(message, {
-          autoClose:500
-        })
+          autoClose: 500,
+        });
       }
-    })
+    });
     setImgUrl(null);
     dispatch(getCurrentUser());
 
@@ -77,12 +78,19 @@ const AccountSetting = () => {
       </h2>
 
       <form onSubmit={handleFormSubmit}>
-        <img
-          src={imgUrl ? imgUrl : user?.profilePicture}
-          alt="upload img"
+        <div
+          className="relative overflow-hidden w-fit h-fit rounded-lg cursor-pointer mb-10"
           onClick={() => imgRef.current.click()}
-          className="w-full md:w-[200px] mb-4 rounded-lg border-2 object-contain cursor-pointer"
-        />
+        >
+          <img
+            src={imgUrl ? imgUrl : user?.profilePicture}
+            alt="upload img"
+            className="w-full md:w-[200px] object-contain"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+            <p className="text-white font-bold ">Change Profile Picture</p>
+          </div>
+        </div>
         {/* INPUTS*/}
         <div className="flex flex-col gap-4 inputs:outline-none inputs:px-3 inputs:py-4 inputs:rounded-xl inputs:bg-theme-bg2 [&_input[type=submit]]:bg-theme-color [&_input:hover[type=submit]]:bg-color-danger inputs:border inputs:border-border-info-color focus:inputs:border-theme-color select:border select:border-border-info-color inputs:placeholder-body-text-color  [&_*]:transition-all ">
           <input
@@ -179,7 +187,7 @@ const AccountSetting = () => {
           <input
             className="text-white cursor-pointer font-bold tracking-wide"
             type="submit"
-            value={`${isLoading ? "Loaign" : "Update" }`}
+            value={`${isLoading ? "Loaign" : "Update"}`}
           />
         </div>
       </form>

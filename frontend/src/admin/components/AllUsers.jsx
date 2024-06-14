@@ -1,4 +1,8 @@
+import { RiUserAddFill } from "react-icons/ri";
+import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { MdSkipPrevious, MdSkipNext } from "react-icons/md";
+import { FaShop } from "react-icons/fa6";
+import { FaUsers, FaUserPlus } from "react-icons/fa6";
 import {
   FaCaretUp,
   FaCaretDown,
@@ -6,6 +10,8 @@ import {
   FaCaretLeft,
   FaEye,
   FaRegEdit,
+  FaPlus,
+  FaCartPlus,
 } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import React, { useEffect, useState, useMemo } from "react";
@@ -199,52 +205,70 @@ const AllUsers = () => {
       <h2 className=" text-white font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">
         Users
       </h2>
-      <div className="text-white grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 [&>div]:border [&>div]:rounded-lg [&>div]:bg-theme-bg2 [&>div]:border-border-info-color hover:[&>div]:border-theme-color [&>div]:p-5 [&>div]:transition-all [&>*:nth-child(1)]:bg-blue-500 ">
-        <div>
-          <h1 className="text-xl font-semibold ">All Users</h1>
-          <div className="text-4xl  font-bold">
-            {allUser?.data?.length}
+      <div className="text-white grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 [&>div]:border [&>div]:rounded-lg [&>div]:bg-theme-bg2 [&>div]:border-border-info-color hover:[&>div]:border-theme-color [&>div]:p-5 [&>div]:transition-all  ">
+        <div className="flex justify-between">
+          <div>
+            <div className="text-4xl text-color-primary font-bold">
+              {allUser?.data?.length}
+            </div>
+            <h1 className="md:text-lg  font-semibold ">All Users</h1>
           </div>
+          <FaUsers size={36} className="bg-blue-500  rounded-full p-2" />
         </div>
-        <div>
-          <div className="text-xl font-semibold ">Sellers</div>
-          <span className="text-4xl text-theme-color font-bold">
-            {totalSellers}
-          </span>
-        </div>
-        <div>
-          <div className="text-xl font-semibold  ">
-            New Users
-            <p className="text-[10px] text-theme-color mt-[-7px]">
-              within this week
-            </p>
+        <div className="flex justify-between">
+          <div>
+            <span className="text-4xl text-color-primary font-bold">
+              {totalSellers}
+            </span>
+            <div className="md:text-lg font-semibold ">Sellers</div>
           </div>
-          <span className="text-4xl text-theme-color font-bold">
-            {
-              allUser?.data?.filter(
-                (user) =>
-                  new Date(user.createdAt).getTime() >
-                  new Date().getTime() - 7 * 24 * 60 * 60 * 1000
-              ).length
-            }
-          </span>
+          <FaShop size={36} stroke-width="1" className="bg-yellow-600  rounded-full p-2" />
         </div>
-        <div>
-          <div className="text-xl font-semibold  ">Buyers</div>
-          <span className="text-4xl text-theme-color font-bold">
-            {totalBuyers}
-          </span>
+        <div className="flex justify-between">
+          <div>
+            <span className="text-4xl text-color-primary font-bold">
+              {
+                allUser?.data?.filter(
+                  (user) =>
+                    new Date(user.createdAt).getTime() >
+                    new Date().getTime() - 7 * 24 * 60 * 60 * 1000
+                ).length
+              }
+            </span>
+            <div className="md:text-lg font-semibold  ">
+              New Users
+              <p className="text-[10px] text-color-primary mt-[-7px] ">
+                within this week
+              </p>
+            </div>
+          </div>
+          <RiUserAddFill size={36} className="bg-green-600 rounded-full p-2" />
         </div>
-        <div>
-          <div className="text-xl font-semibold  ">Verified Users</div>
-          <span className="text-4xl text-theme-color font-bold">
-            {totalVerifiedUsers}
-          </span>
+        <div className="flex justify-between">
+          <div>
+            <span className="text-4xl text-theme-color font-bold">
+              {totalBuyers}
+            </span>
+            <div className="md:text-lg font-semibold  ">Buyers</div>
+          </div>
+          <FaCartPlus size={36} className="bg-teal-500 rounded-full p-2" />
+        </div>
+        <div className="flex justify-between">
+          <div>
+            <span className="text-4xl text-theme-color font-bold">
+              {totalVerifiedUsers}
+            </span>
+            <div className="md:text-lg font-semibold  ">Verified Users</div>
+          </div>
+          <RiVerifiedBadgeFill
+            size={36}
+            className="bg-sky-500 rounded-full p-1"
+          />
         </div>
       </div>
-      <div className="bg-theme-bg2 border border-border-info-color rounded-lg mt-10 px-4 py-3 flex flex-col gap-4 lg:flex-row">
-        <div className=" flex justify-center items-center">
-          <div className="w-full max-w-[400px]">
+      <div className=" mt-10 flex flex-col gap-4 lg:flex-row">
+        <div className="bg-theme-bg2 border w-full max-w-[400px] border-border-info-color rounded-lg flex justify-center items-center py-4">
+          <div className="w-full ">
             <Doughnut
               data={{
                 labels: ["Sellers", "Buyers"],
@@ -278,7 +302,7 @@ const AllUsers = () => {
             />
           </div>
         </div>
-        <div className="flex-1 flex w-full justify-center items-center">
+        <div className="flex-1  flex w-full justify-center items-center bg-theme-bg2 border border-border-info-color rounded-lg  py-4">
           <div className="w-full max-w-[900px]">
             <Line
               data={{
@@ -373,16 +397,18 @@ const AllUsers = () => {
                         key={i}
                         className="p-2 pr-5 select-none first:rounded-l-lg last:rounded-r-lg border-b border-border-info-color  hover:bg-theme-bg2  transition-all"
                       >
-                        {column.render("Header")}
-                        <span className="float-right">
-                          {column.isSorted ? (
-                            column.isSortedDesc ? (
-                              <FaCaretDown size={24} className="mt-[-2px]" />
-                            ) : (
-                              <FaCaretUp size={24} />
-                            )
-                          ) : null}
-                        </span>
+                        <div className="flex gap-4">
+                          {column.render("Header")}
+                          <span>
+                            {column.isSorted ? (
+                              column.isSortedDesc ? (
+                                <FaCaretDown size={24} className="mt-[-2px]" />
+                              ) : (
+                                <FaCaretUp size={24} />
+                              )
+                            ) : null}
+                          </span>
+                        </div>
                       </th>
                     ))}
                   </tr>

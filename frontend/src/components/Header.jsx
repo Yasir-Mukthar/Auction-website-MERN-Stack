@@ -9,7 +9,7 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import { getNotificationForUser } from "../store/notification/notificationSlice";
 import socket from "../socket";
 import { FaBars, FaTimes } from "react-icons/fa";
-
+import { BsCart3 } from "react-icons/bs";
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -65,33 +65,40 @@ const Header = () => {
         </Link>
       </div>
       <div className="hidden sm:block">
-        <Link to="/" className="text-white font-Roboto text-lg mx-3">
+        <Link
+          to="/"
+          className="text-white font-Roboto text-lg mx-3 hover:text-color-primary transition-all "
+        >
           Home
         </Link>
 
-        <Link to="/contact-us" className="text-white font-Roboto text-lg mx-3">
-          Contact Us
+        <Link
+          to="/contact-us"
+          className="text-white font-Roboto text-lg mx-3 hover:text-color-primary transition-all"
+        >
+          Contact
         </Link>
-        <Link to="/about-us" className="text-white font-Roboto text-lg mx-3">
-          About Us
+        <Link
+          to="/about-us"
+          className="text-white font-Roboto text-lg mx-3 hover:text-color-primary transition-all"
+        >
+          About
         </Link>
-        {user && (
-          <Link
-            to="/user-profile/cart"
-            className="text-white font-Roboto text-lg mx-3"
-          >
-            Cart
-          </Link>
-        )}
       </div>
       <div className="flex items-center cursor-pointer z-[1]">
         {user ? (
           <div className="flex justify-center items-center">
+            <Link
+              to="/user-profile/cart"
+              className="text-white font-Roboto text-lg mx-3"
+            >
+              <BsCart3 className="text-white  hover:text-theme-color  transition-all " />
+            </Link>
             <img
               src={user?.profilePicture}
               key={user.profilePicture}
               alt="user image"
-              className="w-10 h-10 rounded-full order-2 cursor-pointer"
+              className="w-10 h-10 rounded-full order-2 cursor-pointer active:scale-[0.95] transition-all"
               onClick={() => setSidebarOpen(!sidebarOpen)}
             />
             <Link to="/user-profile/notifications" className="mr-2 relative">
