@@ -1,5 +1,7 @@
-
-
+import {
+  FaCaretRight,
+  FaCaretLeft,  
+} from "react-icons/fa";
 
 const Pagination = (props) => {
   let pages = [];
@@ -7,9 +9,14 @@ const Pagination = (props) => {
     pages.push(i);
   }
   return (
-    <div className=" text-white p-4 text-center">
+    <div className="flex justify-center items-center border-t border-border-info-color pt-4  my-10 md:button:px-3 md:button:py-2 button:px-2 button:py-1 button:rounded-lg ">
       {props.currentPage > 1 && (
-        <button onClick={() => props.prevPage()}>Prev</button>
+        <button
+          onClick={() => props.prevPage()}
+          className="bg-[#00A3FF] hover:bg-color-danger text-white transition-all"
+        >
+          <FaCaretLeft size={18} />
+        </button>
       )}
 
       <span>
@@ -17,7 +24,12 @@ const Pagination = (props) => {
         <span className="mr-3"> of {pages.length}</span>
       </span>
       {props.currentPage < pages.length && (
-        <button onClick={() => props.nextPage()}>Next</button>
+        <button
+          onClick={() => props.nextPage()}
+          className="bg-[#00A3FF] hover:bg-color-danger text-white transition-all"
+        >
+          <FaCaretRight size={18} />
+        </button>
       )}
     </div>
   );

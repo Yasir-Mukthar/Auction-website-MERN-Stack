@@ -222,7 +222,11 @@ const AllUsers = () => {
             </span>
             <div className="md:text-lg font-semibold ">Sellers</div>
           </div>
-          <FaShop size={36} stroke-width="1" className="bg-yellow-600  rounded-full p-2" />
+          <FaShop
+            size={36}
+            stroke-width="1"
+            className="bg-yellow-600  rounded-full p-2"
+          />
         </div>
         <div className="flex justify-between">
           <div>
@@ -267,8 +271,8 @@ const AllUsers = () => {
         </div>
       </div>
       <div className=" mt-10 flex flex-col gap-4 lg:flex-row">
-        <div className="bg-theme-bg2 border w-full max-w-[400px] border-border-info-color rounded-lg flex justify-center items-center py-4">
-          <div className="w-full ">
+        <div className="bg-theme-bg2 border w-full lg:max-w-[400px] border-border-info-color rounded-lg flex justify-center items-center py-4">
+          <div className="max-w-[400px] w-full ">
             <Doughnut
               data={{
                 labels: ["Sellers", "Buyers"],
