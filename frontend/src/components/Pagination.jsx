@@ -1,7 +1,4 @@
-import {
-  FaCaretRight,
-  FaCaretLeft,  
-} from "react-icons/fa";
+import { FaCaretRight, FaCaretLeft } from "react-icons/fa";
 
 const Pagination = (props) => {
   let pages = [];

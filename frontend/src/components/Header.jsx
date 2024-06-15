@@ -202,14 +202,8 @@ const Header = () => {
             </Link>
           </li>
           <li className="cursor-pointer capitalize text-4xl">
-            {user && (
-              <Link
-                to="/user-profile/cart"
-                className="text-white font-Roboto text-lg mx-3"
-              >
-                Cart
-              </Link>
-            )}
+            {user && <Link to="/user-profile/cart" onClick={() => setNavbarOpen(!navbarOpen)}
+            >Cart</Link>}
           </li>
         </ul>
       )}

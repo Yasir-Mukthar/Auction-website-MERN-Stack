@@ -363,7 +363,7 @@ const AllUsers = () => {
 
       <>
         <div className="mt-12 ">
-          <div className="flex gap-4">
+          <div className="flex flex-col md:flex-row gap-4">
             <select
               className="outline-none bg-theme-bg2 rounded-xl px-3 py-3 cursor-pointer border border-border-info-color focus:border-theme-color  transition-all"
               value={filterField}
@@ -375,7 +375,7 @@ const AllUsers = () => {
               <option value="paymentVerified">Verified</option>
             </select>
             <input
-              className="outline-none bg-theme-bg2 rounded-xl px-3 py-3 border border-border-info-color focus:border-theme-color transition-all"
+              className="outline-none w-full md:w-[200px] bg-theme-bg2 rounded-xl px-3 py-3 border border-border-info-color focus:border-theme-color transition-all"
               value={filterInput}
               onChange={handleFilterChange}
               placeholder={"Search name"}

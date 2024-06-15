@@ -107,9 +107,10 @@ const CheckoutForm = () => {
       <h1 className=" text-white font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">Payment Method</h1>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col lg:w-[50%] gap-4 inputs:outline-none inputs:px-2 inputs:py-3 inputs:rounded-md inputs:white [&_button[type=submit]]:bg-theme-color [&_button:hover[type=submit]]:bg-color-danger inputs:border inputs:border-border-info-color focus:inputs:border-theme-color select:border select:border-border-info-color inputs:placeholder-body-text-color  [&_*]:transition-all "
+        className="flex flex-col lg:w-[450px] gap-3 inputs:outline-none inputs:px-2 inputs:py-[10px] inputs:rounded-md inputs:white [&_button[type=submit]]:bg-theme-color [&_button:hover[type=submit]]:bg-color-danger inputs:border inputs:border-border-info-color focus:inputs:border-theme-color select:border select:border-border-info-color inputs:placeholder-body-text-color inputs:text-sm [&_*]:transition-all "
       >
         <input
+       
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -133,7 +134,7 @@ const CheckoutForm = () => {
           required
           
         />
-        <CardElement className="  outline-none px-2 py-4 rounded-md bg-white border border-border-info-color focus:border-theme-color placeholder-body-text-color " />
+        <CardElement className="  outline-none px-2 py-3 rounded-md bg-white border border-border-info-color focus:border-theme-color placeholder-body-text-color " />
         <button
           type="submit"
           disabled={!stripe}
