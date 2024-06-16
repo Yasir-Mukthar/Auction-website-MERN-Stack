@@ -181,7 +181,7 @@ const AllAuctions = () => {
         <h2 className=" text-white font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">
           All Auctions
         </h2>
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
           <select
             className="outline-none bg-theme-bg2 rounded-xl px-3 py-3 cursor-pointer border border-border-info-color focus:border-theme-color  transition-all"
             value={filterField}
@@ -199,7 +199,7 @@ const AllAuctions = () => {
             <option value="paymentStatus">Payment Status</option>
           </select>
           <input
-            className="outline-none bg-theme-bg2 rounded-xl px-3 py-3 border border-border-info-color focus:border-theme-color transition-all"
+            className="outline-none w-full md:w-[200px] bg-theme-bg2 rounded-xl px-3 py-3 border border-border-info-color focus:border-theme-color transition-all"
             value={filterInput}
             onChange={handleFilterChange}
             placeholder={"Search Name"}
@@ -223,16 +223,18 @@ const AllAuctions = () => {
                       key={columnIndex}
                       className="p-2 pr-5 select-none first:rounded-l-lg last:rounded-r-lg border-b border-border-info-color  hover:bg-theme-bg2  transition-all"
                     >
-                      {column.render("Header")}
-                      <span className="float-right">
-                        {column.isSorted ? (
-                          column.isSortedDesc ? (
-                            <FaCaretDown size={24} className="mt-[-2px]" />
-                          ) : (
-                            <FaCaretUp size={24} />
-                          )
-                        ) : null}
-                      </span>
+                      <div className="flex gap-4">
+                        {column.render("Header")}
+                        <span>
+                          {column.isSorted ? (
+                            column.isSortedDesc ? (
+                              <FaCaretDown size={24} className="mt-[-2px]" />
+                            ) : (
+                              <FaCaretUp size={24} />
+                            )
+                          ) : null}
+                        </span>
+                      </div>
                     </th>
                   ))}
                 </tr>

@@ -50,11 +50,11 @@ const ManageItems = () => {
    }
 
   return (
-    <div className="overflow-auto px-7 py-4 w-full bg-theme-bg text-white rounded-2xl ">
+    <div className=" overflow-auto px-7 py-4 w-full bg-theme-bg text-white rounded-2xl ">
       <h2 className=" text-white font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">
         Manage Items
       </h2>
-      <div className=" px-4 bg-theme-bg2 rounded-2xl  border border-border-info-color">
+      <div className=" overflow-auto px-4 bg-theme-bg2 rounded-2xl  border border-border-info-color">
         <table className="text-left whitespace-nowrap w-full border-separate border-spacing-x-0 border-spacing-y-4">
           <thead className="table-header-group ">
             <tr className="table-row bg-theme-color [&_th]:table-cell [&_th]:pl-5 [&_th]:pr-3 [&_th]:py-3">

@@ -94,13 +94,25 @@ export default {
             opacity: 1,
           },
         },
+        fadeinoutkey: {
+          "0,100%": {  
+            visibility: "visible",
+            opacity: 1,
+          },
+
+          "50%": {                   
+            visibility: "hidden",
+            opacity: 0,
+          },
+        },
       },
       animation: {
         fadein: "fadeinkey 300ms ",
         fadeout: "fadeoutkey 300ms",
         float: "floatkey 3s ease-in-out infinite",
         counterspin: "counterspin 2s infinite",
-        successpayment: "successkey 1s ease-in-out"
+        successpayment: "successkey 1s ease-in-out",
+        fadeinout: "fadeinoutkey 1s ease-in-out infinite",
       },
     },
   },
