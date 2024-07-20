@@ -1,26 +1,37 @@
+import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 
 const Pagination = (props) => {
-    
-    let pages= []
-    for(let i=1; i<=Math.ceil(props.totalPosts/props.postsPerPage); i++){
-        pages.push(i)
-    }
+  let pages = [];
+  for (let i = 1; i <= Math.ceil(props.totalPosts / props.postsPerPage); i++) {
+    pages.push(i);
+  }
   return (
-    <div className="bg-red-500 text-white p-4 text-center">
-        {
-            props.currentPage>1 && <button onClick={()=>props.prevPage()}>Prev</button>
-        }
-        
-        <span>
-            <span className="ml-3">Page {props.currentPage}</span>
-            <span className="mr-3"> of {pages.length}</span>
-        </span>
-        {
-            props.currentPage<pages.length && <button onClick={()=>props.nextPage()}>Next</button>
-        }
-        
-        </div>
-  )
-}
+    <div className=" text-white p-4 text-center flex justify-center items-center">
+      {props.currentPage > 1 && (
+        <button
+          className={`bg-[#00A3FF] hover:bg-color-danger text-white transition-all p-2 rounded-lg`}
+          onClick={() => props.prevPage()}
+        >
+          {" "}
+          <FaCaretLeft size={20} />
+        </button>
+      )}
 
-export default Pagination
+      <span>
+        <span className="ml-3">Page {props.currentPage}</span>
+        <span className="mr-3"> of {pages.length}</span>
+      </span>
+      {props.currentPage < pages.length && (
+        <button
+          className={`bg-[#00A3FF] hover:bg-color-danger text-white transition-all p-2 rounded-lg `}
+          onClick={() => props.nextPage()}
+        >
+          {" "}
+          <FaCaretRight size={20} />
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default Pagination;

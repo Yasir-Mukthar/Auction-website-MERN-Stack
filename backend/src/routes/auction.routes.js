@@ -36,6 +36,8 @@ router.route("/user-auctions").get(verifyUser,verifySeller, getAuctionsByUser);
 router.route("/create-auction").post(verifyUser,verifySeller,  upload.single("image"), createAuction);
 router.route("/:id").get(getSingleAuctionById);
 
+router.route("/admin-delete/:id").delete(verifyUser, verifyAdmin, deleteSingleAuctionById);
+
 
 
 

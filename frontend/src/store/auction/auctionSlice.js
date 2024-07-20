@@ -4,7 +4,7 @@ import auctionService from "./auctionService";
 export const createAuction = createAsyncThunk(
   "auction/createAuction",
   async (payload, thunkAPI) => {
-    console.log("payload", payload)
+    console.log("payload", payload);
     try {
       return await auctionService.createAuction(payload);
     } catch (error) {
@@ -16,8 +16,8 @@ export const createAuction = createAsyncThunk(
 );
 
 export const getAllAuctions = createAsyncThunk(
-  "auction/getAllAuactions", async (payload, thunkAPI) => {
-
+  "auction/getAllAuactions",
+  async (payload, thunkAPI) => {
     try {
       return await auctionService.getAllAuctions(payload);
     } catch (error) {
@@ -25,143 +25,161 @@ export const getAllAuctions = createAsyncThunk(
         (error.response && error.response.data.message) || error.message;
       return thunkAPI.rejectWithValue({ message, isError: true });
     }
-   
-    }
-  
+  }
 );
 
-
 export const getSingleAuctionById = createAsyncThunk(
-  "auction/getSingleAuctionById",async (id, thunkAPI) => {
-
+  "auction/getSingleAuctionById",
+  async (id, thunkAPI) => {
     try {
       return await auctionService.getSingleAuctionById(id);
     } catch (error) {
-      const message = `${id} - ` + (error.response && error.response.data.message) || error.message;
+      const message =
+        `${id} - ` + (error.response && error.response.data.message) ||
+        error.message;
       return thunkAPI.rejectWithValue({ message, isError: true });
     }
   }
-)
+);
 
 export const updateAuctionStatus = createAsyncThunk(
-  'auction/updateAuctionStatus', async (payload, thunkAPI) => {
+  "auction/updateAuctionStatus",
+  async (payload, thunkAPI) => {
     //directly chnage status
     try {
       return await auctionService.updateAuctionStatus(payload);
     } catch (error) {
-      const message = (error.response && error.response.data.message) || error.message;
+      const message =
+        (error.response && error.response.data.message) || error.message;
       return thunkAPI.rejectWithValue({ message, isError: true });
     }
   }
-)
+);
 
 export const selectAuctionWinner = createAsyncThunk(
-  'auction/selectAuctionWinner', async (payload, thunkAPI) => {
-
+  "auction/selectAuctionWinner",
+  async (payload, thunkAPI) => {
     try {
       return await auctionService.selectAuctionWinner(payload);
     } catch (error) {
-      const message = (error.response && error.response.data.message) || error.message;
+      const message =
+        (error.response && error.response.data.message) || error.message;
       return thunkAPI.rejectWithValue({ message, isError: true });
-    }
-  })
-
-
-export const getSellerAuction = createAsyncThunk(
-  'auction/getSellerAuction', async (_, thunkAPI) => {
-    try {
-      return await auctionService.getSellerAuction();
-      
-    } catch (error) {
-      const message = (error.response && error.response.data.message) || error.message;
-      return thunkAPI.rejectWithValue({ message, isError: true });
-      
     }
   }
-)
+);
 
-export const deleteSingleAuctionById=createAsyncThunk(
-  'auction/deleteSingleAuctionById', async (id, thunkAPI) => {
+export const getSellerAuction = createAsyncThunk(
+  "auction/getSellerAuction",
+  async (_, thunkAPI) => {
+    try {
+      return await auctionService.getSellerAuction();
+    } catch (error) {
+      const message =
+        (error.response && error.response.data.message) || error.message;
+      return thunkAPI.rejectWithValue({ message, isError: true });
+    }
+  }
+);
+
+export const deleteSingleAuctionById = createAsyncThunk(
+  "auction/deleteSingleAuctionById",
+  async (id, thunkAPI) => {
     try {
       return await auctionService.deleteSingleAuctionById(id);
     } catch (error) {
-      const message = (error.response && error.response.data.message) || error.message;
+      const message =
+        (error.response && error.response.data.message) || error.message;
       return thunkAPI.rejectWithValue({ message, isError: true });
     }
   }
-)
-
-
-export const updateSingleAuction=createAsyncThunk(
-  "auction/updateSingleAuaction", async (payload, thunkAPI) => {
-    
-  try {
-    return await auctionService.updateSingleAuction(payload);
-    
-  } catch (error) {
-    const message = (error.response && error.response.data.message) || error.message;
-    return thunkAPI.rejectWithValue({ message, isError: true });
-    
-  }
-})
-
-export const getWinnerDetail=createAsyncThunk(
-  "auction/winnerDetail", async (id, thunkAPI) => {
-    try {
-      return await auctionService.getWinnerDetail(id);
-      
-    } catch (error) {
-      const message = (error.response && error.response.data.message) || error.message;
-      return thunkAPI.rejectWithValue({ message, isError: true }); 
-    }
-    }  
 );
 
+export const deleteAuctionByAdminById = createAsyncThunk(
+  "auction/deleteAuctionByAdminById",
+  async (id, thunkAPI) => {
+    try {
+      return await auctionService.deleteAuctionByAdminById(id);
+    } catch (error) {
+      const message =
+        (error.response && error.response.data.message) || error.message;
+      return thunkAPI.rejectWithValue({ message, isError: true });
+    }
+  }
+);
 
-export const getLiveAuctions=createAsyncThunk(
-  "auction/getLiveAuctions", async (_, thunkAPI) => {
+export const updateSingleAuction = createAsyncThunk(
+  "auction/updateSingleAuaction",
+  async (payload, thunkAPI) => {
+    try {
+      return await auctionService.updateSingleAuction(payload);
+    } catch (error) {
+      const message =
+        (error.response && error.response.data.message) || error.message;
+      return thunkAPI.rejectWithValue({ message, isError: true });
+    }
+  }
+);
+
+export const getWinnerDetail = createAsyncThunk(
+  "auction/winnerDetail",
+  async (id, thunkAPI) => {
+    try {
+      return await auctionService.getWinnerDetail(id);
+    } catch (error) {
+      const message =
+        (error.response && error.response.data.message) || error.message;
+      return thunkAPI.rejectWithValue({ message, isError: true });
+    }
+  }
+);
+
+export const getLiveAuctions = createAsyncThunk(
+  "auction/getLiveAuctions",
+  async (_, thunkAPI) => {
     try {
       return await auctionService.getLiveAuctions();
     } catch (error) {
-      const message = (error.response && error.response.data.message) || error.message;
+      const message =
+        (error.response && error.response.data.message) || error.message;
       return thunkAPI.rejectWithValue({ message, isError: true });
     }
-  
   }
-)
+);
 
-export const getUpcomingAuctions=createAsyncThunk(
-  "auction/getUpcomingAuctions", async (_, thunkAPI) => {
+export const getUpcomingAuctions = createAsyncThunk(
+  "auction/getUpcomingAuctions",
+  async (_, thunkAPI) => {
     try {
       return await auctionService.getUpcomingAuctions();
     } catch (error) {
-      const message = (error.response && error.response.data.message) || error.message;
+      const message =
+        (error.response && error.response.data.message) || error.message;
       return thunkAPI.rejectWithValue({ message, isError: true });
     }
-  
   }
-)
+);
 
-export const updatePaymentStatus=createAsyncThunk(
-  "auction/updatePaymentStatus", async (id, thunkAPI) => {
+export const updatePaymentStatus = createAsyncThunk(
+  "auction/updatePaymentStatus",
+  async (id, thunkAPI) => {
     try {
       return await auctionService.updatePaymentStatus(id);
     } catch (error) {
-      const message = (error.response && error.response.data.message) || error.message;
+      const message =
+        (error.response && error.response.data.message) || error.message;
       return thunkAPI.rejectWithValue({ message, isError: true });
     }
-  
   }
-)
-
+);
 
 const initialState = {
   auction: [],
-  singleAuction : {},
-  sellerAuction:[],
-  auctionWinnerDetail:null,
-  liveAuctions:[],
-  upComingAuctions:[],
+  singleAuction: {},
+  sellerAuction: [],
+  auctionWinnerDetail: null,
+  liveAuctions: [],
+  upComingAuctions: [],
   isLoading: false,
   isError: false,
   isSuccess: false,
@@ -170,17 +188,14 @@ const initialState = {
 const auctionSlice = createSlice({
   name: "auction",
   initialState,
-  reducers:{
-    reset:(state)=>{
-        state.isError=false;
-        state.isSuccess=false;
-        state.isLoading=false;
-        state.message="";
-    }
-    
-
-
-},
+  reducers: {
+    reset: (state) => {
+      state.isError = false;
+      state.isSuccess = false;
+      state.isLoading = false;
+      state.message = "";
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(createAuction.pending, (state) => {
       state.isLoading = true;
@@ -266,9 +281,8 @@ const auctionSlice = createSlice({
       state.isLoading = false;
       state.isError = false;
       state.isSuccess = true;
-      state.message = action.payload.message; 
+      state.message = action.payload.message;
       state.auctionWinnerDetail = action.payload.data;
-
     });
     builder.addCase(selectAuctionWinner.rejected, (state, action) => {
       state.isLoading = false;
@@ -381,33 +395,51 @@ const auctionSlice = createSlice({
       state.isError = true;
       state.isSuccess = false;
       state.message = action.payload.message;
-    })
+    });
     builder.addCase(updatePaymentStatus.pending, (state) => {
       state.isLoading = true;
       state.isError = false;
       state.isSuccess = false;
       state.message = "";
-    })
+    });
     builder.addCase(updatePaymentStatus.fulfilled, (state, action) => {
       state.isLoading = false;
       state.isError = false;
       state.isSuccess = true;
       state.message = action.payload.message;
-    })
+    });
     builder.addCase(updatePaymentStatus.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.isSuccess = false;
       state.message = action.payload.message;
-    })
-
-
+    });
+    //deleteAuctionByAdminById
+    builder.addCase(deleteAuctionByAdminById.pending, (state) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = "";
+    });
+    builder.addCase(deleteAuctionByAdminById.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = true;
+      state.message = action.payload.message;
+    });
+    builder.addCase(deleteAuctionByAdminById.rejected, (
+      state,
+      action
+    ) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.isSuccess = false;
+      state.message = action.payload.message;
+    }
+    );
     
-      // Handle other actions...
-    
 
-
-    
+    // Handle other actions...
   },
 });
 

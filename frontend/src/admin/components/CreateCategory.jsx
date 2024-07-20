@@ -39,7 +39,7 @@ const CreateCategory = () => {
 
     dispatch(createCategory(data))
     if(isSuccess){
-        toast.success("Auction created successfully");
+        toast.success("category created successfully");
         dispatch(reset());
 
         navigate("/admin/categories");

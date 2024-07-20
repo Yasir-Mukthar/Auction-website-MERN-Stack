@@ -112,6 +112,21 @@ const deleteSingleAuctionById = async (id) => {
   }
 };
 
+const deleteAuctionByAdminById = async (id) => {
+  try {
+    const response = await axios.delete(`${API_URL}/auctions/admin-delete/${id}`, {
+      withCredentials: true,
+    });
+    console.log("response deleteSingleAuctionById", response.data);
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data.message) || error.message;
+    console.error("Error with deleteSingleAuctionById", error);
+    return { message, isError: true };
+  }
+};
+
 const updateSingleAuction=async(data)=>{
     console.log(data.data, "data updateSingleAuction");
 
@@ -191,6 +206,7 @@ const auctionService = {
   getLiveAuctions,
   getUpcomingAuctions,
   updatePaymentStatus,
+  deleteAuctionByAdminById
 };
 
 export default auctionService;

@@ -431,7 +431,7 @@ const SingleAuctionDetail = () => {
         </div>
       </div>
       <div className="mx-8">
-        <LiveHome></LiveHome>
+        <LiveHome onlyAuction="onlyAuction"></LiveHome>
       </div>
     </>
   );

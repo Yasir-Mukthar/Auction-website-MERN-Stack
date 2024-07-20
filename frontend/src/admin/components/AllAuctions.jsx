@@ -3,7 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAllUsers } from "../../store/user/userSlice";
 import { useTable, useSortBy, usePagination, useFilters } from "react-table";
 import { Link } from "react-router-dom";
-import { getAllAuctions } from "../../store/auction/auctionSlice";
+import {
+  deleteAuctionByAdminById,
+  getAllAuctions,
+} from "../../store/auction/auctionSlice";
 import { MdSkipPrevious, MdSkipNext } from "react-icons/md";
 import {
   FaCaretUp,
@@ -29,8 +32,10 @@ const AllAuctions = () => {
     setFilterInput(value);
   };
 
-  const handleDeleteUser = () => {
-    alert("dele");
+  const handleDeleteUser = (id) => {
+    dispatch(deleteAuctionByAdminById(id)).then(() => {
+      dispatch(getAllAuctions());
+    });
   };
 
   const columns = useMemo(
@@ -102,12 +107,14 @@ const AllAuctions = () => {
                 className=" inline mt-[-3px] text-color-danger hover:text-white hover:bg-color-danger rounded-lg border-2 border-color-danger  px-[6px] py-[3px] transition-all"
               />
             </button>
-            <Link to={`/admin/auctions/edit/${original.actions}`}>
-              <FaRegEdit
-                size={38}
-                className="inline mt-[-3px] text-theme-color hover:text-white hover:bg-theme-color rounded-lg border-2 border-theme-color  px-2 py-[5px] transition-all"
-              />
-            </Link>
+            {original.status === "upcoming" && (
+              <Link to={`/admin/auctions/edit/${original.actions}`}>
+                <FaRegEdit
+                  size={38}
+                  className="inline mt-[-3px] text-theme-color hover:text-white hover:bg-theme-color rounded-lg border-2 border-theme-color px-2 py-[5px] transition-all"
+                />
+              </Link>
+            )}
           </div>
         ),
       },

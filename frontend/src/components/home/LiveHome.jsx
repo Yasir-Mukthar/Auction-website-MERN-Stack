@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 
 
-const LiveHome = () => {
+const LiveHome = (props) => {
   const dispatch=useDispatch();
   const {liveAuctions} = useSelector((state) => state.auction);
   const [liveAuctionsData, setLiveAuctionsData] = useState([]);
@@ -27,7 +27,8 @@ const LiveHome = () => {
             <span className="absolute animate-ping flex rounded-full h-3 w-3 bg-sky-500"></span>
             <span className="relative flex rounded-full h-3 w-3 bg-sky-500"></span>
           </div>
-          <h2 className="text-2xl font-bold text-white">Live Auctions</h2>
+          <h2 className="text-2xl font-bold text-white">{ props.onlyAuction==="onlyAuction" ?"": "Live Auctions"}</h2>
+
         </div>
         <swiper-container
           breakpoints={JSON.stringify({

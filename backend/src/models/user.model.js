@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
   resetTokenExpire: { type: Date },
   
   profilePicture: { type: String , 
-  default:"https://res.cloudinary.com/dnsxaor2k/image/upload/v1709735601/vsauyvodor9ykjca5zvj.jpg"},
+  default:"https://res.cloudinary.com/dnsxaor2k/image/upload/v1721403078/r4s3ingo0ysqq5hzsqal.jpg"},
   phone: { type: String },
   address: { type: String },
   city: { type: String },
