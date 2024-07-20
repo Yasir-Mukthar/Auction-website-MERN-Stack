@@ -36,7 +36,7 @@ const Sidebar = () => {
   return (
     <div className="w-full lg:w-[25%] min-w-[250px] lg:max-w-[350px] ">
       <div className="text-white bg-theme-bg p-5 rounded-2xl">
-        <ul className="flex flex-col gap-1 font-medium">
+        <ul className="flex flex-col gap-1 font-medium cursor-pointer">
           <li>
             <Link
               className={`flex items-center gap-2 py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500 ${

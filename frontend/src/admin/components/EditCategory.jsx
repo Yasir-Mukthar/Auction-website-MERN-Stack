@@ -83,21 +83,23 @@ const EditCategory = () => {
           <h1 className="text-white text-2xl font-bold mb-4">Upload Item</h1>
 
           {imgUrl ? (
-            <img
-              src={imgUrl}
-              alt="upload img"
+            <div
+              className="relative w-full h-80 cursor-pointer"
               onClick={() => imgRef.current.click()}
-              className="w-full h-80 
-                    rounded-lg border-2 border-border-info-color p-2 object-contain cursor-pointer"
-            />
+            >
+              <img
+                src={imgUrl}
+                alt="upload img"
+                className="w-full h-full rounded-lg border-2 border-border-info-color p-2 object-contain"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                <p className="text-white">Click to edit image</p>
+              </div>
+            </div>
           ) : (
             <div
               onClick={() => imgRef.current.click()}
-              className="w-full h-80
-              rounded-xl border-2 border-dashed border-border-info-color 
-                    flex items-center justify-center
-                    cursor-pointer
-                    "
+              className="w-full h-80 rounded-xl border-2 border-dashed border-border-info-color flex items-center justify-center cursor-pointer"
             >
               <p className="text-white">Click to upload</p>
             </div>
