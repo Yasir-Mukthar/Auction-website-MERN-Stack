@@ -11,7 +11,7 @@ import { sendNewBidNotification } from "../store/notification/notificationSlice"
 import socket from "../socket";
 import { getAllBidsForAuction } from "../store/bid/bidSlice";
 import Loading from "../components/Loading";
-import LiveHome from "../components/home/LiveHome"
+import LiveHome from "../components/home/LiveHome";
 
 const SingleAuctionDetail = () => {
   const [newBidAmount, setNewBidAmount] = useState("");
@@ -329,46 +329,45 @@ const SingleAuctionDetail = () => {
           <div className=" flex flex-col gap-4 pt-4 border-t border-border-info-color ">
             {singleAuction?.status === "over" || auctionWinnerDetailData ? (
               bidsData.length > 0 ? (
-               <>
-                <div>
-                  <h1 className="font-bold text-white">Winner</h1>
-                  <div className="flex sm:gap-10 items-center border mt-2 justify-between md:w-[80%] py-1 px-2 md:px-5 border-theme-bg-light rounded-full">
-                    <div className="flex gap-4 items-center text-white">
-                      <img
-                        src={
-                          auctionWinnerDetailData?.bidder?.profilePicture ||
-                          singleAuction?.winner?.bidder?.profilePicture
-                        }
-                        alt="bidder profilePicture"
-                        className="w-10 h-10 rounded-full"
-                      />
-                      <div className="flex flex-col">
-                        <span className="font-semibold">
-                          {auctionWinnerDetailData?.bidder?.fullName ||
-                            singleAuction?.winner?.bidder?.fullName}
-                        </span>
-                        <span className="text-xs text-body-text-color">
-                          {new Date(
-                            auctionWinnerDetailData?.bidTime ||
-                              singleAuction?.winner?.bidTime
-                          ).toLocaleDateString()}{" "}
-                          {""}
-                          {`${new Date(
-                            auctionWinnerDetailData?.bidTime ||
-                              singleAuction?.winner?.bidTime
-                          ).toLocaleTimeString()}`}
-                        </span>
+                <>
+                  <div>
+                    <h1 className="font-bold text-white">Winner</h1>
+                    <div className="flex sm:gap-10 items-center border mt-2 justify-between md:w-[80%] py-1 px-2 md:px-5 border-theme-bg-light rounded-full">
+                      <div className="flex gap-4 items-center text-white">
+                        <img
+                          src={
+                            auctionWinnerDetailData?.bidder?.profilePicture ||
+                            singleAuction?.winner?.bidder?.profilePicture
+                          }
+                          alt="bidder profilePicture"
+                          className="w-10 h-10 rounded-full"
+                        />
+                        <div className="flex flex-col">
+                          <span className="font-semibold">
+                            {auctionWinnerDetailData?.bidder?.fullName ||
+                              singleAuction?.winner?.bidder?.fullName}
+                          </span>
+                          <span className="text-xs text-body-text-color">
+                            {new Date(
+                              auctionWinnerDetailData?.bidTime ||
+                                singleAuction?.winner?.bidTime
+                            ).toLocaleDateString()}{" "}
+                            {""}
+                            {`${new Date(
+                              auctionWinnerDetailData?.bidTime ||
+                                singleAuction?.winner?.bidTime
+                            ).toLocaleTimeString()}`}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-white">
-                      Bid Amount : $
-                      {auctionWinnerDetailData?.bidAmount ||
-                        singleAuction?.winner?.bidAmount}
-                    </div>
-                  </div>{" "}
-                </div>
-                
-               </>
+                      <div className="text-white">
+                        Bid Amount : $
+                        {auctionWinnerDetailData?.bidAmount ||
+                          singleAuction?.winner?.bidAmount}
+                      </div>
+                    </div>{" "}
+                  </div>
+                </>
               ) : (
                 <h1 className="text-white">No bids</h1>
               )
@@ -431,7 +430,7 @@ const SingleAuctionDetail = () => {
         </div>
       </div>
       <div className="mx-8">
-        <LiveHome onlyAuction="onlyAuction"></LiveHome>
+        <LiveHome></LiveHome>
       </div>
     </>
   );
