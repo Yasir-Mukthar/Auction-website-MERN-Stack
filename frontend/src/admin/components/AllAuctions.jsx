@@ -70,6 +70,19 @@ const AllAuctions = () => {
       {
         Header: "Status",
         accessor: "status",
+        Cell: ({ value }) => (
+          <span
+            className={`py-1 px-2 border capitalize rounded-lg ${
+              value === "upcoming"
+                ? "text-orange-500 border-orange-500"
+                : value === "active"
+                ? "text-green-500 border-green-500"
+                : ""}`
+            }
+          >
+            {value}
+          </span>
+        ),
       },
       {
         Header: "Bid",
