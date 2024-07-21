@@ -429,9 +429,9 @@ const SingleAuctionDetail = () => {
           </div>
         </div>
       </div>
-      <div className="mx-8">
+      {/* <div className="mx-8">
         <LiveHome></LiveHome>
-      </div>
+      </div> */}
     </>
   );
 };
