@@ -13,7 +13,7 @@ import { getAllBidsForAuction } from "../store/bid/bidSlice";
 import Loading from "../components/Loading";
 import LiveHome from "../components/home/LiveHome";
 
-const SingleAuctionDetail = () => {
+const SingleAuctionDetail = ({ noPadding }) => {
   const [newBidAmount, setNewBidAmount] = useState("");
   const logInUser = JSON.parse(localStorage.getItem("user"));
   const { user } = useSelector((state) => state.auth);
@@ -192,7 +192,7 @@ const SingleAuctionDetail = () => {
   return (
     <>
       <div
-        className="flex place-content-between  py-10 px-5 lg:py-20  lg:px-10  items-start gap-7 flex-wrap md:flex-nowrap "
+        className={`flex place-content-between  py-10 px-5 lg:py-20  lg:px-10  items-start gap-7 flex-wrap md:flex-nowrap ${noPadding ? "lg:py-0 px-0" : "p-4"}`}
         id="item01"
       >
         <img
