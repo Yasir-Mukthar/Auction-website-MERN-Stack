@@ -106,10 +106,10 @@ const Header = () => {
                 </span>
               ) : null} */}
 
-              <IoIosNotificationsOutline
+              {/* <IoIosNotificationsOutline
                 size={37}
                 className="text-white text-xl cursor-pointer bg-theme-bg hover:text-theme-color rounded-full p-2 transition-all "
-              />
+              /> */}
             </Link>
             <Link
               onClick={() => setNavbarOpen(!navbarOpen)}
@@ -143,7 +143,7 @@ const Header = () => {
           } rounded-xl origin-top-right overflow-hidden absolute right-12 top-16 mt-[4px] bg-body-bg z-50   w-[250px]`}
         >
           <nav className="pt-2 [&_a]:transition-all [&_a]:duration-100">
-            <Link
+            {/* <Link
               to="/admin/dashboard"
               className="block no-underline text-white font-Roboto text-lg py-2 px-7 hover:bg-theme-bg-light"
               onClick={() => setSidebarOpen(false)}
@@ -168,7 +168,7 @@ const Header = () => {
               onClick={() => setSidebarOpen(false)}
             >
               Account Setting
-            </Link>
+            </Link> */}
             <Link
               onClick={() => {
                 logoutHandle();

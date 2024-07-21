@@ -13,6 +13,7 @@ import {
   updateUserById,
   deleteUserById,
   getTopSellers,
+  getTopCities,
 } from "../controllers/user.controller.js";
 import { verifyAdmin, verifyUser } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -37,6 +38,7 @@ router
   .put(verifyUser, upload.single("profilePicture"), updateUserProfile);
 
 
+  router.route("/top-cities").get(verifyUser, verifyAdmin, getTopCities);
 
 router.route("/top-sellers").get(verifyUser, verifyAdmin,getTopSellers);
 router.route("/:id").delete(verifyUser,verifyAdmin, deleteUserById);

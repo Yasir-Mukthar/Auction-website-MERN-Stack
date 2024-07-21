@@ -32,7 +32,6 @@ const AllUsers = () => {
   const { allUser, topSellers, reset } = useSelector((state) => state.user);
   const [filterInput, setFilterInput] = useState("");
   const [filterField, setFilterField] = useState("name");
-
   const handleFilterChange = (e) => {
     const value = e.target.value || undefined;
     setFilter(filterField, value); // Use the selected field
@@ -188,37 +187,8 @@ const AllUsers = () => {
 
   console.log("userCreatedAt", userCreatedAt);
 
-  const cities = [
-    { city: "New York" },
-    { city: "Los Angeles" },
-    { city: "Chicago" },
-    { city: "Houston" },
-    { city: "Phoenix" },
-    { city: "Philadelphia" },
-    { city: "Chicago" },
-    { city: "Houston" },
-    { city: "Chicago" },
-    { city: "Houston" },
-    { city: "Phoenix" },
-    { city: "Los Angeles" },
-    { city: "Chicago" },
-    { city: "Houston" },
-    { city: "Phoenix" },
-    { city: "Philadelphia" },
-    // More users here
-  ];
+ 
 
-  // Count the number of users from each city
-  const cityCounts = cities.reduce((counts, user) => {
-    counts[user.city] = (counts[user.city] || 0) + 1;
-    return counts;
-  }, {});
-
-  // Get the top cities
-  const topCities = Object.entries(cityCounts)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 5)
-    .map(([city, count]) => ({ city, count }));
 
   return (
     <div className="px-7 py-4 w-full bg-theme-bg text-slate-300 rounded-2xl">
@@ -526,56 +496,7 @@ const AllUsers = () => {
           </select>
         </div>
       </>
-      <div className="h-auto mt-20 bg-theme-bg2 border border-border-info-color rounded-lg px-4 py-2 flex flex-col items-center lg:flex-row">
-        <div className="w-full h-[400px] lg:w-3/4 xl:w-2/3">
-          <Bar
-            data={{
-              labels: topCities.map((city) => city.city),
-              datasets: [
-                {
-                  label: "No of Users",
-                  data: topCities.map((city) => city.count),
-                  backgroundColor: "rgba(75, 192, 192, 0.2)",
-                  borderColor: "rgba(75, 192, 192, 1)",
-                  borderWidth: 1,
-                },
-              ],
-            }}
-            height={200}
-            options={{
-              indexAxis: "y",
-              scales: {
-                x: {
-                  beginAtZero: true,
-                  ticks: {
-                    stepSize: 1,
-                    color: "white",
-                  },
-                },
-                y: {
-                  ticks: {
-                    color: "white",
-                  },
-                },
-              },
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: {
-                  labels: {
-                    color: "white",
-                  },
-                },
-                title: {
-                  display: true,
-                  text: "Top Cities",
-                  color: "white",
-                },
-              },
-            }}
-          />
-        </div>
-      </div>
+      
       <div className="text-white mt-10">
         <h2 className=" text-white font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">
           Top Sellers

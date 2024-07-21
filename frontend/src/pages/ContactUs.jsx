@@ -27,6 +27,8 @@ toast.success("Email Send Successfully.",{
   autoClose: 1000
 
 })      
+//empty inputs
+          form.current.reset();
   },
         () => {
           toast.error("Error Sending Email.")

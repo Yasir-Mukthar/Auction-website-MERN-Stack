@@ -155,13 +155,13 @@ const AllCategories = () => {
       <div className="">
         <h2 className=" flex items-center justify-between text-white font-bold text-xl border-b border-border-info-color pb-3 mb-5 ">
           Categories
-          <button
+          {/* <button
             onClick={printDocument}
             className="bg-color-danger items-center px-3 py-2 rounded-lg text-base font-medium inline-flex gap-2"
           >
             <FaFilePdf size={24} />
             Export PDF
-          </button>
+          </button> */}
         </h2>
         <div>
           <div className="grid grid-cols-1 lg:grid-cols-3  items-center gap-2  rounded-lg w-full ">
