@@ -11,6 +11,15 @@ export const getAllCities = async () => {
         return response.data;
 }
 
+//get top cities by user
+export const getTopCitiesByUser = async () => {
+    const response = await axios.get(`${API_URL}/users/top-cities`,{
+        withCredentials:true
+    });
+        console.log('response top cities', response.data);
+        return response.data;
+}
+
 
 
 
@@ -19,7 +28,8 @@ export const getAllCities = async () => {
 
 
 const cityService= {
-    getAllCities
+    getAllCities,
+    getTopCitiesByUser,
 }
 
 

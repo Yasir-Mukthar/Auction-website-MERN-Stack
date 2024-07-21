@@ -554,6 +554,42 @@ const getTopSellers = asyncHandler(async (req, res) => {
 })
 
 
+// @desc TOP FIVE CITIES WHICH HAVE MOST USERS
+// @route GET /api/v1/users/top-cities
+// @access Admin
+
+const getTopCities= asyncHandler(async(req, res)=>{
+  try{
+    const topCities= await User.aggregate([
+      {
+        $group:{
+          _id:"$city",
+          totalUsers:{$sum:1}
+        }
+      },
+      {
+        $sort:{totalUsers:-1}
+      },
+      {
+        $limit:6
+      }
+    ])
+    //remove first item
+    topCities.splice(0,1)
+    res.json(new ApiResponse(200, "Top cities fetched successfully", topCities));
+  }catch(error){
+    return res
+      .status(error.statusCode || 500)
+      .json(
+        new ApiResponse(
+          error.statusCode || 500,
+          error.message || "Internal Server Error"
+        )
+      );
+  }
+})
+
+
 export {
   registerUser,
   loginUser,
@@ -568,4 +604,5 @@ export {
   updateUserById,
   deleteUserById,
   getTopSellers,
+  getTopCities,
 };
