@@ -84,7 +84,7 @@ const NavSidebar = ({closeNavbar}) => {
               className={`flex items-center gap-2  py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500 ${
                 activeLink === "/admin/auction" ? " text-white" : ""
               }`}
-              to="/admin/auction"
+              to="/admin/auctions"
               onClick={() => handleLinkClick("/admin/auction")}
             >
               <FaCirclePlus size={16} className="text-theme-color" />
@@ -99,7 +99,7 @@ const NavSidebar = ({closeNavbar}) => {
                   ? "bg-theme-color hover:text-white"
                   : ""
               }`}
-              to="/admin/category"
+              to="/admin/categories"
               onClick={() => handleLinkClick("/admin/category")}
             >
               <IoIosListBox

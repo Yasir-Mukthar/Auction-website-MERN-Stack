@@ -116,7 +116,7 @@ const Sidebar = ({ closeNavbar }) => {
               Category
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               className={`flex items-center gap-2 py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500 ${
                 activeLink === "/user-profile/notifications"
@@ -136,8 +136,8 @@ const Sidebar = ({ closeNavbar }) => {
               />
               Notifications
             </Link>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <Link
               className={`flex items-center gap-2 py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500 ${
                 activeLink === "/user-profile/account-settings"
@@ -157,8 +157,8 @@ const Sidebar = ({ closeNavbar }) => {
               />
               Account Settings
             </Link>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <Link
               className={`flex items-center gap-2 py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500 ${
                 activeLink === "/user-profile/change-password"
@@ -178,8 +178,8 @@ const Sidebar = ({ closeNavbar }) => {
               />
               Change Password
             </Link>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <Link
               className={`flex items-center gap-2 py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500 ${
                 activeLink === "/user-profile/payment-method"
@@ -199,7 +199,7 @@ const Sidebar = ({ closeNavbar }) => {
               />
               Payment Method
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link
               className="flex items-center gap-2 py-2 px-4 rounded-lg cursor-pointer hover:pl-[20px] hover:text-theme-color hover:bg-theme transition-all duration-500"
