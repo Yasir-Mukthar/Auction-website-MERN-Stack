@@ -49,7 +49,7 @@ const SingleAuction = ({
             />
           </div>
         </div>
-        <h3 className="my-3 text-xl font-semibold">{name}</h3>
+        <h3 className="my-3 text-[19px] font-Barlow ">{name}</h3>
       </div>
       <div>
         <div className="flex justify-start items-center">

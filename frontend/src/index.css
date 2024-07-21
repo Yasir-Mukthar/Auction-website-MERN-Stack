@@ -44,3 +44,7 @@ body {
   -webkit-text-stroke: 2px #29B6F6;
   -webkit-text-fill-color: transparent;
 }
+
+.swiper-slide {
+  height: auto;
+}
