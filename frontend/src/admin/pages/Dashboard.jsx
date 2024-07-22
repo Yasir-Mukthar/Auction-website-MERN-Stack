@@ -28,7 +28,7 @@ const Dashboard = () => {
 
         <div className=" w-full overflow-hidden">
           <Routes>
-            <Route path="/dashboard" element={<ProfileComponent />}></Route>
+            {/* <Route path="/dashboard" element={<ProfileComponent />}></Route> */}
             <Route path="/users/*" element={<AllUsers />} />
             <Route path="/users/profile/:id" element={<ProfileComponent />} />
             <Route path="/users/edit/:id" element={<EditUser />} />

@@ -7,7 +7,7 @@ import { register, reset } from "../../store/auth/authSlice";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const Register = () => {
-    const [showPassword, setShowPassword] = useState(false);
+    // const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -70,9 +70,9 @@ const Register = () => {
   
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  // const togglePasswordVisibility = () => {
+  //   setShowPassword(!showPassword);
+  // };
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-[#061224] text-[#7386a8]">
@@ -116,7 +116,7 @@ const Register = () => {
           <label className="my-1 text-lg">Password</label>
           <div className=" pr-3 overflow-hidden flex justify-between items-center w-full rounded bg-[#0E294D] outline-none mb-4 border border-border-info-color ">
             <input
-              type={showPassword ? "text" : "password"}
+              type="password"
               placeholder="Your Password"
               className=" w-full pl-5 py-3 bg-[#0E294D] text-white placeholder-body-text-color outline-none"
               name="password"
@@ -126,7 +126,7 @@ const Register = () => {
               }
               required
             />
-            <button
+            {/* <button
               className=" p-2 hover:bg-theme-bg rounded-full h-fit active:scale-90 hover: transition-all"
               onClick={togglePasswordVisibility}
             >
@@ -135,7 +135,7 @@ const Register = () => {
               ) : (
                 <FaRegEyeSlash size={18} className=" text-gray-400 " />
               )}
-            </button>
+            </button> */}
           </div>
           <button
             type="submit"

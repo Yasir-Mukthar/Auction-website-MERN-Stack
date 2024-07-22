@@ -13,14 +13,14 @@ const Login = () => {
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
-  const [showPassword, setShowPassword] = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  // const togglePasswordVisibility = () => {
+  //   setShowPassword(!showPassword);
+  // };
   useEffect(() => {
     if (user) {
-      navigate("/admin/dashboard");
+      navigate("/admin/users");
     }
     if (isError) {
       toast.error(message);
@@ -30,7 +30,7 @@ const Login = () => {
       toast.success(message);
       dispatch(reset());
       if(user?.userType==="admin"){
-        navigate("/admin/dashboard");
+        navigate("/admin/users");
 
       } else{
         navigate("/dashboard")
@@ -81,7 +81,7 @@ const Login = () => {
           <label className="my-1 mt-2 text-lg">Password</label>
           <div className=" pr-3 overflow-hidden flex justify-between items-center w-full rounded bg-[#0E294D] outline-none mb-4 border border-border-info-color">
             <input
-              type={showPassword ? "text" : "password"}
+              type="password"
               placeholder="Your Password "
               className=" w-full pl-5 py-3 bg-[#0E294D] text-white placeholder-body-text-color outline-none "
               name="password"
@@ -90,7 +90,7 @@ const Login = () => {
                 setFormData({ ...formData, password: e.target.value })
               }
             />
-            <abbr title="Show / Hide Password">
+            {/* <abbr title="Show / Hide Password">
               <button
                 className=" p-2 hover:bg-theme-bg rounded-full h-fit active:scale-90 hover: transition-all"
                 onClick={togglePasswordVisibility}
@@ -101,14 +101,14 @@ const Login = () => {
                   <FaRegEyeSlash size={18} className=" text-gray-400 " />
                 )}
               </button>
-            </abbr>
+            </abbr> */}
           </div>
-          <Link
+          {/* <Link
             to="/forgot-password"
             className="my-1 text-theme-color no-underline hover:text-color-danger"
           >
             Forget Password?
-          </Link>
+          </Link> */}
           <button
             type="submit"
             className="my-4 font-Roboto outline-none border-none w-full rounded bg-[#00A3FF] px-4 py-3 font-bold hover:bg-color-danger  text-[#ffffff]"
@@ -117,7 +117,7 @@ const Login = () => {
           </button>
         </form>
 
-        <p>
+        {/* <p>
           Dont have an account?{" "}
           <Link
             to="/register"
@@ -125,7 +125,7 @@ const Login = () => {
           >
             Sign Up.
           </Link>
-        </p>
+        </p> */}
       </div>
     </div>
   );

@@ -37,7 +37,7 @@ const AdminPublicRoute = () => {
 
   useEffect(() => {
     if (auth) {
-      navigate("/admin/dashboard");
+      navigate("/admin/users");
     }
   }, [auth, navigate]);
 
