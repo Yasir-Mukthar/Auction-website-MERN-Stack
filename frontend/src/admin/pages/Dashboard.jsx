@@ -34,7 +34,7 @@ const Dashboard = () => {
             <Route path="/users/edit/:id" element={<EditUser />} />
             <Route path="/auctions/*" element={<AllAuctions />} />
             <Route path="/auctions/edit/:id" element={<EditAuction />} />
-            <Route path="/auctions/view/:id" element={<SingleAuctionDetail />} />
+            <Route path="/auctions/view/:id" element={<SingleAuctionDetail noPadding />} />
             <Route path="/categories/*" element={<AllCategories />} />
             <Route path="/categories/edit/:id" element={<EditCategory />} />
             <Route
