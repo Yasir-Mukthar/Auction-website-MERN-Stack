@@ -1,5 +1,5 @@
-# Auction Website using Mern Stack
-# Project is under development and will be completed in the next few weeks
+# Real Time Auction Website using Mern Stack (Biding Website)
+
 
 This project is built using the MERN (MongoDB, Express.js, React.js, Node.js) stack.
 
