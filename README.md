@@ -3,6 +3,12 @@
 
 This project is built using the MERN (MongoDB, Express.js, React.js, Node.js) stack.
 
+## Demo Video
+
+[![Watch the video](https://img.youtube.com/vi/eab9SJJD3r8/0.jpg)](https://www.youtube.com/watch?v=eab9SJJD3r8)
+
+
+
 ## Prerequisites
 
 Before running this project, make sure you have the following installed on your machine:
