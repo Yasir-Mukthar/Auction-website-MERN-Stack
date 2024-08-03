@@ -58,8 +58,27 @@ Create a `.env` file in the backend directory of the project and add the followi
 
 - PORT = ? (the port where the server will be listening)
 - MONGO_URI= ?     (your MongoDB connection string)
-- SECRET=?         (a secret key used by jsonwebtoken)
 
+- CORS_ORIGIN=?
+- JWT_SECRET=?
+- JWT_EXPIRES_IN=?
+- RESET_TOKEN_SECRET=?
+
+- USER_EMAIL=?
+- USER_PASSWORD=?
+
+- CLOUDINARY_CLOUD_NAME=?
+- CLOUDINARY_API_KEY=?
+- CLOUDINARY_API_SECRET=?
+
+- STRIPE_KEY=?
+
+
+## Chat bot Configuration
+
+- Follow these steps: (https://docs.flowiseai.com/getting-started)
+
+- Then follow these videos : (https://youtube.com/playlist?list=PL4HikwTaYE0H7wBxhvQqxYcKOkZ4O3zXh&si=uODePiis-Mdmkp2w)
 
 
 ## Contributing
