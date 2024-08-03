@@ -5,7 +5,7 @@ This project is built using the MERN (MongoDB, Express.js, React.js, Node.js) st
 
 ## Demo Video
 
-[![Watch the video](https://img.youtube.com/vi/eab9SJJD3r8/0.jpg)](https://www.youtube.com/watch?v=eab9SJJD3r8)
+[![Watch the video](https://img.youtube.com/vi/vWLnbGh8oV0/0.jpg)](https://www.youtube.com/watch?v=vWLnbGh8oV0)
 
 
 
