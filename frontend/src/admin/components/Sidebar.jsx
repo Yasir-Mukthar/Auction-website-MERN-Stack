@@ -23,7 +23,7 @@ const Sidebar = ({ closeNavbar }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  console.log(user, "user in sidebar..........,,,,,,.. usertype..");
+  //console.log(user, "user in sidebar..........,,,,,,.. usertype..");
 
   useEffect(() => {}, [user]);
 

@@ -43,7 +43,7 @@ const AllUsers = () => {
       dispatch(getAllUsers());
     });
   };
-  console.log(topSellers, "top sellers ,,,");
+  //console.log(topSellers, "top sellers ,,,");
   const columns = React.useMemo(
     () => [
       {
@@ -140,7 +140,7 @@ const AllUsers = () => {
         : [],
     [allUser]
   );
-  console.log("data", data);
+  //console.log("data", data);
 
   const {
     getTableProps,
@@ -185,7 +185,7 @@ const AllUsers = () => {
     userCreatedAt[month] = userCreatedAt[month] + 1;
   });
 
-  console.log("userCreatedAt", userCreatedAt);
+  //console.log("userCreatedAt", userCreatedAt);
 
  
 

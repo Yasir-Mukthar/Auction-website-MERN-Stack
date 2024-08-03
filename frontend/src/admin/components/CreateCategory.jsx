@@ -25,7 +25,7 @@ const CreateCategory = () => {
     e.preventDefault();
     //image data so use new formdata
     const data = new FormData();
-    console.log(formData);
+    //console.log(formData);
     data.append("name", formData.name);
     data.append("description", formData.description);
 

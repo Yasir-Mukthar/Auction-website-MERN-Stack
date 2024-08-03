@@ -14,10 +14,10 @@ const ProfileComponent = () => {
 
   useEffect(() => {
     dispatch(getUserById(id));
-    console.log("useEffect........");
+    //console.log("useEffect........");
   }, []);
   useEffect(() => {}, [singleUser]);
-  console.log(singleUser, "user............");
+  //console.log(singleUser, "user............");
 
   return (
     <>

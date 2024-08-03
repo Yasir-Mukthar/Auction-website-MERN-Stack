@@ -26,7 +26,7 @@ const SingleAuction = ({
 
   socket.on("setStatus", async () => {
     await setStatusData("over");
-    console.log("handlewinner func in dashboard.,,,,,,,,,,");
+    ////console.log("handlewinner func in dashboard.,,,,,,,,,,");
   });
 
   const logInUser = JSON.parse(localStorage.getItem("user"));

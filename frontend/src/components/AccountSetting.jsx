@@ -8,7 +8,7 @@ const AccountSetting = () => {
   const { user, isLoading, isSuccess, isError, message } = useSelector(
     (state) => state.auth
   );
-  console.log(user, "user.......");
+  //console.log(user, "user.......");
   const [formData, setFormData] = useState({
     fullName: user?.fullName || "",
     email: user?.email,
@@ -21,23 +21,23 @@ const AccountSetting = () => {
   });
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("useEffect........");
+    //console.log("useEffect........");
     dispatch(getCurrentUser());
   }, []);
   useEffect(() => {}, [user]);
 
   const [imgUrl, setImgUrl] = useState(user?.profilePicture);
   const imgRef = useRef(null);
-  console.log(imgUrl, "imgUrl......");
-  console.log(user?.profilePicture, "user?.profilePicture........");
+  //console.log(imgUrl, "imgUrl......");
+  //console.log(user?.profilePicture, "user?.profilePicture........");
 
   const handleFormSubmit = (e) => {
     dispatch(reset());
     e.preventDefault();
-    console.log(imgUrl, "imgUrl");
+    //console.log(imgUrl, "imgUrl");
     //image data so use new formdata
     const data = new FormData();
-    console.log(formData);
+    //console.log(formData);
 
     data.append("fullName", formData.fullName);
     data.append("email", formData.email);
@@ -52,7 +52,7 @@ const AccountSetting = () => {
     } else {
       data.append("profilePicture", imgUrl);
     }
-    console.log(imgUrl);
+    //console.log(imgUrl);
     dispatch(updateProfile(data)).then(() => {
       if (isSuccess) {
         toast.success(message || "user profile updated successfully.", {

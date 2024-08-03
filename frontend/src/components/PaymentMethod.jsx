@@ -25,7 +25,7 @@ const CheckoutForm = () => {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
 
-  console.log(user, "user in payment method..........");
+  ////console.log(user, "user in payment method..........");
   useEffect(()=>{
 
   },[user])
@@ -57,9 +57,9 @@ const CheckoutForm = () => {
     });
 
     if (error) {
-      console.log("[error]", error.message);
+      ////console.log("[error]", error.message);
     } else {
-      console.log("[PaymentMethod]", paymentMethod);
+      ////console.log("[PaymentMethod]", paymentMethod);
 
       // Send paymentMethod.id to your server
       //use axios
@@ -71,7 +71,7 @@ const CheckoutForm = () => {
             { withCredentials: true }
           )
           .then((response) => {
-            console.log(response.data);
+            ////console.log(response.data);
             //react toastfy
             toast.success("Payment Method Updated Successfully");
             //empty inputs
@@ -83,10 +83,10 @@ const CheckoutForm = () => {
             
           })
           .catch((error) => {
-            console.error(error);
+            ////console.error(error);
           });
 
-          console.log("Payment method updating........");
+          ////console.log("Payment method updating........");
 
         } else {
         axios
@@ -99,7 +99,7 @@ const CheckoutForm = () => {
           )
           .then((response) => {
             if (response.status === 200) {
-              console.log(response.data); // Should log "Payment method added successfully"
+              ////console.log(response.data); // Should log "Payment method added successfully"
               //react toastfy
               toast.success("Payment Method Added Successfully");
               //empty inputs
@@ -110,13 +110,13 @@ const CheckoutForm = () => {
               cardElement.clear();
 
             } else {
-              console.log("Failed to add payment method");
+              ////console.log("Failed to add payment method");
             }
           })
           .catch((error) => {
-            console.error(error);
+            ////console.error(error);
           });
-          console.log("Payment method adding........");
+          ////console.log("Payment method adding........");
 
       }
     }

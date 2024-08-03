@@ -20,7 +20,7 @@ const EditCategory = () => {
   const [imgUrl, setImgUrl] = useState(singleCategory?.imageUrl || "");
   const imgRef = useRef(null);
 
-  console.log("singlcategyr........", singleCategory);
+  //console.log("singlcategyr........", singleCategory);
 
   useEffect(() => {
     dispatch(getSingleCategory(id));
@@ -46,12 +46,12 @@ const EditCategory = () => {
     setImgUrl(singleCategoryData?.imageUrl || "");
   }, [singleCategoryData]);
 
-  console.log(formData, "formData....");
+  //console.log(formData, "formData....");
   const handleProductUpload = (e) => {
     e.preventDefault();
     //image data so use new formdata
     const data = new FormData();
-    console.log(formData);
+    //console.log(formData);
     data.append("name", formData.name);
 
     data.append("description", formData.description);
@@ -64,7 +64,7 @@ const EditCategory = () => {
 
     //print data
     for (var pair of data.entries()) {
-      console.log(`${pair[0]}, ${pair[1]}`);
+      //console.log(`${pair[0]}, ${pair[1]}`);
     }
 
     dispatch(updateCategory({ data: data, id: id }));

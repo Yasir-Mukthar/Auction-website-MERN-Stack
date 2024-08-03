@@ -24,15 +24,12 @@ const SingleAuctionDetail = ({ noPadding }) => {
   const { bids } = useSelector((state) => state.bid);
   const [auctionStarted, setAuctionStarted] = useState(false);
   const [singleAuctionData, setSingleAuctionData] = useState();
-  console.log((singleAuctionData, "singleAuctionData............"));
+  //console.log((singleAuctionData, "singleAuctionData............"));
   const [auctionWinnerDetailData, setAuctionWinnerDetailData] = useState();
   const [bidsData, setBidsData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(
-    bidsData,
-    "bidsData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
-  );
+  
   useEffect(() => {
     const interval = setInterval(() => {
       const currentTime = new Date().getTime();
@@ -55,19 +52,16 @@ const SingleAuctionDetail = ({ noPadding }) => {
     setAuctionStarted(false);
 
     setAuctionWinnerDetailData(data);
-    console.log(
-      auctionWinnerDetailData,
-      "winner sellected auctionWinnerDetailData.....................,,,,,,,,,,,"
-    );
+    
   });
 
   const handleWinner = () => {
     socket.emit("selectWinner", params?.id);
   };
 
-  console.log(params.id);
-  console.log(singleAuction);
-  console.log(isLoading);
+  //console.log(params.id);
+  //console.log(singleAuction);
+  //console.log(isLoading);
 
   useEffect(() => {
     setIsLoading(true);
@@ -78,9 +72,9 @@ const SingleAuctionDetail = ({ noPadding }) => {
     dispatch(getAllBidsForAuction(params?.id));
   }, [params?.id]);
 
-  console.log("useEffect is running.new new....");
+  //console.log("useEffect is running.new new....");
   socket.on("newBidData", async (data) => {
-    console.log(data, "newBidData,,,,,,,,,,,,,,,,,io,,,,,,io");
+    //console.log(data, "newBidData,,,,,,,,,,,,,,,,,io,,,,,,io");
     setBidsData([
       {
         _id: new Date().getTime(),
@@ -95,27 +89,16 @@ const SingleAuctionDetail = ({ noPadding }) => {
       ...bidsData,
     ]);
 
-    console.log(
-      singleAuctionData,
-      "singleAuctionData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
-    );
+    
     setSingleAuctionData((prevState) => ({
       ...prevState,
       startingPrice: data.bidAmount,
     }));
-    console.log(
-      singleAuctionData,
-      "singleAuctionData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
-    );
-
-    console.log(
-      bidsData,
-      "bidsData,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
-    );
+    
     // handleNewBid()
   });
   useEffect(() => {
-    console.log("useEffect is running.new new bidsdata bidsdata bidsdata....");
+    //console.log("useEffect is running.new new bidsdata bidsdata bidsdata....");
   }, [bidsData]);
 
   useEffect(() => {
@@ -125,20 +108,17 @@ const SingleAuctionDetail = ({ noPadding }) => {
 
   useEffect(() => {
     socket.on("connect", () => {
-      console.log(`Client connected with the id: ${socket.id}`);
+      //console.log(`Client connected with the id: ${socket.id}`);
     });
     socket.emit("joinAuction", logInUser?._id);
     socket.on("newUserJoined", (data) => {
-      console.log(
-        data,
-        "newUserJoined,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
-      );
+      
     });
   }, []);
 
   const placeBidHandle = async (e) => {
     e.preventDefault();
-    console.log((singleAuctionData, "singleAuctionData............"));
+    //console.log((singleAuctionData, "singleAuctionData............"));
     if (user?.paymentVerified === false) {
       toast.info(
         "Please verify your payment method to place a bid. Go to settings..."
@@ -150,7 +130,7 @@ const SingleAuctionDetail = ({ noPadding }) => {
     };
     if (Math.floor(newBidAmount) <= singleAuctionData?.startingPrice) {
       toast.info("Bid amount should be greater than the currnt bid");
-      console.log(new Date().getTime() / 1000 + " seconds");
+      //console.log(new Date().getTime() / 1000 + " seconds");
     } else if (singleAuction?.endTime < new Date().getTime() / 1000) {
       toast.info("Auction time is over");
     } else {

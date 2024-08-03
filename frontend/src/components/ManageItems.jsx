@@ -20,10 +20,10 @@ const ManageItems = () => {
   useEffect(() => {
     dispatch(getSellerAuction());
   }, [dispatch]);
-  console.log(sellerAuction, "sellerAuction....");
+  //console.log(sellerAuction, "sellerAuction....");
 
   const handleDeleteAuction = async (id) => {
-    console.log(id, "delete id....");
+    //console.log(id, "delete id....");
     await dispatch(deleteSingleAuctionById(id)).then(() => {
       toast.success("item deleted.", {
         autoClose: 500,

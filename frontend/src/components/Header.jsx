@@ -21,12 +21,12 @@ const Header = () => {
   let location = useLocation();
   const logInUser = JSON.parse(localStorage.getItem("user"));
 
-  console.log(notifications, "notifications............ header......");
+  //console.log(notifications, "notifications............ header......");
   //i want a length of isRead ===false
   const unReadNotifications = notifications.filter(
     (notification) => notification.isRead === false
   );
-  console.log(unReadNotifications.length, "unreadnotificatons........ length");
+  //console.log(unReadNotifications.length, "unreadnotificatons........ length");
 
   useEffect(() => {}, [user]);
   useEffect(() => {
@@ -34,16 +34,13 @@ const Header = () => {
       dispatch(getNotificationForUser());
     }
     socket.on("newBidNotification", (data) => {
-      console.log(
-        data,
-        " new bid notification data from socket.,,,,,,,,,,,,,,,,,,,,,,,,.........."
-      );
+      
       socket.emit("joinAuction", logInUser?._id);
 
       dispatch(getNotificationForUser());
     });
 
-    console.log(notifications, "notification dispatch............");
+    //console.log(notifications, "notification dispatch............");
   }, [location]);
 
   const logoutHandle = () => {

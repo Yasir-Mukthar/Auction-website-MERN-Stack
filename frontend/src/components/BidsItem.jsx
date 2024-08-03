@@ -10,10 +10,10 @@ const BidsItem = () => {
   const dispatch = useDispatch();
   const { bids , isLoading} = useSelector((state) => state.bid);
   const {user}=useSelector(state=>state.auth)
-  console.log(bids, "bids....");
+  //console.log(bids, "bids....");
   useEffect(() => {
     dispatch(getBidsAuctionsByUser());
-    console.log("use effecty bids....", bids);
+    //console.log("use effecty bids....", bids);
   }, []);
 
 

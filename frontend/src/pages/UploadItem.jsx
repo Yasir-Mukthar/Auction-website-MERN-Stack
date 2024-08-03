@@ -25,7 +25,7 @@ const UploadItem = () => {
     dispatch(getAllCities());
   }, [dispatch]);
 
-  console.log("categoreik   ", categories);
+  ////console.log("categoreik   ", categories);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -39,7 +39,7 @@ const UploadItem = () => {
 
   useEffect(() => {
     dispatch(reset());
-    console.log(isSuccess  , " and ", isError);
+    ////console.log(isSuccess  , " and ", isError);
 
     if ( isError) {
       toast.error(message, {
@@ -47,7 +47,7 @@ const UploadItem = () => {
       });
       dispatch(reset());
     } else if (isSuccess &&  isError===undefined  ) {
-      console.log(isSuccess  , " and ", isError);
+      ////console.log(isSuccess  , " and ", isError);
       toast.success(message, {
         autoClose: 500,
       });
@@ -71,7 +71,7 @@ const UploadItem = () => {
     e.preventDefault();
     //image data so use new formdata
     const data = new FormData();
-    console.log(formData);
+    ////console.log(formData);
     data.append("name", formData.name);
     data.append("startingPrice", formData.startingPrice);
     data.append("category", formData.category);
@@ -87,7 +87,7 @@ const UploadItem = () => {
     } else {
       data.append("image", imgRef.current.files[0]);
     }
-    console.log("before data sentidn", isSuccess);
+    ////console.log("before data sentidn", isSuccess);
     dispatch(createAuction(data));
 
     //dispatch(getAllAuctions());

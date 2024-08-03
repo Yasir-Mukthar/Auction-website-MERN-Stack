@@ -26,11 +26,11 @@ const SearchLocationCategory = () => {
     dispatch(getAllCities());
   }, []);
 
-  // console.log(categories, "categories")
-  // console.log(cities, "cities")
+  // //console.log(categories, "categories")
+  // //console.log(cities, "cities")
 
   const SearchByFilter = () => {
-    console.log(filter, "filter ssss ");
+    //console.log(filter, "filter ssss ");
 
     dispatch(getAllAuctions(filter));
   };
@@ -46,7 +46,7 @@ const SearchLocationCategory = () => {
           try {
             const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=318f69a969db4f7599b7fbb5043e444e`);
       
-            console.log(response, " response from location,  ,,,,,,,,,,");
+            //console.log(response, " response from location,  ,,,,,,,,,,");
       
             if (response.data && response.data.results && response.data.results[0]) {
               let district = response.data.results[0].components.district;
@@ -54,11 +54,11 @@ const SearchLocationCategory = () => {
               setCity(district);
             }
           } catch (error) {
-            console.error('Error getting city name:', error);
+            //console.error('Error getting city name:', error);
           }
         },
         (error) => {
-          console.error('Error getting location:', error);
+          //console.error('Error getting location:', error);
         },
         {
           enableHighAccuracy: true
@@ -68,7 +68,7 @@ const SearchLocationCategory = () => {
   }, []);
   
   
-  console.log(city);
+  //console.log(city);
 
   return (
     <div className="flex justify-center items-center my-5 min-h-[100px]">

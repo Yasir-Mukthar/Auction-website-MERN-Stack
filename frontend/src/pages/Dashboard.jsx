@@ -17,11 +17,11 @@ const Dashboard = () => {
   const { auction, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auction
   );
-  console.log(auctionData);
+  //console.log(auctionData);
 
   useEffect(() => {
     dispatch(getAllAuctions());
-    console.log("dispatched");
+    //console.log("dispatched");
   }, []);
 
   useEffect(() => {

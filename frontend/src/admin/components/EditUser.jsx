@@ -7,7 +7,7 @@ const EditUser = () => {
   //id
   const { id } = useParams();
   const { singleUser } = useSelector((state) => state.user);
-  console.log(singleUser, "user.......");
+  //console.log(singleUser, "user.......");
   const [formData, setFormData] = useState({
     fullName: singleUser?.fullName || "",
     email: singleUser?.email,
@@ -20,7 +20,7 @@ const EditUser = () => {
   });
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("useEffect........");
+    //console.log("useEffect........");
     dispatch(getUserById(id));
   }, []);
   useEffect(()=>{},[id])
@@ -44,15 +44,15 @@ const EditUser = () => {
 
   const [imgUrl, setImgUrl] = useState(singleUser?.profilePicture);
   const imgRef = useRef(null);
-  console.log(imgUrl, "imgUrl......");
-  console.log(singleUser?.profilePicture, "singleUser?.profilePicture........");
+  //console.log(imgUrl, "imgUrl......");
+  //console.log(singleUser?.profilePicture, "singleUser?.profilePicture........");
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log(imgUrl, "imgUrl");
+    //console.log(imgUrl, "imgUrl");
     //image data so use new formdata
     const data = new FormData();
-    console.log(formData);
+    //console.log(formData);
 
     data.append("fullName", formData.fullName);
     data.append("email", formData.email);
@@ -67,7 +67,7 @@ const EditUser = () => {
     } else {
       data.append("profilePicture", imgUrl);
     }
-    console.log(imgUrl);
+    //console.log(imgUrl);
     dispatch(updateUserById({data,id}));
     setImgUrl(null);
     dispatch(getUserById(id));

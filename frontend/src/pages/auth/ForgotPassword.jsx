@@ -29,7 +29,7 @@ const ForgotPassword = () => {
 
   const handlePasswordReset = (e) => {
     e.preventDefault();
-    console.log(email);
+    //console.log(email);
     if (email === "") {
       toast.error("Email is required");
       return false;

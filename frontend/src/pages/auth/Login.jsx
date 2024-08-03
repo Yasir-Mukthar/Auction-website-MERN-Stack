@@ -39,7 +39,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    //console.log(formData);
     dispatch(reset());
     dispatch(login(formData));
   };

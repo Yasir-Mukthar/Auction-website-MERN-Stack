@@ -24,7 +24,7 @@ const Cart = () => {
     fetchStripe();
   }, []);
 
-  console.log(cartItem);
+  //console.log(cartItem);
 
   useEffect(() => {
     dispatch(getCartItems());
@@ -65,10 +65,10 @@ const Cart = () => {
     const result = await stripe.redirectToCheckout({
       sessionId: data.id,
     });
-    console.log(result);
+    //console.log(result);
 
     if (result.error) {
-      console.log(result.error.message);
+      //console.log(result.error.message);
     } else {
       alert("succes");
     }

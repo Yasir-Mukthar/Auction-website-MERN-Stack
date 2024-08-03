@@ -29,7 +29,7 @@ const AllCategories = () => {
   const { categories, categoriesDetail, topCategories } = useSelector(
     (state) => state.category
   );
-  console.log(topCategories);
+  //console.log(topCategories);
   const handleFilterChange = (e) => {
     const value = e.target.value || undefined;
     setFilter(filterField, value);
@@ -92,7 +92,7 @@ const AllCategories = () => {
     dispatch(getCategoriesMoreDetail());
     dispatch(getTopCategories());
   }, []);
-  console.log(categoriesDetail);
+  //console.log(categoriesDetail);
   const data = React.useMemo(
     () =>
       Array.isArray(categories?.data)
@@ -105,7 +105,7 @@ const AllCategories = () => {
         : [],
     [categories]
   );
-  console.log("data", data);
+  //console.log("data", data);
 
   const {
     getTableProps,

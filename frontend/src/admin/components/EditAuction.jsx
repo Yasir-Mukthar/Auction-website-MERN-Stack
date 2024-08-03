@@ -21,7 +21,7 @@ const EditAuction = () => {
   const imgRef = useRef(null);
   const { categories } = useSelector((state) => state.category);
   const { cities } = useSelector((state) => state.city);
-  console.log("singleAuction........", singleAuction);
+  //console.log("singleAuction........", singleAuction);
 
   useEffect(() => {
     dispatch(getSingleAuctionById(id));
@@ -66,7 +66,7 @@ const EditAuction = () => {
     setImgUrl(singleAuctionData?.image || "");
   }, [singleAuctionData]);
 
-  console.log("categoreik   ", categories);
+  //console.log("categoreik   ", categories);
 
   // const [formData, setFormData] = useState({
   //   name: singleAuctionData?.name || "",
@@ -81,12 +81,12 @@ const EditAuction = () => {
   //   location: singleAuction?.location?._id || "",
   //   startingPrice: parseFloat(singleAuction?.startingPrice) || 0,
   // });
-  console.log(formData, "formData....");
+  //console.log(formData, "formData....");
   const handleProductUpload = (e) => {
     e.preventDefault();
     //image data so use new formdata
     const data = new FormData();
-    console.log(formData);
+    //console.log(formData);
     data.append("name", formData.name);
     data.append("startingPrice", formData.startingPrice);
     data.append("category", formData.category);
@@ -103,7 +103,7 @@ const EditAuction = () => {
 
     //print data
     for (var pair of data.entries()) {
-      console.log(`${pair[0]}, ${pair[1]}`);
+      //console.log(`${pair[0]}, ${pair[1]}`);
     }
 
     dispatch(updateSingleAuction({ data: data, id: id }));

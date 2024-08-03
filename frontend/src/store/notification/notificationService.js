@@ -10,7 +10,7 @@ export const getNotificationForUser = async () => {
         withCredentials: true,
         
     });
-    console.log(response.data, " response from getNotificationForUser");
+    //console.log(response.data, " response from getNotificationForUser");
     return response.data;
   };
 
@@ -20,19 +20,19 @@ export const markNotificationAsRead= async (id) => {
         withCredentials: true,
         
     });
-    console.log(response.data, " response from markNotificationAsRead");
+    //console.log(response.data, " response from markNotificationAsRead");
     return response.data;
   };
    
 
 
   export  const sendNewBidNotification= async (data) => {
-    console.log(data, " data from sendNewBidNotification");
+    //console.log(data, " data from sendNewBidNotification");
     const response = await axios.post(`${API_URL}/notifications/send-notification`, data, {
         withCredentials: true,
         
     });
-    console.log(response.data, " response from sendNewBidNotification");
+    //console.log(response.data, " response from sendNewBidNotification");
     return response.data;
   };
 
@@ -43,7 +43,7 @@ export const markNotificationAsRead= async (id) => {
         withCredentials: true,
         
     });
-    console.log(response.data, " response from markAllNotificationsAsRead");
+    //console.log(response.data, " response from markAllNotificationsAsRead");
     return response.data;
   };
 

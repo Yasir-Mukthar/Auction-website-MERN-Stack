@@ -13,10 +13,10 @@ const ProfileComponent = () => {
 
   useEffect(() => {
     dispatch(getCurrentUser());
-    console.log("useEffect........");
+    //console.log("useEffect........");
   }, []);
   useEffect(() => {}, [user]);
-  console.log(user, "user............");
+  //console.log(user, "user............");
 
   return (
     <>
